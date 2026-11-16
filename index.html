@@ -7,310 +7,196 @@
 <title>Bilgin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght,BNCE,INFM@0,300..800,-100..100,0..100&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
-/* Düzen: kitap sayfası metaforu. Kâğıt zemin, lacivert mürekkep, mandalina vurgu; her bölüm bir "sayfa", aralarında kurdun izi. Bilinçli tek tema (açık). */
+/* Kareli Defter: sayfa açık bir kareli okul defteri; ders defterin üstünde oynanıyor. Tek tema (açık). */
 :root{
-  --lacivert:#0B2E4F; --petrol:#0E6E8C; --mandalina:#FF8A3D;
-  --kopuk:#E2F1F4; --kagit:#FFFDF8; --kiremit:#B4541A;
-  --petrol-a:#CFE6EC; --mand-a:#FFE6D4; --lac-2:#4A6177; --cizgi:#DCE7EA; --yesil:#2E8A57; --yesil-a:#DDF1E5; --hata:#C2412D; --hata-a:#FBE3DE;
-  --f-disp:'Fredoka',ui-rounded,'Trebuchet MS',system-ui,sans-serif;
-  --f-body:'Nunito Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --lacivert:#0B2E4F; --petrol:#0E6E8C; --mandalina:#FF8A3D; --kopuk:#E2F1F4; --kiremit:#B4541A;
+  --kenar:#D2F1FB; --kagit:#FBF6E6; --kalem:#3D4F63;
+  --el:'Shantell Sans','Comic Sans MS',ui-rounded,system-ui,sans-serif;
+  --ui:'Nunito',ui-rounded,system-ui,-apple-system,'Segoe UI',sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--kagit);color:var(--lacivert);font:400 17px/1.6 var(--f-body)}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--kagit)}
+body{margin:0;background:var(--kenar);color:var(--lacivert);font:700 17px/1.5 var(--ui)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--kenar);z-index:40}
+::selection{background:var(--mandalina);color:var(--lacivert)}
 img{display:block;max-width:100%}
-h1,h2,h3{font-family:var(--f-disp);font-weight:600;line-height:1.08;text-wrap:balance;margin:0;letter-spacing:-.01em}
-p{margin:0}
+a{color:inherit}
 button{font:inherit;color:inherit;cursor:pointer}
-:focus-visible{outline:3px solid var(--mandalina);outline-offset:3px;border-radius:10px}
-.ic{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-.eti{font:800 13px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--petrol)}
-.btn{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;background:var(--mandalina);color:var(--lacivert);font:600 19px var(--f-disp);padding:13px 26px 12px;box-shadow:0 5px 0 var(--kiremit);transition:transform .12s,box-shadow .12s;text-decoration:none}
-.btn:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--kiremit)}
-.btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--kiremit)}
-.btn.ikincil{background:#fff;color:var(--lacivert);box-shadow:0 5px 0 var(--cizgi);border:2px solid var(--cizgi)}
+:focus-visible{outline:3px solid var(--mandalina);outline-offset:3px;border-radius:12px}
+.ic{max-width:1440px;margin:0 auto;padding-left:max(clamp(16px,6vw,120px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,6vw,120px),env(safe-area-inset-right,0px))}
+.ust .ic{max-width:none;padding-left:max(clamp(16px,4vw,64px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,4vw,64px),env(safe-area-inset-right,0px))}
+.el{font-family:var(--el)}
+.hap{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;font:800 clamp(15px,1.25vw,19px)/1 var(--ui);padding:.95em 1.5em;text-decoration:none;border:0;transition:transform .15s cubic-bezier(.2,.8,.2,1),box-shadow .15s}
+.hap svg{width:1.05em;height:1.05em}
+.hap.turuncu{background:var(--mandalina);color:var(--lacivert);box-shadow:0 6px 14px -6px rgba(11,46,79,.4)}
+.hap.cizgi{background:transparent;color:var(--lacivert);box-shadow:inset 0 0 0 2.5px var(--lacivert)}
+.hap.koyu{background:var(--lacivert);color:#fff}
+.hap:hover{transform:translateY(-2px)}
+.hap:active{transform:translateY(1px)}
 
-/* ÜST BAR */
-.ust{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,253,248,.92);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
-.ust.kaydi{border-color:var(--cizgi)}
-.ust .ic{display:flex;align-items:center;gap:24px;height:72px}
-.ust .logo{height:46px;width:auto}
-.ust nav{display:flex;gap:22px;margin-left:auto;font-weight:800;font-size:15px}
-.ust nav a{color:var(--lacivert);text-decoration:none;opacity:.8}
-.ust nav a:hover{opacity:1;color:var(--petrol)}
-.ust .btn{font-size:16px;padding:9px 18px 8px;box-shadow:0 4px 0 var(--kiremit)}
+.ust{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--kenar) 92%,transparent);backdrop-filter:saturate(1.2) blur(8px)}
+.ust .ic{display:flex;align-items:center;gap:clamp(16px,3vw,48px);height:clamp(64px,6.6vw,96px)}
+.ust .logo img{height:clamp(40px,4.4vw,62px);width:auto}
+.ust nav{display:flex;gap:clamp(18px,3.4vw,64px);margin-left:auto;font:800 clamp(15px,1.45vw,22px) var(--ui)}
+.ust nav a{text-decoration:none}
+.ust nav a:hover{color:var(--petrol)}
+.ust .hap{margin-left:clamp(8px,2vw,40px)}
 
-/* HERO */
-.hero{padding-block:28px 40px;position:relative;overflow:hidden}
-.hero-ust{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;margin-bottom:22px}
-.hero h1{font-size:clamp(40px,6.4vw,86px);font-weight:700}
-.hero h1 em{font-style:normal;color:var(--kiremit);position:relative;white-space:nowrap}
-.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:.16em;border-radius:99px;background:repeating-linear-gradient(90deg,var(--mandalina) 0 .5em,var(--petrol) .5em 1em);opacity:.9;z-index:-1}
-.hero .alt{max-width:46ch;color:var(--lac-2);font-size:19px;margin-top:14px}
-.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-.yas{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right}
-.yas b{font:700 64px/1 var(--f-disp);color:var(--petrol)}
-.yas span{font-weight:800;font-size:14px;color:var(--lac-2)}
+.sahne-dis{padding-bottom:clamp(8px,2vw,24px)}
+.sahne{position:relative;aspect-ratio:1536/822;container-type:inline-size;width:min(100%,calc((100svh - clamp(64px,6.6vw,96px) - 130px) * 1.8686));margin-inline:auto}
+.sahne .defter{position:absolute;inset:0;width:100%;height:100%}
+.p{position:absolute}
+.metin{position:absolute;left:8.4%;top:5.8%;width:42%;display:flex;flex-direction:column;align-items:flex-start;gap:1.1cqw;z-index:2}
+.metin h1{margin:0;font:800 3.95cqw/1.1 var(--el);letter-spacing:-.03em;color:var(--lacivert);white-space:nowrap;font-variation-settings:"INFM" 100,"BNCE" 45;transform:rotate(-3deg);transform-origin:0 100%}
+.metin h1 .alt-cizgi{position:relative;white-space:nowrap}
+.metin h1 .alt-cizgi svg{position:absolute;left:-2%;bottom:-.28em;width:104%;height:.4em;overflow:visible}
+.metin .kivilcim{position:absolute;left:-3.4cqw;top:-1.2cqw;width:3cqw}
+.metin .kivilcim.k2{left:-3cqw;top:auto;bottom:1.6cqw;width:2.2cqw;transform:rotate(-30deg)}
+.kiv-kamyon{left:21.6%;top:61.6%;width:2.4%;transform:rotate(-20deg)}
+.kamyon-h{left:22.4%;top:63.2%;width:7.4%}
+.metin p{margin:.6cqw 0 0;font:700 1.4cqw/1.3 var(--ui);color:var(--lacivert)}
+.metin .cta{display:flex;gap:.9cqw;margin-top:1.4cqw}
+.metin .cta .hap{font-size:1.6cqw;padding:1.05cqw 1.9cqw}
 
-.dunya{position:relative;border-radius:34px;overflow:hidden;aspect-ratio:3/2;max-width:100%;background:var(--kopuk);cursor:none;touch-action:pan-y;isolation:isolate}
-.dunya img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.xray{position:absolute;inset:0;background:var(--lacivert);
-  -webkit-mask:radial-gradient(circle at calc(var(--x) - var(--r) * 1.05) var(--y),#000 calc(var(--r) - 1px),transparent var(--r)),radial-gradient(circle at calc(var(--x) + var(--r) * 1.05) var(--y),#000 calc(var(--r) - 1px),transparent var(--r));
-          mask:radial-gradient(circle at calc(var(--x) - var(--r) * 1.05) var(--y),#000 calc(var(--r) - 1px),transparent var(--r)),radial-gradient(circle at calc(var(--x) + var(--r) * 1.05) var(--y),#000 calc(var(--r) - 1px),transparent var(--r))}
-.xray img{opacity:.42;filter:grayscale(1) contrast(1.4) brightness(1.3);mix-blend-mode:screen}
-.xray .izgara{position:absolute;inset:0;background-image:linear-gradient(rgba(207,230,236,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(207,230,236,.18) 1px,transparent 1px);background-size:28px 28px}
-.not-x{position:absolute;transform:translate(-50%,-50%);font:600 clamp(13px,1.5vw,20px)/1.15 var(--f-disp);color:#fff;text-align:center;white-space:nowrap}
-.not-x small{display:block;font:800 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--mandalina)}
-.not-x::before{content:"";position:absolute;left:50%;top:-14px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--mandalina);box-shadow:0 0 0 4px rgba(255,138,61,.3)}
-.gozluk-cer{position:absolute;left:var(--x);top:var(--y);width:calc(var(--r) * 4.4);transform:translate(-50%,-50%);pointer-events:none;z-index:3;filter:drop-shadow(0 6px 10px rgba(11,46,79,.35))}
-.ipucu-etiket{position:absolute;left:18px;bottom:18px;z-index:4;background:rgba(255,253,248,.94);border-radius:999px;padding:9px 16px;font-weight:800;font-size:14px;display:flex;gap:8px;align-items:center;box-shadow:0 4px 14px -6px rgba(11,46,79,.4)}
-.ipucu-etiket i{width:10px;height:10px;border-radius:50%;background:var(--mandalina);animation:nab 1.6s infinite}
-@keyframes nab{50%{box-shadow:0 0 0 6px rgba(255,138,61,0)}0%{box-shadow:0 0 0 0 rgba(255,138,61,.5)}}
+.etiket{left:2.6%;top:49.5%;width:20.3%;height:12.2%;transform:rotate(-4deg);display:grid;place-items:center}
+.etiket::before{content:"";position:absolute;inset:-4% -6%;background:url(assets/tape.png) center/100% 100% no-repeat,url(assets/tape.png) center/100% 100% no-repeat,url(assets/tape.png) center/100% 100% no-repeat;filter:drop-shadow(0 2px 2px rgba(11,46,79,.12));background-color:rgba(255,206,120,.5);border-radius:3px;transform:rotate(1deg)}
+.etiket b{position:relative;font:600 2.7cqw/1 var(--el);color:var(--lacivert)}
+.hap-k{position:absolute;border-radius:999px;font:700 1.2cqw/1 var(--el);display:inline-flex;align-items:center;gap:.5cqw;padding:.7cqw 1.2cqw;white-space:nowrap}
+.hap-k.sinif{left:5.6%;top:59.2%;background:#BFE6F2;color:var(--lacivert);transform:rotate(-3deg)}
+.hap-k.simdi{left:6%;top:65.2%;box-shadow:inset 0 0 0 .18cqw var(--mandalina);color:var(--lacivert);transform:rotate(-3deg)}
+.hap-k.simdi i{width:.85cqw;height:.85cqw;border-radius:50%;background:var(--mandalina);animation:nabiz 1.6s ease-out infinite}
+@keyframes nabiz{0%{box-shadow:0 0 0 0 rgba(255,138,61,.6)}100%{box-shadow:0 0 0 1cqw rgba(255,138,61,0)}}
 
-/* ŞERİT */
-.serit{background:var(--lacivert);color:#fff;overflow:hidden;padding-block:16px;margin-top:8px}
-.serit-ic{display:flex;gap:42px;white-space:nowrap;animation:ak 38s linear infinite;width:max-content;font:600 22px var(--f-disp)}
-.serit-ic span{display:inline-flex;align-items:center;gap:42px}
-.serit-ic span::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--mandalina)}
-.serit-ic span:nth-child(3n)::after{background:var(--petrol-a)}
-@keyframes ak{to{transform:translateX(-50%)}}
+.kopru{left:3.90%;top:52.72%;width:76.18%;height:31.51%}
+.kurt{left:35.9%;top:28.2%;width:28.6%;height:36.5%;transform-origin:50% 100%;animation:kurt 3.4s ease-in-out infinite}
+@keyframes kurt{50%{transform:translateY(-1.2%) rotate(-.6deg)}}
+.tahta{position:absolute;top:59.6%;translate:-50% 0;font:600 2.1cqw/1 var(--el);color:var(--lacivert);display:flex;flex-direction:column;align-items:center;line-height:.9}
+.tahta hr{width:1.8cqw;border:0;border-top:.2cqw solid var(--lacivert);margin:.35cqw 0;border-radius:2px}
+.t1{left:38.12%} .t2{left:53.56%} .t3{left:63.94%}
+.denklem{left:19.4%;top:82%;font:400 2.5cqw/1 var(--el);color:var(--kalem);display:flex;align-items:center;gap:.4cqw}
+.denklem .kesir{display:inline-flex;flex-direction:column;align-items:center;font-size:2cqw;line-height:.95}
+.denklem .kesir hr{width:1.3cqw;border:0;border-top:.16cqw solid var(--kalem);margin:.1cqw 0}
+.denklem u{text-decoration:none;box-shadow:0 .3cqw 0 -.05cqw var(--mandalina)}
 
-/* BÖLÜM */
-.bolum{padding-block:96px 24px}
-.bolum-bas{display:flex;flex-direction:column;gap:12px;max-width:760px;margin-bottom:36px}
-.bolum-bas h2{font-size:clamp(32px,4.4vw,56px)}
-.bolum-bas p{color:var(--lac-2);font-size:19px;max-width:60ch}
+.beceri-baslik{left:64.3%;top:9%;font:600 3.6cqw/1 var(--el);color:var(--lacivert);transform:rotate(-3deg);isolation:isolate}
+.beceri-baslik span{position:relative}
+.beceri-baslik span::before{content:"";position:absolute;left:-8%;right:-16%;top:-18%;bottom:-22%;background:url(assets/swash.png) center/100% 100% no-repeat;z-index:-1}
+.arti{left:83%;top:17%;font:600 1.9cqw/1 var(--el);color:var(--kiremit);transform:rotate(-8deg)}
+.grafik{left:67.4%;top:22.4%;width:26.7%;height:31.1%}
+.eksen{position:absolute;top:45.5%;font:400 1.35cqw/1.05 var(--el);color:var(--kalem);text-align:center;transform:translateX(-50%)}
+.e1{left:73.4%} .e2{left:81.9%} .e3{left:88%}
+.ok-k{left:66.9%;top:51.1%;width:8%;height:14.6%;overflow:visible}
+.cikartma{left:82.2%;top:54%;width:12.4%;height:17.8%}
+.cikartma-yazi{left:84.4%;top:59.4%;width:9%;font:600 1.75cqw/1.08 var(--el);color:var(--lacivert);text-align:center;transform:rotate(-5deg)}
+.kalem{left:73.7%;top:73.2%;width:23.8%;height:17.3%}
+.bant{left:86%;top:-.7%;width:7.9%;height:9.2%;transform:rotate(9deg)}
 
-/* SINIF ASANSÖRÜ */
-.asansor{display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;align-items:start}
-.katlar{display:flex;flex-direction:column-reverse;gap:8px;position:relative;padding-left:26px}
-.katlar::before{content:"";position:absolute;left:8px;top:10px;bottom:10px;width:6px;border-radius:6px;background:repeating-linear-gradient(var(--mandalina) 0 18px,var(--petrol) 18px 36px);opacity:.35}
-.kat{display:flex;align-items:center;gap:12px;border:2px solid var(--cizgi);background:#fff;border-radius:18px;padding:10px 14px;text-align:left;transition:all .18s;position:relative}
-.kat b{font:700 26px/1 var(--f-disp);width:46px;color:var(--petrol)}
-.kat span{font-weight:800;font-size:14px;color:var(--lac-2);line-height:1.2}
-.kat:hover{border-color:var(--petrol)}
-.kat[aria-pressed="true"]{background:var(--lacivert);border-color:var(--lacivert);transform:translateX(8px)}
-.kat[aria-pressed="true"] b{color:var(--mandalina)}
-.kat[aria-pressed="true"] span{color:#C9D6E2}
-.kat[aria-pressed="true"]::before{content:"";position:absolute;left:-28px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;background:var(--mandalina);box-shadow:0 0 0 5px rgba(255,138,61,.25)}
-.sinif-pano{background:#fff;border:2px solid var(--cizgi);border-radius:30px;padding:28px;display:flex;flex-direction:column;gap:20px;min-width:0}
-.pano-ust{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
-.pano-ust h3{font-size:34px}
-.pano-ust small{font-weight:800;color:var(--lac-2)}
-.dersler{display:flex;flex-wrap:wrap;gap:8px}
-.dersler span{border-radius:999px;padding:7px 14px;font-weight:800;font-size:14px;background:var(--kopuk);color:var(--lacivert)}
-.dersler span.oyun{background:var(--mand-a);color:var(--kiremit)}
-.oyunlar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.okart{border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:8px;min-height:190px;position:relative;overflow:hidden;color:#fff}
-.okart.mat{background:var(--petrol)}
-.okart.fen{background:var(--mandalina);color:var(--lacivert)}
-.okart.ing{background:var(--lacivert)}
-.okart .d{font:800 12px var(--f-body);letter-spacing:.1em;text-transform:uppercase;opacity:.85}
-.okart h4{margin:0;font:600 25px/1.1 var(--f-disp)}
-.okart p{font-size:15px;opacity:.92}
-.okart .mek{margin-top:auto;font-weight:800;font-size:13px;display:inline-flex;gap:6px;align-items:center;background:rgba(255,255,255,.18);border-radius:999px;padding:5px 12px;align-self:flex-start}
-.okart.fen .mek{background:rgba(11,46,79,.12)}
-.okart svg.desen{position:absolute;right:-18px;bottom:-18px;width:120px;height:120px;opacity:.18}
-.pano-not{font-size:14px;color:var(--lac-2)}
-
-/* OYUN SALONU */
-.salon{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
-.sekmeler{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.sekme{border:2px solid var(--cizgi);background:#fff;border-radius:999px;padding:10px 18px;font:600 18px var(--f-disp);display:flex;gap:10px;align-items:center}
-.sekme i{font-style:normal;font:800 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--lac-2)}
-.sekme[aria-selected="true"]{background:var(--lacivert);border-color:var(--lacivert);color:#fff}
-.sekme[aria-selected="true"] i{color:var(--mandalina)}
-.oyun{background:#fff;border:2px solid var(--cizgi);border-radius:30px;padding:clamp(18px,3vw,30px);min-height:520px;display:flex;flex-direction:column;gap:16px;position:relative;min-width:0}
-.oyun-ust{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-.oyun-ust h3{font-size:28px}
-.oyun-ust small{display:block;font-weight:800;color:var(--lac-2);font-size:13px}
-.arac{display:flex;gap:8px;align-items:center}
-.gbtn{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--petrol);background:var(--kopuk);border-radius:999px;padding:7px 14px;font-weight:800;font-size:14px;color:var(--petrol)}
-.gbtn svg{width:30px;height:14px}
-.gbtn[disabled]{opacity:.45;cursor:default}
-.tur{font:600 16px var(--f-disp);background:var(--mand-a);color:#8A3E10;border-radius:999px;padding:6px 14px}
-.soru{font:600 clamp(20px,2.4vw,26px)/1.25 var(--f-disp)}
-.geri{min-height:1.6em;font-weight:800;font-size:16px}
-.geri.ok{color:var(--yesil)} .geri.no{color:var(--hata)} .geri.ip{color:var(--petrol)}
-.salla{animation:salla .38s}
-@keyframes salla{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
-
-/* kesir köprüsü */
-.nehir{position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(#DFF0F4 0 58%,#8CC5D3 58% 100%);height:250px}
-.nehir svg{position:absolute;inset:0;width:100%;height:100%}
-.kopru{position:absolute;left:18%;width:64%;top:52%;height:30px;display:flex;border-radius:4px;outline:3px dashed rgba(11,46,79,.25);outline-offset:3px}
-.tahta{height:100%;display:grid;place-items:center;font:600 15px var(--f-disp);color:#fff;border-right:3px solid var(--kagit);animation:otur .35s cubic-bezier(.3,1.5,.5,1)}
-.tahta:last-child{border-right:0}
-@keyframes otur{from{transform:translateY(-40px);opacity:0}}
-.nehir svg.kamyon{position:absolute;inset:auto;left:3%;top:calc(52% - 46px);width:80px;height:44px;transition:left 2.2s cubic-bezier(.5,0,.3,1)}
-.nehir svg.kamyon.gec{left:84%}
-.kamyon.gec{left:84%}
-.parcalar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.parca{border:0;border-radius:12px;height:52px;font:600 20px var(--f-disp);color:#fff;box-shadow:0 4px 0 rgba(11,46,79,.25);transition:transform .1s;min-width:56px}
-.parca:hover{transform:translateY(-3px)}
-.esit{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;align-items:center;font:600 20px var(--f-disp)}
-.esit .top{color:var(--petrol)}
-.ipucu-izgara{display:grid;grid-template-columns:repeat(24,1fr);height:14px;border-radius:4px;overflow:hidden;gap:1px;background:var(--cizgi)}
-.ipucu-izgara i{background:#fff}
-
-/* hücre */
-.hucre-alan{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:18px;align-items:center}
-.hucre-alan svg{width:100%;height:auto;max-height:340px}
-.org{cursor:pointer;transition:filter .15s,transform .15s;transform-box:fill-box;transform-origin:center}
-.org:hover{filter:brightness(1.12) drop-shadow(0 0 6px rgba(255,138,61,.8))}
-.org.isik{animation:isik 1.1s ease-in-out infinite}
-@keyframes isik{50%{filter:drop-shadow(0 0 10px #FF8A3D) brightness(1.15)}}
-.org.dogru{filter:drop-shadow(0 0 8px #2E8A57)}
-.lejant{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700}
-.lejant span{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:10px;background:var(--kagit)}
-.lejant span.bulundu{background:var(--yesil-a)}
-.lejant i{width:14px;height:14px;border-radius:50%;flex:none}
-
-/* kelime kurdu */
-.kurt-alan{display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center}
-.resim{background:var(--kopuk);border-radius:24px;aspect-ratio:1;display:grid;place-items:center}
-.resim svg{width:72%;height:auto}
-.kurt-govde{display:flex;align-items:center;gap:0;min-height:76px;flex-wrap:wrap;row-gap:8px}
-.kurt-kafa{width:70px;height:70px;border-radius:50%;background:var(--mandalina);position:relative;flex:none;z-index:2;box-shadow:inset -6px -8px 0 rgba(180,84,26,.25)}
-.kurt-kafa::before,.kurt-kafa::after{content:"";position:absolute;top:22px;width:22px;height:18px;border:4px solid var(--lacivert);border-radius:7px;background:#fff}
-.kurt-kafa::before{left:8px}.kurt-kafa::after{right:8px}
-.kurt-kafa b{position:absolute;left:50%;bottom:12px;width:16px;height:8px;margin-left:-8px;border-bottom:4px solid var(--lacivert);border-radius:0 0 10px 10px}
-.bogum{width:58px;height:58px;border-radius:50%;margin-left:-10px;display:grid;place-items:center;font:600 26px var(--f-disp);color:#fff;animation:otur .35s cubic-bezier(.3,1.5,.5,1);box-shadow:inset -5px -6px 0 rgba(0,0,0,.14)}
-.bogum:nth-child(even){background:var(--petrol)} .bogum:nth-child(odd){background:var(--mandalina);color:var(--lacivert)}
-.bogum.bos{background:transparent!important;border:3px dashed var(--cizgi);color:transparent;box-shadow:none;animation:none}
-.harfler{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.harf{width:58px;height:58px;border-radius:16px;border:2px solid var(--cizgi);background:#fff;font:600 28px var(--f-disp);box-shadow:0 4px 0 var(--cizgi);transition:transform .12s}
-.harf:nth-child(odd){transform:rotate(-4deg)} .harf:nth-child(even){transform:rotate(3deg)}
-.harf:hover{border-color:var(--petrol)}
-.harf.kullan{opacity:.2;pointer-events:none}
-.harf.isik{border-color:var(--mandalina);background:var(--mand-a)}
-
-/* BECERİ HARİTASI PANELİ */
-.harita{background:var(--lacivert);color:#fff;border-radius:30px;padding:24px;display:flex;flex-direction:column;gap:16px;position:sticky;top:calc(88px + env(safe-area-inset-top,0px))}
-.harita h3{font-size:24px}
-.harita .k{font:800 11px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--mandalina)}
-.ogr{display:flex;align-items:center;gap:12px}
-.ogr i{width:44px;height:44px;border-radius:50%;background:var(--petrol);display:grid;place-items:center;font:600 18px var(--f-disp);font-style:normal}
-.ogr small{display:block;color:#A9BCCD;font-weight:700;font-size:13px}
-.beceri{display:flex;flex-direction:column;gap:11px}
-.bc{display:grid;grid-template-columns:minmax(0,1fr) 40px;gap:4px 10px;font-size:14px;font-weight:700}
-.bc .ad{display:flex;gap:6px;align-items:center;min-width:0}
-.bc .ad em{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:6px;padding:2px 8px;background:rgba(255,255,255,.12);color:#C9D6E2;white-space:nowrap}
-.bc .ad em.bilgin{background:var(--mandalina);color:var(--lacivert)}
-.bc .v{text-align:right;font-variant-numeric:tabular-nums}
-.bc .cub{grid-column:1/-1;height:9px;border-radius:9px;background:rgba(255,255,255,.12);overflow:hidden}
-.bc .cub b{display:block;height:100%;border-radius:9px;background:var(--petrol-a);transition:width .8s cubic-bezier(.3,1.2,.4,1)}
-.bc.bilgin .cub b{background:var(--mandalina)}
-.bc.parla{animation:parla 1s}
-@keyframes parla{30%{background:rgba(255,138,61,.18);border-radius:8px}}
-.hata-ayr{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.hata-ayr div{background:rgba(255,255,255,.08);border-radius:14px;padding:10px;text-align:center}
-.hata-ayr b{display:block;font:600 28px var(--f-disp);font-variant-numeric:tabular-nums}
-.hata-ayr small{font-size:12px;font-weight:700;color:#A9BCCD}
-.akis{font-size:13px;color:#A9BCCD;border-top:1px solid rgba(255,255,255,.12);padding-top:12px}
-
-/* DURAK */
-.durak-yol{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;position:relative}
-.dk{background:#fff;border:2px solid var(--cizgi);border-radius:22px;padding:16px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.dk .n{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:600 19px var(--f-disp);background:var(--kopuk);color:var(--petrol)}
-.dk:nth-child(4) .n,.dk:nth-child(5) .n{background:var(--mandalina);color:var(--lacivert)}
-.dk:last-child{background:var(--lacivert);border-color:var(--lacivert);color:#fff}
-.dk:last-child .n{background:var(--mandalina);color:var(--lacivert)}
-.dk b{font:600 19px var(--f-disp)}
-.dk p{font-size:14px;color:var(--lac-2)}
-.dk:last-child p{color:#C9D6E2}
-.dk .faz{font:800 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--kiremit)}
-.dk:last-child .faz{color:var(--mandalina)}
-
-/* POZ BANDI */
-.pozlar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:40px}
-.poz{background:var(--kopuk);border-radius:26px;padding:12px 12px 16px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
-.poz img{width:100%;aspect-ratio:1;object-fit:contain}
-.poz b{font:600 18px var(--f-disp)}
-.poz small{font-size:13px;color:var(--lac-2);font-weight:700;line-height:1.3}
-
-/* EKOSİSTEM */
-.eko{display:grid;grid-template-columns:minmax(0,1fr) 120px minmax(0,1fr);gap:20px;align-items:center}
-.kaynaklar{display:grid;gap:10px}
-.kay{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--cizgi);border-radius:18px;padding:12px 14px}
-.kay.ben{border-color:var(--mandalina);background:var(--mand-a)}
-.kay i{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font:600 16px var(--f-disp);font-style:normal;flex:none;color:#fff}
-.kay b{font:600 18px var(--f-disp);display:block}
-.kay small{color:var(--lac-2);font-weight:700;font-size:13px}
-.ok-orta{display:flex;flex-direction:column;align-items:center;gap:10px}
-.aila{width:110px;height:110px;border-radius:50%;background:var(--lacivert);color:#fff;display:grid;place-items:center;font:700 26px var(--f-disp);box-shadow:0 0 0 10px var(--petrol-a);position:relative}
-.aila::after{content:"";position:absolute;inset:-22px;border-radius:50%;border:2px dashed var(--petrol);animation:don 18s linear infinite}
-@keyframes don{to{transform:rotate(360deg)}}
-.cikti{display:grid;gap:12px}
-.cikti-kart{background:var(--lacivert);color:#fff;border-radius:22px;padding:18px}
-.cikti-kart b{font:600 21px var(--f-disp);display:block;margin-bottom:4px}
-.cikti-kart p{color:#C9D6E2;font-size:15px}
-.cikti-kart.acik{background:#fff;color:var(--lacivert);border:2px solid var(--cizgi)}
-.cikti-kart.acik p{color:var(--lac-2)}
-
-/* CANLI ÖRNEKLER */
-.canli{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.ck{border-radius:24px;padding:20px;text-decoration:none;color:var(--lacivert);background:#fff;border:2px solid var(--cizgi);display:flex;flex-direction:column;gap:8px;min-height:180px;transition:transform .15s,border-color .15s}
-.ck:hover{transform:translateY(-4px);border-color:var(--petrol)}
-.ck .d{font:800 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--petrol)}
-.ck b{font:600 23px/1.1 var(--f-disp)}
-.ck p{font-size:14px;color:var(--lac-2)}
-.ck span{margin-top:auto;font-weight:800;font-size:14px;color:var(--kiremit)}
-
-/* ROLLER */
-.roller{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.rol{border-radius:28px;padding:26px;display:flex;flex-direction:column;gap:12px;min-width:0}
-.rol.o{background:var(--kopuk)} .rol.g{background:var(--mand-a)} .rol.k{background:var(--lacivert);color:#fff}
-.rol h3{font-size:28px}
-.rol ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:16px}
-.rol.k li::marker{color:var(--mandalina)}
-.yanilgi{background:#fff;border-radius:16px;padding:12px 14px;font-size:14px;display:flex;flex-direction:column;gap:6px;color:var(--lacivert)}
-.yanilgi div{display:flex;justify-content:space-between;gap:10px}
-.yanilgi b{font-variant-numeric:tabular-nums;color:var(--kiremit)}
-
-/* KAPANIŞ */
-.kapanis{margin-top:100px;background:var(--lacivert);color:#fff;border-radius:44px;padding:clamp(28px,5vw,64px);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:center;overflow:hidden;position:relative}
-.kapanis h2{font-size:clamp(34px,4.6vw,60px)}
-.kapanis p{color:#C9D6E2;font-size:19px;margin-top:12px;max-width:44ch}
-.kapanis .cta{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
-.kapanis img{width:min(100%,380px);justify-self:center;animation:zipla 3s ease-in-out infinite}
-@keyframes zipla{50%{transform:translateY(-12px) rotate(-2deg)}}
-footer{padding-block:40px 56px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--lac-2);font-size:14px;font-weight:700}
-footer img{height:38px;width:auto}
-.ornek-not{font-size:13px;color:var(--lac-2);margin-top:14px}
-
-@media (max-width:1000px){
-  .salon{grid-template-columns:1fr}
-  .harita{position:static}
-  .durak-yol{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .pozlar{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .canli{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .eko{grid-template-columns:1fr}
-  .ok-orta{flex-direction:row;justify-content:center}
+@media (prefers-reduced-motion:no-preference){
+  .tahta{animation:yaz .5s cubic-bezier(.2,1.4,.4,1) backwards}
+  .t1{animation-delay:.5s} .t2{animation-delay:.8s} .t3{animation-delay:1.1s}
+  @keyframes yaz{from{opacity:.15;transform:translateY(-1.4cqw) scale(.6)}}
+  .denklem{animation:sil 1s .9s cubic-bezier(.3,0,.2,1) backwards}
+  @keyframes sil{from{clip-path:inset(0 92% 0 0)}to{clip-path:inset(0 0 0 0)}}
+  .grafik{animation:sil 1.3s 1.5s cubic-bezier(.3,0,.2,1) backwards}
+  .ok-k{animation:yaz .8s 1.3s ease-out backwards}
+  .arti{animation:yaz .55s 2.7s cubic-bezier(.2,1.6,.4,1) backwards}
+  .cikartma,.cikartma-yazi{animation:yapis .6s 3s cubic-bezier(.2,1.5,.4,1) backwards}
+  @keyframes yapis{from{opacity:.2;transform:scale(1.3) rotate(12deg)}}
 }
-@media (max-width:760px){
+
+.kareli{background:var(--kagit) url(assets/kareli.png) repeat;background-size:auto 46px}
+.bolum{padding-block:clamp(56px,7vw,110px)}
+.bas{font:800 clamp(30px,4.2vw,64px)/1.05 var(--el);margin:0;text-wrap:balance;letter-spacing:-.01em}
+.bas u{text-decoration:underline;text-decoration-color:var(--mandalina);text-decoration-thickness:.14em;text-underline-offset:.14em;text-decoration-skip-ink:none}
+
+.sinif-bant{background:var(--kenar);padding-block:clamp(12px,1.6vw,24px) clamp(18px,2vw,30px)}
+.siniflar-ust{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.siniflar-ust .bas{font-size:clamp(28px,2.6vw,40px)}
+@media (min-width:1100px){.siniflar-ust{flex-wrap:nowrap}.siniflar-ust .bas{white-space:nowrap}.notlar{flex-wrap:nowrap!important;overflow-x:auto;padding:6px 4px;scrollbar-width:none;max-width:52vw}}
+.notlar{display:flex;gap:10px;flex-wrap:wrap}
+.not{border:0;border-radius:999px;background:#FFF4D8;box-shadow:0 3px 8px -4px rgba(11,46,79,.35);font:600 clamp(14px,1.15vw,18px)/1 var(--el);padding:.7em 1em;white-space:nowrap;transition:transform .15s}
+.not:nth-child(3n+2){background:#FFE3CF}
+.not:nth-child(3n){background:#D9F0F6}
+.not:hover{transform:translateY(-2px) rotate(-2deg)}
+.not[aria-pressed="true"]{background:var(--lacivert);color:#fff;transform:rotate(-3deg) scale(1.06)}
+.foto{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,3vw,48px);margin-top:clamp(36px,4.5vw,60px)}
+.polaroid{position:relative;background:#fff;border-radius:22px;padding:14px 14px 18px;box-shadow:0 18px 30px -18px rgba(11,46,79,.45);display:flex;flex-direction:column;gap:8px;min-width:0;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.polaroid:nth-child(1){transform:rotate(-2.2deg)} .polaroid:nth-child(2){transform:rotate(1.4deg) translateY(10px)} .polaroid:nth-child(3){transform:rotate(-1deg)}
+.polaroid:hover{transform:rotate(0) translateY(-6px)}
+.polaroid::before{content:attr(data-ders);position:absolute;top:-18px;left:50%;min-width:140px;height:44px;transform:translateX(-50%) rotate(-4deg);background:url(assets/tape.png) center/100% 100% no-repeat;display:grid;place-items:center;padding:0 22px;font:600 15px var(--el);color:var(--lacivert);white-space:nowrap;z-index:1}
+.polaroid .resim{border-radius:16px;aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden}
+.polaroid.mat .resim{background:#CDEAF2} .polaroid.fen .resim{background:#FFE1CC} .polaroid.ing .resim{background:#DCE5EE}
+.polaroid .resim img{height:92%;width:auto;object-fit:contain}
+.polaroid b{font:600 clamp(20px,1.9vw,28px)/1.05 var(--el)}
+
+.oyna{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:clamp(20px,4vw,60px);align-items:center}
+.masa{background:transparent;padding:0;display:flex;flex-direction:column;gap:18px;min-width:0}
+.masa .soru{font:600 clamp(20px,2vw,28px)/1.2 var(--el);margin:0}
+.nehir{position:relative;background:url(assets/nehir-bos.png) center/100% 100% no-repeat;aspect-ratio:1800/1067;max-width:760px;width:100%;margin-inline:auto}
+.yol{position:absolute;left:24%;right:24%;top:40%;height:11%;display:flex;gap:4px}
+.yol .t{height:100%;display:grid;place-items:center;color:var(--lacivert);font:600 clamp(13px,1.4vw,19px) var(--el);border-radius:999px;background:#F3D9A4;box-shadow:inset 0 0 0 2.5px #C98A3A,0 4px 8px -4px rgba(11,46,79,.4);animation:otur .4s cubic-bezier(.2,1.4,.4,1)}
+@keyframes otur{from{transform:translateY(-30px);opacity:0}}
+.araba{position:absolute;left:4%;top:30%;width:17%;transition:left 2.2s cubic-bezier(.5,0,.3,1)}
+.araba.gec{left:78%}
+.dalga{position:absolute;left:24%;right:24%;bottom:10%;height:20%;opacity:.7}
+.tahtalar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.tk{border:0;border-radius:999px;height:56px;color:var(--lacivert);background:#F3D9A4!important;font:600 21px var(--el);box-shadow:inset 0 0 0 2.5px #C98A3A,0 5px 10px -5px rgba(11,46,79,.45);transition:transform .12s}
+.tk:hover{transform:translateY(-3px)}
+.durum{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;font:600 18px var(--el)}
+.durum .geri{min-height:1.4em}
+.geri.ok{color:#2E7D52} .geri.no{color:var(--kiremit)}
+.harita{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.harita img{width:100%;max-width:420px}
+.beceri-sayac{display:flex;align-items:baseline;gap:12px}
+.beceri-sayac b{font:800 clamp(56px,6vw,96px)/1 var(--el);color:var(--petrol);font-variant-numeric:tabular-nums}
+.beceri-sayac span{font:600 20px/1.2 var(--el)}
+
+.eko{display:flex;align-items:center;justify-content:center;gap:clamp(14px,2.4vw,36px);flex-wrap:wrap;margin-top:clamp(28px,4vw,52px)}
+.rozetler{display:grid;grid-template-columns:repeat(3,auto);gap:10px 14px;justify-content:center;align-items:center}
+.rz{width:clamp(96px,8.4vw,124px);height:auto;aspect-ratio:1;object-fit:contain;align-self:center}
+.rz:nth-child(odd){transform:rotate(-6deg)} .rz:nth-child(even){transform:rotate(5deg)}
+.rz.ben{width:clamp(124px,11vw,160px)}
+.ok-buyuk{width:clamp(60px,7vw,110px);height:auto}
+.aila{width:clamp(140px,13vw,190px);height:auto;aspect-ratio:1;object-fit:contain;transform:rotate(-4deg)}
+.cikti{display:flex;flex-direction:column;align-items:center;gap:6px}
+.cikti img{width:clamp(200px,18vw,280px)}
+.cikti b{font:600 clamp(20px,1.8vw,26px) var(--el)}
+
+.kapanis{background:var(--lacivert);color:#fff;overflow:hidden}
+.kapanis .ic{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);align-items:center;gap:24px;padding-block:clamp(48px,6vw,90px)}
+.kapanis .bas{color:#fff}
+.kapanis .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.kapanis .hap.turuncu{box-shadow:none}
+.kapanis .hap.cizgi{color:#fff;box-shadow:inset 0 0 0 2.5px #fff}
+.kapanis img{width:min(100%,360px);justify-self:center;filter:drop-shadow(0 20px 26px rgba(0,0,0,.35))}
+footer{background:var(--lacivert);color:#B9CAD9;border-top:1px solid rgba(255,255,255,.12)}
+footer .ic{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-block:22px 30px;font:700 14px var(--ui)}
+footer img{height:38px;width:auto;background:#fff;border-radius:999px;padding:4px 12px}
+
+@media (max-width:860px){
   .ust nav{display:none}
-  .hero-ust{grid-template-columns:1fr}
-  .yas{align-items:flex-start;text-align:left}
-  .asansor{grid-template-columns:1fr}
-  .katlar{flex-direction:row;overflow-x:auto;padding:4px 2px 10px;scroll-snap-type:x mandatory}
-  .katlar::before{display:none}
-  .kat{flex:none;scroll-snap-align:start}
-  .kat[aria-pressed="true"]{transform:translateY(-4px)}
-  .kat[aria-pressed="true"]::before{display:none}
-  .oyunlar,.roller{grid-template-columns:1fr}
-  .hucre-alan,.kurt-alan{grid-template-columns:1fr}
-  .resim{max-width:180px;margin:0 auto}
-  .durak-yol{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .pozlar{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .canli{grid-template-columns:1fr}
-  .kapanis{grid-template-columns:1fr}
-  .dunya{aspect-ratio:4/3}
-  .bolum{padding-block:72px 16px}
+  .ust .hap{margin-left:auto}
+  .sahne-dis{display:flex;flex-direction:column;overflow:hidden}
+  .sahne{width:190%;margin-left:-45%}
+  .etiket,.hap-k,.beceri-baslik,.arti,.eksen,.grafik,.ok-k,.cikartma,.cikartma-yazi,.bant,.kiv-kamyon,.kamyon-h,.denklem,.kalem{display:none!important}
+  .sahne{display:flex;flex-direction:column}
+  .metin{position:relative;left:auto;top:auto;width:auto;transform:none;padding:12px max(16px,env(safe-area-inset-left,0px)) 18px;gap:12px;background:var(--kenar)}
+  .metin h1{font-size:clamp(30px,8.4vw,50px);white-space:normal;text-wrap:balance;transform:none}
+  .metin h1 .kir{display:none}
+  .metin .kivilcim{display:none}
+  .metin p{font-size:clamp(16px,4.4vw,19px)}
+  .metin .cta{gap:10px;flex-wrap:wrap;margin-top:6px}
+  .metin .cta .hap{font-size:16px;padding:14px 20px}
+  .oyna{grid-template-columns:1fr}
+  .foto{grid-template-columns:1fr;max-width:420px;margin-inline:auto}
+  .polaroid:nth-child(2){transform:rotate(1.4deg)}
+  .kapanis .ic{grid-template-columns:1fr}
+  .kapanis img{width:min(70%,260px)}
+  .eko{flex-direction:column}
+  .ok-buyuk{transform:rotate(90deg)}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
@@ -318,415 +204,153 @@ footer img{height:38px;width:auto}
 <body>
 
 
-<header class="ust" id="ust">
+<header class="ust">
   <div class="ic">
-    <img class="logo" src="img/logo.png" alt="BİLGİN">
-    <nav aria-label="Sayfa bölümleri"><a href="#siniflar">Sınıflar</a><a href="#salon">Oyun salonu</a><a href="#durak">Nasıl öğretir</a><a href="#ekosistem">Beceri haritası</a><a href="#roller">Okullar için</a></nav>
-    <a class="btn" href="#salon">Hemen oyna</a>
+    <a class="logo" href="#" aria-label="BİLGİN ana sayfa"><img src="assets/logo.png" alt="BİLGİN"></a>
+    <nav aria-label="Ana menü"><a href="#siniflar">Sınıflar</a><a href="#oyna">Oyunlar</a><a href="#ekosistem">Beceri haritası</a><a href="#kurumlar">Kurumlar</a></nav>
+    <a class="hap koyu" href="#kurumlar">Demo talep et</a>
   </div>
 </header>
 
 <main>
-<section class="hero">
-  <div class="ic">
-    <div class="hero-ust">
-      <div>
-        <h1>Ders kitabından <em>bir dünya</em> çıktı.</h1>
-        <p class="alt">Bilgin; matematiği köprüye, fen bilimlerini hücre laboratuvarına, İngilizceyi bir kasabaya çeviren 1–8. sınıf dijital içerik platformu. Çocuk oynar, öğretmen görür, beceri haritası büyür.</p>
-        <div class="cta"><a class="btn" href="#salon">Bir oyun dene →</a><a class="btn ikincil" href="#siniflar">Sınıfını seç</a></div>
+<section class="sahne-dis" aria-labelledby="h1">
+  <div class="sahne" id="sahne">
+    <img class="defter" src="assets/notebook.webp" alt="" width="2304" height="1233">
+    <div class="metin" id="metin">
+      <svg class="kivilcim" viewBox="0 0 40 40" aria-hidden="true"><g stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"><path d="M8 30 2 22"/><path d="M18 22 14 10"/><path d="M28 24 32 12"/></g></svg>
+      <h1 id="h1">1–8. sınıf dersleri<br class="kir"> oynanan duraklara<br class="kir"> <span class="alt-cizgi">dönüşür<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 14 C50 4 120 6 198 10" fill="none" stroke="#FF8A3D" stroke-width="7" stroke-linecap="round"/></svg></span></h1>
+      <p>Her oyun, öğrencinin beceri haritasını büyütür.</p>
+      <svg class="kivilcim k2" viewBox="0 0 40 40" aria-hidden="true"><g stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"><path d="M8 30 2 22"/><path d="M18 22 14 10"/><path d="M28 24 32 12"/></g></svg>
+      <div class="cta">
+        <a class="hap turuncu" href="#kurumlar">Demo talep et <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a class="hap cizgi" href="#oyna">Bir oyun dene <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></a>
       </div>
-      <div class="yas"><b>K1–K8</b><span>İlkokul ve ortaokul<br>MEB müfredatıyla uyumlu</span></div>
     </div>
+    <div class="p etiket" aria-hidden="true"><b>Kesir Köprüsü</b></div>
+    <span class="hap-k sinif" aria-hidden="true">4. sınıf · Matematik</span>
+    <span class="hap-k simdi" aria-hidden="true"><i></i>Şimdi oynanıyor</span>
+    <img class="p kopru" src="assets/bridge2.png" alt="Kesir tahtalarından nehrin üstüne kurulan köprü ve yük bekleyen kamyon">
+    <svg class="p kiv-kamyon" viewBox="0 0 40 40" aria-hidden="true"><g stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"><path d="M8 30 2 22"/><path d="M18 22 14 10"/><path d="M28 24 32 12"/></g></svg>
+    <img class="p kamyon-h" src="assets/kamyon.png" alt="">
+    <img class="p kurt" src="assets/worm.png" alt="Bilgin köprünün üstünde ilerliyor">
+    <span class="tahta t1" aria-hidden="true">1<hr>2</span><span class="tahta t2" aria-hidden="true">1<hr>4</span><span class="tahta t3" aria-hidden="true">1<hr>4</span>
+    <div class="p denklem" role="img" aria-label="Bir bölü iki artı bir bölü dört artı bir bölü dört eşittir bir"><span class="kesir">1<hr>2</span>+<span class="kesir">1<hr>4</span>+<span class="kesir">1<hr>4</span>=<u>1</u></div>
+    <div class="p beceri-baslik"><span>Beceri haritası</span></div>
+    <span class="p arti">+1 beceri</span>
+    <img class="p grafik" src="assets/skill-chart.png" alt="Kesirlerden akıl yürütmeye yükselen beceri çizgisi">
+    <span class="eksen e1">Kesirler</span><span class="eksen e2">Problem<br>çözme</span><span class="eksen e3">Akıl<br>yürütme</span>
+    <svg class="p ok-k" viewBox="0 0 124 120" aria-hidden="true"><path d="M8 112 C40 100 80 70 104 18" fill="none" stroke="#FF8A3D" stroke-width="5" stroke-linecap="round" stroke-dasharray="6 7"/><path d="M90 26 104 14 108 34" fill="none" stroke="#FF8A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <img class="p cikartma" src="assets/sticker.png" alt="">
+    <span class="p cikartma-yazi">Öğrenme görünür.</span>
+    <img class="p kalem" src="assets/marker.png" alt="">
+    <img class="p bant" src="assets/tape.png" alt="">
+  </div>
+</section>
 
-    <div class="dunya" id="dunya" style="--x:58%;--y:46%;--r:76px" role="img" aria-label="Kitaptan çıkan Bilgin dünyası: solda matematik köprüsü, ortada hücre laboratuvarı, sağda harflerden kasaba. Gözlük imleci gizli ders notlarını gösterir.">
-      <img src="img/sahne.webp" alt="">
-      <div class="xray" aria-hidden="true">
-        <img src="img/sahne.webp" alt="">
-        <div class="izgara"></div>
-        <div id="notlar"></div>
+<section id="siniflar" aria-labelledby="h-sinif">
+  <div class="sinif-bant"><div class="ic siniflar-ust">
+      <h2 class="bas" id="h-sinif">Her <u>durak</u> bir ders. Her oyun bir iz.</h2>
+      <div class="notlar" id="notlar" role="group" aria-label="Sınıf seç"></div>
+  </div></div>
+  <div class="kareli bolum" style="padding-top:clamp(40px,5vw,72px)"><div class="ic"><div class="foto" id="foto" aria-live="polite"></div></div></div>
+</section>
+
+<section class="kareli bolum" id="oyna" aria-labelledby="h-oyna" style="padding-top:0">
+  <div class="ic oyna">
+    <div class="masa">
+      <h2 class="bas" id="h-oyna" style="font-size:clamp(28px,3.2vw,46px)">Köprüyü sen kur.</h2>
+      <p class="soru">Nehrin üstüne tam <b>1 bütün</b> uzunluğunda köprü kur.</p>
+      <div class="nehir">
+        <div class="yol" id="yol" aria-label="Köprü"></div>
+        <img class="araba" id="araba" src="assets/kamyon.png" alt="">
       </div>
-      <svg class="gozluk-cer" viewBox="0 0 440 130" aria-hidden="true">
-        <g fill="none" stroke="#0B2E4F" stroke-width="16" stroke-linejoin="round">
-          <rect x="18" y="18" width="180" height="96" rx="38"/>
-          <rect x="242" y="18" width="180" height="96" rx="38"/>
-          <path d="M198 54 Q220 38 242 54"/>
-        </g>
-        <g stroke="#FF8A3D" stroke-width="8" stroke-linecap="round"><path d="M10 50 L0 44"/><path d="M430 50 L440 44"/></g>
-      </svg>
-      <div class="ipucu-etiket"><i></i>Bilgin gözlüğünü gezdir: gizli dersi gör</div>
+      <div class="tahtalar" id="tahtalar"></div>
+      <div class="durum"><span class="geri" id="geri" aria-live="polite"></span><button class="hap cizgi" id="topla" style="font-size:15px;padding:10px 16px">Tahtaları topla</button></div>
+    </div>
+    <div class="harita">
+      <div class="beceri-sayac"><b id="sayac">42</b><span>Kesirler<br>beceri puanı</span></div>
+      <img src="assets/skill-chart.png" alt="Yükselen beceri çizgisi">
+      <p class="el" style="font-weight:600;font-size:clamp(17px,1.5vw,21px);margin:0;max-width:30ch">Doğru köprü puanı artırır. Aceleyle yapılan hata ayrı, konu eksiği ayrı sayılır.</p>
     </div>
   </div>
 </section>
 
-<div class="serit" aria-hidden="true"><div class="serit-ic">
-  <span>Kesir köprüsü</span><span>Hücre dedektifi</span><span>Kelime kurdu</span><span>Denge terazisi</span><span>Sürtünme rampası</span><span>Üslü roket</span><span>DNA fermuarı</span><span>Saat kulesi</span><span>Oran mutfağı</span>
-  <span>Kesir köprüsü</span><span>Hücre dedektifi</span><span>Kelime kurdu</span><span>Denge terazisi</span><span>Sürtünme rampası</span><span>Üslü roket</span><span>DNA fermuarı</span><span>Saat kulesi</span><span>Oran mutfağı</span>
-</div></div>
-
-<section class="bolum" id="siniflar">
+<section class="kareli bolum" id="ekosistem" aria-labelledby="h-eko" style="padding-top:0">
   <div class="ic">
-    <div class="bolum-bas">
-      <span class="eti">Sınıf asansörü</span>
-      <h2>Sekiz kat, her katta o sınıfın dersleri.</h2>
-      <p>Bir kat seç. O sınıfın dersleri ve matematik, fen, İngilizce oyunlarından birer örnek açılır.</p>
-    </div>
-    <div class="asansor">
-      <div class="katlar" id="katlar" role="group" aria-label="Sınıf seç"></div>
-      <div class="sinif-pano" id="pano" aria-live="polite"></div>
-    </div>
-  </div>
-</section>
-
-<section class="bolum" id="salon">
-  <div class="ic">
-    <div class="bolum-bas">
-      <span class="eti">Oyun salonu · sayfada oynanır</span>
-      <h2>Üç oyun. Oynadıkça sağdaki harita değişir.</h2>
-      <p>Her doğru, yanlış ve ipucu beceri haritasına bir veri olarak düşer. Hızlı verilen yanlış “dikkat hatası”, ipucundan sonra bile yapılan yanlış “konu eksiği” sayılır.</p>
-    </div>
-    <div class="salon">
-      <div>
-        <div class="sekmeler" role="tablist" aria-label="Oyunlar">
-          <button class="sekme" role="tab" aria-selected="true" data-oyun="kopru"><i>Mat · 4. sınıf</i>Kesir Köprüsü</button>
-          <button class="sekme" role="tab" aria-selected="false" data-oyun="hucre"><i>Fen · 7. sınıf</i>Hücre Dedektifi</button>
-          <button class="sekme" role="tab" aria-selected="false" data-oyun="kurt"><i>İng · 3. sınıf</i>Kelime Kurdu</button>
-        </div>
-        <div class="oyun" id="oyun" role="tabpanel"></div>
-      </div>
-      <aside class="harita" aria-label="Canlı beceri haritası">
-        <span class="k">Canlı beceri haritası</span>
-        <div class="ogr"><i>DA</i><div><b>Deniz A.</b><small>Örnek öğrenci · 4. sınıf</small></div></div>
-        <div class="beceri" id="beceri"></div>
-        <div class="hata-ayr"><div><b id="hKonu">0</b><small>Konu eksiği</small></div><div><b id="hDikkat">0</b><small>Dikkat hatası</small></div></div>
-        <p class="akis">Turuncu çubuklar Bilgin’den, açık çubuklar ekosistemin diğer ürünlerinden gelir. Hepsi AI-LA’da tek haritada birleşir.</p>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<section class="bolum" id="durak">
-  <div class="ic">
-    <div class="bolum-bas">
-      <span class="eti">Her durak aynı ritimle öğretir</span>
-      <h2>Önce ne bildiğine bakar, sonra oyunla öğretir, en sonda damgayı basar.</h2>
-      <p>Her konu bir durak. Giriş testi yolu çocuğa göre kısaltır ya da uzatır; puan göstermez, yalnızca yolu ayarlar.</p>
-    </div>
-    <div class="durak-yol">
-      <div class="dk"><span class="n">1</span><span class="faz">Önce</span><b>Giriş testi</b><p>Dört soru, yolu ayarlar.</p></div>
-      <div class="dk"><span class="n">2</span><span class="faz">Önce</span><b>Kanca</b><p>Bir sorun, bir merak.</p></div>
-      <div class="dk"><span class="n">3</span><span class="faz">Sırası</span><b>Keşfet</b><p>Dokunarak öğrenilen kartlar.</p></div>
-      <div class="dk"><span class="n">4</span><span class="faz">Sırası</span><b>Oyna</b><p>Kavram oyunun kuralıdır.</p></div>
-      <div class="dk"><span class="n">5</span><span class="faz">Sonra</span><b>Üret</b><p>Kendi örneğini kurar.</p></div>
-      <div class="dk"><span class="n">6</span><span class="faz">Sonra</span><b>Bitiş testi</b><p>Yeni bir bağlamda.</p></div>
-      <div class="dk"><span class="n">★</span><span class="faz">Ödül</span><b>Damga</b><p>Pasaporta bir damga, haritaya bir veri.</p></div>
-    </div>
-    <div class="pozlar">
-      <div class="poz"><img src="img/poz_selam.webp" alt="Bilgin el sallıyor"><b>Selam</b><small>Kanca anında konuşur</small></div>
-      <div class="poz"><img src="img/poz_dusunme.webp" alt="Bilgin düşünüyor"><b>Düşün</b><small>Tahmin ister</small></div>
-      <div class="poz"><img src="img/poz_ipucu.webp" alt="Bilgin gözlüğünü itip büyüteç tutuyor"><b>Gözlük</b><small>İpucunu gösterir</small></div>
-      <div class="poz"><img src="img/poz_sevinc.webp" alt="Bilgin sevinçle zıplıyor"><b>Sevinç</b><small>Doğruyu kutlar</small></div>
-      <div class="poz"><img src="img/poz_rozet.webp" alt="Bilgin rozet tutuyor"><b>Damga</b><small>Durağı kapatır</small></div>
-    </div>
-  </div>
-</section>
-
-<section class="bolum" id="ekosistem">
-  <div class="ic">
-    <div class="bolum-bas">
-      <span class="eti">AI-LA ekosistemi</span>
-      <h2>Bilgin tek başına çalışmaz. Öğrencinin bütün izleri tek haritada buluşur.</h2>
-      <p>Bilgin’deki dersler, okuma, İngilizce, kodlama ve yapay zekâ çalışmalarıyla birlikte AI-LA’ya akar. Öğretmen ve aile, çocuğun nerede parladığını ve neye ihtiyaç duyduğunu tek yerde görür.</p>
-    </div>
+    <h2 class="bas" id="h-eko" style="text-align:center">Bütün izler <u>tek haritada</u> buluşur.</h2>
     <div class="eko">
-      <div class="kaynaklar">
-        <div class="kay ben"><i style="background:var(--mandalina);color:var(--lacivert)">Bi</i><div><b>Bilgin</b><small>Dersler ve oyunlar · K1–K8</small></div></div>
-        <div class="kay"><i style="background:#C9431A">Ok</i><div><b>Okumino</b><small>Okuma ve anlama</small></div></div>
-        <div class="kay"><i style="background:#6246b6">Re</i><div><b>Readmino</b><small>İngilizce okuma</small></div></div>
-        <div class="kay"><i style="background:#5B3FA8">T14</i><div><b>TALENT14</b><small>Kodlama becerileri</small></div></div>
-        <div class="kay"><i style="background:#1F2A6B">AG</i><div><b>AI-GALAXY</b><small>Yapay zekâ okuryazarlığı</small></div></div>
-        <div class="kay"><i style="background:#0E6E8C">TC</i><div><b>TalentCup</b><small>Yarışma ve proje</small></div></div>
+      <div class="rozetler">
+        <img class="rz ben" src="assets/st_bilgin.png" alt="Bilgin: dersler">
+        <img class="rz" src="assets/st_okumino.png" alt="Okumino: okuma">
+        <img class="rz" src="assets/st_readmino.png" alt="Readmino: İngilizce okuma">
+        <img class="rz" src="assets/st_talent14.png" alt="TALENT14: kodlama">
+        <img class="rz" src="assets/st_aigalaxy.png" alt="AI-GALAXY: yapay zekâ okuryazarlığı">
+        <img class="rz" src="assets/st_talentcup.png" alt="TalentCup: yarışma">
       </div>
-      <div class="ok-orta"><div class="aila">AI-LA</div></div>
-      <div class="cikti">
-        <div class="cikti-kart"><b>Beceri haritası</b><p>Konu konu güçlü ve eksik yanlar; konu eksiği ile dikkat hatası ayrı ayrı.</p></div>
-        <div class="cikti-kart acik"><b>Öğretmene öneri</b><p>Sınıfın en sık yanılgısı ve o yanılgı için hazır telafi kartı.</p></div>
-        <div class="cikti-kart acik"><b>Aileye bilgilendirme</b><p>Haftanın damgaları ve evde sorulacak tek bir soru.</p></div>
-      </div>
+      <svg class="ok-buyuk" viewBox="0 0 110 40" aria-hidden="true"><path d="M4 22 C34 8 70 30 98 18" fill="none" stroke="#FF8A3D" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 9"/><path d="M86 8 102 17 90 30" fill="none" stroke="#FF8A3D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <img class="aila" src="assets/st_aila.png" alt="AI-LA">
+      <svg class="ok-buyuk" viewBox="0 0 110 40" aria-hidden="true"><path d="M4 22 C34 8 70 30 98 18" fill="none" stroke="#FF8A3D" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 9"/><path d="M86 8 102 17 90 30" fill="none" stroke="#FF8A3D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="cikti"><img src="assets/skill-chart.png" alt=""><b>Beceri haritası</b></div>
     </div>
   </div>
 </section>
 
-<section class="bolum">
+<section class="kapanis" id="kurumlar" aria-labelledby="h-son">
   <div class="ic">
-    <div class="bolum-bas">
-      <span class="eti">Ekosistemden canlı oyunlar</span>
-      <h2>Fikir değil, oynanıyor.</h2>
-      <p>AI-LA atölyesinde yapılmış bu oyunlar, Bilgin duraklarının nasıl hissettireceğini bugün gösteriyor.</p>
+    <div>
+      <h2 class="bas" id="h-son">Okulunuzda <u>bir ders</u> oynatalım.</h2>
+      <div class="cta"><a class="hap turuncu" href="mailto:info@ai-la.ai">Demo talep et</a><a class="hap cizgi" href="#oyna">Bir oyun dene</a></div>
     </div>
-    <div class="canli">
-      <a class="ck" href="https://erhan3861.github.io/kopru-kur/" target="_blank" rel="noopener"><span class="d">Fen · Kuvvet ve yapı</span><b>Köprü Kur</b><p>3D köprü kurulur, yük taşınır mı diye denenir.</p><span>Oyna ↗</span></a>
-      <a class="ck" href="https://erhan3861.github.io/hucre-3d/" target="_blank" rel="noopener"><span class="d">Fen · Hücre</span><b>3D Hücre</b><p>Bitki ve hayvan hücresinde kesit, organeller ve quiz.</p><span>Oyna ↗</span></a>
-      <a class="ck" href="https://erhan3861.github.io/enerji-koyu/" target="_blank" rel="noopener"><span class="d">Fen · Enerji</span><b>Enerji Köyü</b><p>24 saatlik simülasyonla yenilenebilir enerji kararları.</p><span>Oyna ↗</span></a>
-      <a class="ck" href="https://erhan3861.github.io/kuzu-agili/" target="_blank" rel="noopener"><span class="d">Mat · 5. sınıf</span><b>Kuzu Ağılı</b><p>Çevre ve alanla ağıl kurulur, kuzular sığar mı bakılır.</p><span>Oyna ↗</span></a>
-    </div>
-  </div>
-</section>
-
-<section class="bolum" id="roller">
-  <div class="ic">
-    <div class="bolum-bas">
-      <span class="eti">Okullar ve kurslar için</span>
-      <h2>Çocuk oynar. Öğretmen görür. Aile anlar.</h2>
-    </div>
-    <div class="roller">
-      <div class="rol o"><h3>Öğrenci</h3><ul><li>Her konu oynanabilir bir durak</li><li>Bilgin gözlüğüyle ipucu, cezasız hata</li><li>Pasaport damgaları ve sınıf rozeti</li></ul></div>
-      <div class="rol g"><h3>Öğretmen</h3><ul><li>Konuyu sınıfa tek tıkla atar</li><li>Sınıfın yanılgılarını sıralı görür</li></ul>
-        <div class="yanilgi" aria-label="Örnek yanılgı raporu"><div><span>Kenar ile köşeyi karıştırma</span><b>%38</b></div><div><span>Kesirde paydası büyük olanı büyük sanma</span><b>%31</b></div><div><span>Hücre duvarını hayvan hücresine verme</span><b>%22</b></div></div>
-      </div>
-      <div class="rol k"><h3>Kurum</h3><ul><li>Okulun ya da kursun kendi markasıyla</li><li>Sınıf ve şube düzeyinde ilerleme</li><li>AI-LA beceri haritasıyla bütünleşik</li><li>KURSLA.ai altyapısıyla kurslarda</li></ul></div>
-    </div>
-    <p class="ornek-not">Sayfadaki öğrenci adı, oranlar ve oyun adları tanıtım örneğidir.</p>
-
-    <div class="kapanis">
-      <div>
-        <h2>Gözlüğünü tak, sınıfını seç.</h2>
-        <p>Bilgin, 1. sınıftan 8. sınıfa kadar her dersi oynanabilir bir durağa çeviriyor.</p>
-        <div class="cta"><a class="btn" href="#salon">Oyun salonuna dön</a><a class="btn ikincil" href="#siniflar">Sınıflara bak</a></div>
-      </div>
-      <img src="img/poz_rozet.webp" alt="Rozet tutan Bilgin">
-    </div>
+    <img src="img/poz_rozet.webp" alt="Rozet tutan Bilgin">
   </div>
 </section>
 </main>
-
-<footer class="ic"><img src="img/logo.png" alt="BİLGİN"><span>Bilgin bir AI-LA ekosistem ürünüdür.</span></footer>
+<footer><div class="ic"><img src="assets/logo.png" alt="BİLGİN"><span>Bilgin bir AI-LA ekosistem ürünüdür. Oyun adları ve puanlar tanıtım örneğidir.</span></div></footer>
 
 <script>
 (()=>{
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-
-/* üst bar gölgesi */
-addEventListener('scroll',()=>$('#ust').classList.toggle('kaydi',scrollY>10),{passive:true});
-
-/* ---------- ses ---------- */
 let ac=null;
-function ton(k){ try{ ac=ac||new (window.AudioContext||window.webkitAudioContext)();
-  const s={ok:[660,880],no:[300,230],tik:[560],yer:[440,587],bitti:[392,523,659,784]}[k]||[500];
-  s.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+i*.09;o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.14,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.24);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.26);}); }catch(e){} }
+function ton(k){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();({ok:[660,880],no:[300,230],tik:[560],bitti:[392,523,659,784]}[k]||[500]).forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+i*.09;o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.13,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.24);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.26)})}catch(e){}}
 
-/* ---------- GÖZLÜK ---------- */
-const NOTLAR=[
-  {x:25,y:35,t:'½ + ¼ + ¼ = 1',k:'Kesir köprüsü'},
-  {x:13,y:59,t:'Yük: 1 bütün',k:'Köprü kuralı'},
-  {x:45,y:27,t:'Çekirdek · kloroplast',k:'Bitki hücresi'},
-  {x:56,y:9,t:'Gezegenler döner',k:'Güneş sistemi'},
-  {x:79,y:30,t:'a house · the bus',k:'Article'},
-  {x:35,y:61,t:'8 taş = 8 sınıf',k:'Bilgin yolu'},
-  {x:50,y:73,t:'Merhaba, ben Bilgin!',k:'Rehber'}
-];
-$('#notlar').innerHTML=NOTLAR.map(n=>`<div class="not-x" style="left:${n.x}%;top:${n.y}%"><small>${n.k}</small>${n.t}</div>`).join('');
-const d=$('#dunya'); let dokundu=false, oto=null;
-function yer(px,py){ d.style.setProperty('--x',px+'px'); d.style.setProperty('--y',py+'px'); }
-function r(){ d.style.setProperty('--r',Math.max(46,Math.min(84,d.clientWidth*.07))+'px'); }
-r(); addEventListener('resize',r);
-d.addEventListener('pointermove',e=>{ dokundu=true; clearInterval(oto); const b=d.getBoundingClientRect(); yer(e.clientX-b.left,e.clientY-b.top); });
-/* dokunmasız ekranlarda gözlük notları sırayla gezer */
-let i=0; function sonraki(){ if(dokundu) return; const n=NOTLAR[i++%NOTLAR.length]; d.style.transition='none'; yer(d.clientWidth*n.x/100,d.clientHeight*n.y/100); }
-if(!matchMedia('(prefers-reduced-motion:reduce)').matches){ oto=setInterval(sonraki,2200); }
-setTimeout(sonraki,50);
+/* mobilde başlık bloğunu sahnenin üstüne taşı */
+const mq=matchMedia('(max-width:860px)'), metin=$('#metin'), sahne=$('#sahne');
+function yerlestir(){ if(mq.matches) sahne.parentNode.insertBefore(metin,sahne); else sahne.insertBefore(metin,sahne.querySelector(".etiket")); }
+mq.addEventListener('change',yerlestir); yerlestir();
 
-/* ---------- SINIF ASANSÖRÜ ---------- */
 const S={
-1:{d:['Matematik','Türkçe','Hayat Bilgisi'],o:[['mat','Sayı Treni','1–20 arası sayılar vagonlara binip sıraya girer.','Sürükle ve sırala'],['tr','Hece Balonları','Balonlar patlar, heceler kelimeye dizilir.','Dinle ve dokun'],['hb','Okul Yolu Haritası','Evden okula güvenli yolu çizersin.','Yol çiz']]},
-2:{d:['Matematik','Türkçe','Hayat Bilgisi','İngilizce'],o:[['mat','Toplama Pazarı','Elmalar, sepetler ve onluk bozdurma.','Topla ve öde'],['ing','Renk Kurdu','“Paint it blue!” der, kurt boyanır.','Dinle ve boya'],['hb','Mevsim Çarkı','Çark döner, mevsime uygun kıyafeti seçersin.','Eşleştir']]},
-3:{d:['Matematik','Türkçe','Fen Bilimleri','Hayat Bilgisi','İngilizce'],o:[['mat','Çarpım Bahçesi','Sıralar ve sütunlarla fide dikilir.','Diz ve say'],['fen','Duyu Dedektifi','Beş duyuyla gizemli kutuyu çöz.','Tahmin et'],['ing','Kelime Kurdu','Harfleri sırayla yiyen kurt büyür.','Oyun salonunda oyna']]},
-4:{d:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce'],o:[['mat','Kesir Köprüsü','Kesir tahtalarıyla nehre tam bir köprü kur.','Oyun salonunda oyna'],['fen','Besin Tabağı','Dengeli tabak kur, enerji çubuğunu doldur.','Sürükle ve dengele'],['ing','Saat Kulesi','“It is half past three” der, akrebi çevir.','Dinle ve kur']]},
-5:{d:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce','Din Kültürü'],o:[['mat','Ondalık Pazarı','Fiyatları ondalıkla karşılaştır, en ucuzu bul.','Karşılaştır'],['fen','Sürtünme Rampası','Dört yüzeyde dinamometre ile kuvvet ölç.','Deney yap'],['ing','Hava Spikeri','Haritaya bulut yerleştirip hava durumunu anlat.','Konuş ve yerleştir']]},
-6:{d:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce','Din Kültürü'],o:[['mat','Oran Mutfağı','Tarifi kişi sayısına göre büyüt, tadı bozma.','Ölçekle'],['fen','Vücut Turu','Bir alyuvarla dolaşım sisteminde yolculuk.','Yolu bul'],['ing','Hobi Kulübü','Kulüp panosuna kendi hobini İngilizce yaz.','Yaz ve paylaş']]},
-7:{d:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce','Din Kültürü'],o:[['mat','Denge Terazisi','Eşitliğin iki yanına aynı işlemi yap, terazi dengede kalsın.','Dengele'],['fen','Hücre Dedektifi','Organelleri işlevlerinden tanı.','Oyun salonunda oyna'],['ing','Dizi Sahnesi','Bir sahnenin repliklerini doğru zamanla tamamla.','Canlandır']]},
-8:{d:['Matematik','Türkçe','Fen Bilimleri','İnkılap Tarihi','İngilizce','Din Kültürü'],o:[['mat','Üslü Roket','Üsleri doğru yaz, roket bir sonraki gezegene sıçrasın.','Hesapla ve fırlat'],['fen','DNA Fermuarı','Bazları eşleştir, fermuarı kapat.','Eşleştir'],['ing','Bilim Fuarı','Projeni üç cümlede İngilizce sun.','Sun ve kaydet']]}
+1:[['mat','Sayı Treni','Matematik','poz_selam'],['fen','Hece Balonları','Türkçe','poz_sevinc'],['ing','Okul Yolu','Hayat Bilgisi','poz_dusunme']],
+2:[['mat','Toplama Pazarı','Matematik','poz_selam'],['fen','Mevsim Çarkı','Hayat Bilgisi','poz_dusunme'],['ing','Renk Kurdu','İngilizce','poz_sevinc']],
+3:[['mat','Çarpım Bahçesi','Matematik','poz_dusunme'],['fen','Duyu Dedektifi','Fen Bilimleri','poz_ipucu'],['ing','Kelime Kurdu','İngilizce','poz_selam']],
+4:[['mat','Kesir Köprüsü','Matematik','poz_ipucu'],['fen','Besin Tabağı','Fen Bilimleri','poz_sevinc'],['ing','Saat Kulesi','İngilizce','poz_dusunme']],
+5:[['mat','Ondalık Pazarı','Matematik','poz_dusunme'],['fen','Sürtünme Rampası','Fen Bilimleri','poz_ipucu'],['ing','Hava Spikeri','İngilizce','poz_selam']],
+6:[['mat','Oran Mutfağı','Matematik','poz_sevinc'],['fen','Vücut Turu','Fen Bilimleri','poz_ipucu'],['ing','Hobi Kulübü','İngilizce','poz_selam']],
+7:[['mat','Denge Terazisi','Matematik','poz_dusunme'],['fen','Hücre Dedektifi','Fen Bilimleri','poz_ipucu'],['ing','Dizi Sahnesi','İngilizce','poz_sevinc']],
+8:[['mat','Üslü Roket','Matematik','poz_sevinc'],['fen','DNA Fermuarı','Fen Bilimleri','poz_ipucu'],['ing','Bilim Fuarı','İngilizce','poz_rozet']]
 };
-const TUR={mat:['mat','Matematik'],fen:['fen','Fen Bilimleri'],ing:['ing','İngilizce'],tr:['fen','Türkçe'],hb:['mat','Hayat Bilgisi']};
-const DESEN={mat:'<svg class="desen" viewBox="0 0 100 100"><g fill="#fff"><rect x="10" y="10" width="36" height="36" rx="8"/><rect x="54" y="54" width="36" height="36" rx="8"/><circle cx="72" cy="28" r="18"/></g></svg>',fen:'<svg class="desen" viewBox="0 0 100 100"><g fill="#0B2E4F"><circle cx="50" cy="50" r="40"/></g></svg>',ing:'<svg class="desen" viewBox="0 0 100 100"><g fill="#fff"><path d="M10 20h80v50H50L30 88V70H10z"/></g></svg>'};
-const AD=['','1. sınıf','2. sınıf','3. sınıf','4. sınıf','5. sınıf','6. sınıf','7. sınıf','8. sınıf'];
-const ALT=['','İlk adım','Okuyorum','Keşif','Kesirler','Ortaokul kapısı','Oranlar','Hücreler','LGS yılı'];
-$('#katlar').innerHTML=[1,2,3,4,5,6,7,8].map(k=>`<button class="kat" data-k="${k}" aria-pressed="false"><b>K${k}</b><span>${AD[k]}<br>${ALT[k]}</span></button>`).join('');
-function sinif(k){
-  $$('.kat').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k==k));
-  const s=S[k];
-  $('#pano').innerHTML=`<div class="pano-ust"><h3>${AD[k]}</h3><small>${s.d.length} ders · her ders bir patika</small></div>
-    <div class="dersler">${s.d.map(x=>`<span>${x}</span>`).join('')}</div>
-    <div class="oyunlar">${s.o.map(o=>{const t=TUR[o[0]]; return `<article class="okart ${t[0]}"><span class="d">${t[1]}</span><h4>${o[1]}</h4><p>${o[2]}</p><span class="mek">${o[3]}</span>${DESEN[t[0]]}</article>`}).join('')}</div>
-    <p class="pano-not">Oyun adları örnek seçkidir; her sınıfta her ders için tema tema durak dizisi hazırlanır.</p>`;
-  if(k==4||k==7||k==3){ const o=$$('.okart',$('#pano')).find(a=>/Oyun salonunda/.test(a.textContent)); if(o){ o.style.cursor='pointer'; o.onclick=()=>{ sekme(k==4?'kopru':k==7?'hucre':'kurt'); $('#salon').scrollIntoView(); }; } }
-}
-$('#katlar').onclick=e=>{const b=e.target.closest('.kat'); if(b){ton('tik');sinif(+b.dataset.k);}};
+$('#notlar').innerHTML=[1,2,3,4,5,6,7,8].map(k=>`<button class="not" data-k="${k}" aria-pressed="false">${k}. sınıf</button>`).join('');
+function sinif(k){ $$('.not').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k==k));
+  $('#foto').innerHTML=S[k].map(o=>`<article class="polaroid ${o[0]}" data-ders="${o[2]}"><div class="resim"><img src="img/${o[3]}.webp" alt="" loading="lazy"></div><b>${o[1]}</b></article>`).join(''); }
+$('#notlar').onclick=e=>{const b=e.target.closest('.not'); if(b){ton('tik');sinif(+b.dataset.k);}};
 sinif(4);
 
-/* ---------- BECERİ HARİTASI ---------- */
-const B=[
-  {id:'kesir',ad:'Kesirler',k:'bilgin',v:42},
-  {id:'hucre',ad:'Hücre ve organeller',k:'bilgin',v:35},
-  {id:'kelime',ad:'İngilizce kelime',k:'bilgin',v:48},
-  {id:'okuma',ad:'Okuduğunu anlama',k:'Okumino',v:71},
-  {id:'algo',ad:'Algoritmik düşünme',k:'TALENT14',v:64},
-  {id:'yz',ad:'YZ okuryazarlığı',k:'AI-GALAXY',v:57}
-];
-const H={konu:0,dikkat:0};
-function haritaCiz(){
-  $('#beceri').innerHTML=B.map(b=>`<div class="bc ${b.k==='bilgin'?'bilgin':''}" data-b="${b.id}"><span class="ad">${b.ad}<em class="${b.k==='bilgin'?'bilgin':''}">${b.k==='bilgin'?'Bilgin':b.k}</em></span><span class="v">${b.v}</span><span class="cub"><b style="width:${b.v}%"></b></span></div>`).join('');
-  $('#hKonu').textContent=H.konu; $('#hDikkat').textContent=H.dikkat;
-}
-haritaCiz();
-function besle(id,delta){ const b=B.find(x=>x.id===id); b.v=Math.max(0,Math.min(100,b.v+delta)); haritaCiz(); const el=$(`[data-b="${id}"]`); el.classList.add('parla'); }
-function hataKaydet(hizli,ipucuSonrasi){ if(ipucuSonrasi) H.konu++; else if(hizli) H.dikkat++; else H.konu++; haritaCiz(); }
-
-/* ---------- OYUN SALONU ---------- */
-const oyunEl=$('#oyun');
-const GOZ='<svg viewBox="0 0 44 20" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3"><rect x="2" y="3" width="17" height="14" rx="6"/><rect x="25" y="3" width="17" height="14" rx="6"/><path d="M19 9q3-3 6 0"/></g></svg>';
-function salla(el){ el.classList.remove('salla'); void el.offsetWidth; el.classList.add('salla'); }
-function sekme(ad){ $$('.sekme').forEach(s=>s.setAttribute('aria-selected',s.dataset.oyun===ad)); ({kopru,hucre,kurt})[ad](); }
-$$('.sekme').forEach(s=>s.onclick=()=>{ton('tik');sekme(s.dataset.oyun);});
-
-/* --- Kesir Köprüsü --- */
-const KOPRU_TUR=[
-  {soru:'Nehrin üstüne tam <b>1 bütün</b> uzunluğunda köprü kur.',p:[2,4,4,8,3],kural:null},
-  {soru:'Bu kez <b>tam 3 tahta</b> kullanarak 1 bütün yap.',p:[2,3,4,6,6,8],kural:3},
-  {soru:'Son tur: <b>yalnızca 4 tahta</b>, hepsi farklı olsun mu? Hayır, <b>tam 4 tahta</b> yeter.',p:[2,4,8,8,3,6],kural:4}
-];
-const RENK={2:'#0E6E8C',3:'#B4541A',4:'#FF8A3D',6:'#4A6177',8:'#0B2E4F'};
-function kopru(){
-  let t=0;
-  const tur=()=>{
-    const T=KOPRU_TUR[t]; let dizi=[], ipucu=false, bas=performance.now();
-    const top=()=>dizi.reduce((a,p)=>a+1/p,0);
-    const ciz=()=>{
-      oyunEl.innerHTML=`<div class="oyun-ust"><div><small>Matematik · 4. sınıf · Kesirler</small><h3>Kesir Köprüsü</h3></div><div class="arac"><span class="tur">Tur ${t+1}/3</span><button class="gbtn" id="ipucu">${GOZ}İpucu</button></div></div>
-        <p class="soru">${T.soru}</p>
-        <div class="nehir" id="nehir">
-          <svg viewBox="0 0 600 250" preserveAspectRatio="none" aria-hidden="true"><path d="M0 130 L108 130 L118 250 L0 250Z" fill="#7DB27A"/><path d="M600 130 L492 130 L482 250 L600 250Z" fill="#7DB27A"/><path d="M0 130 L108 130 L110 142 L0 142Z" fill="#5E9A5C"/><path d="M600 130 L492 130 L490 142 L600 142Z" fill="#5E9A5C"/><g stroke="#fff" stroke-width="3" opacity=".6" stroke-linecap="round"><path d="M160 190h40M260 210h60M380 185h50"/></g></svg>
-          <div class="kopru" id="kopruEl">${dizi.map(p=>`<div class="tahta" style="width:${100/p}%;background:${RENK[p]}">1/${p}</div>`).join('')}</div>
-          <svg class="kamyon" id="kamyon" viewBox="0 0 80 44" aria-hidden="true"><rect x="2" y="8" width="46" height="24" rx="5" fill="#FF8A3D"/><rect x="48" y="16" width="26" height="16" rx="4" fill="#0E6E8C"/><rect x="54" y="19" width="12" height="8" rx="2" fill="#E2F1F4"/><circle cx="16" cy="36" r="7" fill="#0B2E4F"/><circle cx="60" cy="36" r="7" fill="#0B2E4F"/></svg>
-        </div>
-        ${ipucu?`<div class="ipucu-izgara" aria-label="24 eş parçaya bölünmüş bir bütün">${'<i></i>'.repeat(24)}</div>`:''}
-        <div class="esit" aria-live="polite"><span>${dizi.length?dizi.map(p=>'1/'+p).join(' + '):'Henüz tahta yok'}</span><span class="top">= ${kesirYaz(top())}</span>${T.kural?`<span class="tur">${dizi.length}/${T.kural} tahta</span>`:''}</div>
-        <div class="parcalar">${T.p.map((p,i)=>`<button class="parca" data-p="${p}" data-i="${i}" style="width:${Math.max(56,220/p)}px;background:${RENK[p]}" aria-label="1 bölü ${p} tahta">1/${p}</button>`).join('')}</div>
-        <p class="geri" id="geri" aria-live="polite"></p>
-        <div style="display:flex;gap:10px;justify-content:center"><button class="btn ikincil" id="sifir" style="font-size:15px;padding:8px 16px">Tahtaları topla</button><button class="btn" id="sonraki" hidden>Sonraki tur →</button></div>`;
-      $('#ipucu').onclick=()=>{ ipucu=true; ciz(); geri('Gözlük: bütünü 24 eşit parçaya böldük. 1/2 = 12, 1/3 = 8, 1/4 = 6, 1/6 = 4, 1/8 = 3 parça. Toplam 24 olmalı.','ip'); };
-      $('#sifir').onclick=()=>{ dizi=[]; ciz(); };
-      $$('.parca').forEach(b=>b.onclick=()=>{
-        const p=+b.dataset.p; dizi.push(p); ton('yer'); const s=top(); ciz();
-        if(Math.abs(s-1)<1e-9){
-          if(T.kural && dizi.length!==T.kural){ geri(`1 bütün oldu ama ${T.kural} tahta istenmişti. Başka bir yol dene.`,'no'); salla($('#nehir')); hataKaydet(false,ipucu); besle('kesir',-2); return; }
-          geri('Tam bir bütün! Kamyon geçiyor…','ok'); ton('bitti'); $('#kamyon').classList.add('gec'); besle('kesir',ipucu?5:9);
-          const s2=$('#sonraki'); s2.hidden=false; s2.textContent=t<2?'Sonraki tur →':'Baştan oyna ↺'; s2.onclick=()=>{ t=(t+1)%3; tur(); };
-        } else if(s>1+1e-9){
-          const hizli=performance.now()-bas<2500; geri(`Köprü ${kesirYaz(s)} oldu, 1’den uzun! Tahtalar nehre düştü.`,'no'); ton('no'); salla($('#nehir')); hataKaydet(hizli,ipucu); besle('kesir',-3);
-          setTimeout(()=>{ dizi=[]; ciz(); },1300);
-        } else if(T.kural && dizi.length>=T.kural){ geri(`${T.kural} tahta kullandın ama köprü henüz ${kesirYaz(s)}.`,'no'); ton('no'); hataKaydet(false,ipucu); setTimeout(()=>{ dizi=[]; ciz(); },1300); }
-        bas=performance.now();
-      });
-    };
-    const geri=(m,c)=>{ const g=$('#geri'); if(g){ g.className='geri '+c; g.textContent=m; } };
-    ciz();
-  };
-  tur();
-}
-function kesirYaz(x){ if(x===0) return '0'; for(let p=1;p<=48;p++){ const n=Math.round(x*p); if(Math.abs(n/p-x)<1e-9){ const g=(a,b)=>b?g(b,a%b):a; const k=g(n,p); return p/k===1?String(n/k):`${n/k}/${p/k}`; } } return x.toFixed(2); }
-
-/* --- Hücre Dedektifi --- */
-const ORG={
-  duvar:{ad:'Hücre duvarı',r:'#5E9A5C'}, zar:{ad:'Hücre zarı',r:'#9BD08F'}, cekirdek:{ad:'Çekirdek',r:'#0B2E4F'},
-  klor:{ad:'Kloroplast',r:'#3E8E3A'}, mito:{ad:'Mitokondri',r:'#FF8A3D'}, koful:{ad:'Koful',r:'#8CC5D3'}
+const RENK={2:'#0E6E8C',3:'#B4541A',4:'#FF8A3D',6:'#3D4F63',8:'#0B2E4F'};
+let dizi=[], puan=42, bas=performance.now(), bitti=false;
+const top=()=>dizi.reduce((a,p)=>a+1/p,0);
+function kesirYaz(x){for(let p=1;p<=48;p++){const n=Math.round(x*p);if(Math.abs(n/p-x)<1e-9){const g=(a,b)=>b?g(b,a%b):a,k=g(n,p)||1;return p/k===1?String(n/k):`${n/k}/${p/k}`}}return x.toFixed(2)}
+function geri(m,c){const g=$('#geri');g.className='geri '+c;g.textContent=m}
+function ciz(){ $('#yol').innerHTML=dizi.map(p=>`<div class="t" style="width:calc(${100/p}% - 4px)">1/${p}</div>`).join(''); }
+$('#tahtalar').innerHTML=[2,3,4,6,8].map(p=>`<button class="tk" data-p="${p}" style="width:${Math.max(58,240/p)}px;background:${RENK[p]}" aria-label="1 bölü ${p} tahta">1/${p}</button>`).join('');
+function puanla(d){ puan=Math.max(0,Math.min(100,puan+d)); $('#sayac').textContent=puan; }
+$('#tahtalar').onclick=e=>{
+  const b=e.target.closest('.tk'); if(!b||bitti) return;
+  dizi.push(+b.dataset.p); ton('tik'); ciz(); const s=top();
+  if(Math.abs(s-1)<1e-9){ bitti=true; geri('Tam bir bütün! Kamyon geçiyor.','ok'); ton('bitti'); $('#araba').classList.add('gec'); puanla(8); }
+  else if(s>1){ const hizli=performance.now()-bas<2000; geri(`${kesirYaz(s)} oldu, 1’den uzun. ${hizli?'Biraz acele ettin.':'Tahtalar nehre düştü.'}`,'no'); ton('no'); puanla(-3); setTimeout(()=>{dizi=[];ciz()},1100); }
+  else geri(`Şimdilik ${kesirYaz(s)}.`,'');
+  bas=performance.now();
 };
-const HSORU=[
-  {s:'Besin ve oksijenden <b>enerji</b> üreten “santral” hangisi?',c:'mito',ip:['mito','klor'],y:'Kloroplast ışıkla besin üretir; enerjiyi açığa çıkaran mitokondridir.'},
-  {s:'<b>Fotosentez</b> nerede yapılır?',c:'klor',ip:['klor','koful'],y:'Fotosentezde ışık gerekir; yeşil renk veren organel aranıyor.'},
-  {s:'Hücrenin <b>yönetim merkezi</b>, kalıtım bilgisi nerede?',c:'cekirdek',ip:['cekirdek','mito'],y:'DNA’yı saklayan, yönetimden sorumlu yapı aranıyor.'},
-  {s:'Bitki hücresinde olup <b>hayvan hücresinde olmayan</b> sert dış katman?',c:'duvar',ip:['duvar','zar'],y:'Her iki hücrede de zar vardır; yalnız bitkide olan sert katman aranıyor.'},
-  {s:'Su ve atık depolayan <b>büyük kese</b> hangisi?',c:'koful',ip:['koful','cekirdek'],y:'Bitki hücresinin ortasındaki büyük, açık renkli kese.'}
-];
-function hucre(){
-  let q=0, ipucu=false, bul=new Set(), bas=performance.now(), kilit=false;
-  const svg=()=>`<svg viewBox="0 0 420 300" role="img" aria-label="Bitki hücresi; organellere dokun">
-    <rect class="org" data-o="duvar" x="10" y="10" width="400" height="280" rx="46" fill="${ORG.duvar.r}"/>
-    <rect class="org" data-o="zar" x="24" y="24" width="372" height="252" rx="38" fill="${ORG.zar.r}"/>
-    <rect x="34" y="34" width="352" height="232" rx="32" fill="#EAF6E5"/>
-    <ellipse class="org" data-o="koful" cx="220" cy="150" rx="96" ry="72" fill="${ORG.koful.r}" opacity=".9"/>
-    <g class="org" data-o="cekirdek"><circle cx="88" cy="96" r="38" fill="${ORG.cekirdek.r}"/><circle cx="96" cy="90" r="12" fill="#4A6177"/></g>
-    <g class="org" data-o="klor">${[[340,70],[350,200],[90,220],[300,250]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="26" ry="14" fill="${ORG.klor.r}" transform="rotate(-20 ${x} ${y})"/><path d="M${x-14} ${y} h28" stroke="#BFE3B5" stroke-width="3" transform="rotate(-20 ${x} ${y})"/>`).join('')}</g>
-    <g class="org" data-o="mito">${[[150,232],[355,138],[70,160]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="24" ry="12" fill="${ORG.mito.r}"/><path d="M${x-16} ${y} q5 -8 10 0 t10 0 t10 0" fill="none" stroke="#FFE6D4" stroke-width="2.5"/>`).join('')}</g>
-  </svg>`;
-  const ciz=()=>{
-    const Q=HSORU[q];
-    oyunEl.innerHTML=`<div class="oyun-ust"><div><small>Fen Bilimleri · 7. sınıf · Hücre</small><h3>Hücre Dedektifi</h3></div><div class="arac"><span class="tur">Soru ${q+1}/5</span><button class="gbtn" id="ipucu" ${ipucu?'disabled':''}>${GOZ}İpucu</button></div></div>
-      <p class="soru">${Q.s}</p>
-      <div class="hucre-alan"><div id="hucreSvg">${svg()}</div>
-        <div class="lejant">${Object.entries(ORG).map(([k,o])=>`<span class="${bul.has(k)?'bulundu':''}"><i style="background:${o.r}"></i>${bul.has(k)?o.ad:'? ? ?'}</span>`).join('')}</div></div>
-      <p class="geri" id="geri" aria-live="polite"></p>
-      <div style="display:flex;justify-content:center"><button class="btn" id="sonraki" hidden>Sonraki soru →</button></div>`;
-    if(ipucu) Q.ip.forEach(k=>$$(`.org[data-o="${k}"]`).forEach(e=>e.classList.add('isik')));
-    $('#ipucu').onclick=()=>{ ipucu=true; ciz(); geri('Gözlük iki adayı parlattı. '+Q.y,'ip'); };
-    $('#hucreSvg').onclick=e=>{
-      const o=e.target.closest('.org'); if(!o||kilit) return;
-      const k=o.dataset.o, hizli=performance.now()-bas<2000;
-      if(k===Q.c){ kilit=true; bul.add(k); ton('ok'); besle('hucre',ipucu?5:8); ciz(); $$(`.org[data-o="${k}"]`).forEach(e=>e.classList.add('dogru')); geri(`Evet: ${ORG[k].ad}!`,'ok');
-        const s=$('#sonraki'); s.hidden=false; s.textContent=q<4?'Sonraki soru →':'Baştan oyna ↺'; s.onclick=()=>{ q=(q+1)%5; if(q===0) bul.clear(); ipucu=false; kilit=false; bas=performance.now(); ciz(); };
-        if(q===4) ton('bitti');
-      } else { ton('no'); salla($('#hucreSvg')); hataKaydet(hizli,ipucu); besle('hucre',-2); geri(`Bu ${ORG[k].ad}. ${hizli?'Biraz acele ettin, soruyu bir daha oku.':'Gözlüğü dene.'}`,'no'); bas=performance.now(); }
-    };
-  };
-  const geri=(m,c)=>{ const g=$('#geri'); g.className='geri '+c; g.textContent=m; };
-  ciz();
-}
-
-/* --- Kelime Kurdu --- */
-const RESIM={
-  APPLE:'<svg viewBox="0 0 100 100"><path d="M50 30c-10-8-34-6-34 22 0 22 16 38 26 38 4 0 6-2 8-2s4 2 8 2c10 0 26-16 26-38 0-28-24-30-34-22z" fill="#C2412D"/><path d="M50 30c0-10 4-16 10-20" stroke="#0B2E4F" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M54 20c8-8 20-6 22-2-8 6-16 6-22 2z" fill="#2E8A57"/><ellipse cx="34" cy="48" rx="6" ry="10" fill="#fff" opacity=".35"/></svg>',
-  BOOK:'<svg viewBox="0 0 100 100"><path d="M10 26q20-8 40 4v58q-20-12-40-4z" fill="#0E6E8C"/><path d="M90 26q-20-8-40 4v58q20-12 40-4z" fill="#0B2E4F"/><path d="M16 32q16-5 30 3M16 44q16-5 30 3M54 35q14-8 30-3M54 47q14-8 30-3" stroke="#E2F1F4" stroke-width="3" fill="none"/></svg>',
-  SUN:'<svg viewBox="0 0 100 100"><g stroke="#FF8A3D" stroke-width="6" stroke-linecap="round"><path d="M50 6v14M50 80v14M6 50h14M80 50h14M19 19l10 10M71 71l10 10M81 19 71 29M29 71 19 81"/></g><circle cx="50" cy="50" r="22" fill="#FFB547"/></svg>',
-  FISH:'<svg viewBox="0 0 100 100"><path d="M14 50c14-20 44-24 62 0-18 24-48 20-62 0z" fill="#0E6E8C"/><path d="M76 50l16-14v28z" fill="#FF8A3D"/><circle cx="30" cy="46" r="4" fill="#fff"/><path d="M44 40q6 10 0 20" stroke="#E2F1F4" stroke-width="3" fill="none"/></svg>',
-  CAT:'<svg viewBox="0 0 100 100"><path d="M24 34 22 12l18 12h20l18-12-2 22c6 6 8 14 8 22 0 18-16 30-34 30S16 74 16 56c0-8 2-16 8-22z" fill="#FF8A3D"/><circle cx="38" cy="52" r="5" fill="#0B2E4F"/><circle cx="62" cy="52" r="5" fill="#0B2E4F"/><path d="M46 64q4 4 8 0" stroke="#0B2E4F" stroke-width="3" fill="none"/><path d="M14 58h18M14 66h18M68 58h18M68 66h18" stroke="#0B2E4F" stroke-width="2"/></svg>'
-};
-const KEL=['APPLE','BOOK','SUN','FISH','CAT'];
-function kurt(){
-  let w=0;
-  const tur=()=>{
-    const K=KEL[w], harfler=karistir((K+ekHarf(K)).split('')); let n=0, ipucu=false, bas=performance.now();
-    const ciz=()=>{
-      oyunEl.innerHTML=`<div class="oyun-ust"><div><small>İngilizce · 3. sınıf · Kelimeler</small><h3>Kelime Kurdu</h3></div><div class="arac"><span class="tur">Kelime ${w+1}/5</span><button class="gbtn" id="ipucu">${GOZ}İpucu</button></div></div>
-        <p class="soru">Resmin İngilizcesini kurda harf harf yedir.</p>
-        <div class="kurt-alan"><div class="resim" aria-label="Resim: ${K.toLowerCase()}">${RESIM[K]}</div>
-          <div><div class="kurt-govde" id="govde" aria-label="Kurdun gövdesi: ${n} harf"><div class="kurt-kafa"><b></b></div>${K.split('').map((h,i)=>`<div class="bogum ${i<n?'':'bos'}">${i<n?h:''}</div>`).join('')}</div></div></div>
-        <div class="harfler" id="harfler">${harfler.map((h,i)=>`<button class="harf" data-h="${h}" data-i="${i}" aria-label="${h} harfi">${h}</button>`).join('')}</div>
-        <p class="geri" id="geri" aria-live="polite"></p>
-        <div style="display:flex;justify-content:center;gap:10px"><button class="gbtn" id="dinle">🔈 Dinle</button><button class="btn" id="sonraki" hidden>Sonraki kelime →</button></div>`;
-      $('#ipucu').onclick=()=>{ ipucu=true; isikla(); geri('Gözlük sıradaki harfi parlattı.','ip'); };
-      $('#dinle').onclick=()=>soyle(K);
-      $('#dinle').innerHTML='<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/></svg> Dinle';
-      $('#harfler').onclick=e=>{
-        const b=e.target.closest('.harf'); if(!b||b.classList.contains('kullan')) return;
-        const hizli=performance.now()-bas<1200;
-        if(b.dataset.h===K[n]){ b.classList.add('kullan'); n++; ton('yer'); $$('.bogum')[n-1].className='bogum'; $$('.bogum')[n-1].textContent=K[n-1];
-          if(n===K.length){ ton('bitti'); soyle(K); besle('kelime',ipucu?4:8); geri(`${K.toLowerCase()}! Kurt ${K.length} boğum uzadı.`,'ok'); $$('.harf').forEach(x=>x.classList.add('kullan'));
-            const s=$('#sonraki'); s.hidden=false; s.textContent=w<4?'Sonraki kelime →':'Baştan oyna ↺'; s.onclick=()=>{ w=(w+1)%5; tur(); }; }
-          else if(ipucu) isikla();
-        } else { ton('no'); salla($('#govde')); hataKaydet(hizli,ipucu); besle('kelime',-2); geri(hizli?'Hızlı gittin! Resme bir daha bak.':`Sıradaki harf ${b.dataset.h} değil.`,'no'); }
-        bas=performance.now();
-      };
-    };
-    const isikla=()=>{ $$('.harf').forEach(x=>x.classList.remove('isik')); const h=$$('.harf').find(x=>!x.classList.contains('kullan')&&x.dataset.h===K[n]); if(h) h.classList.add('isik'); };
-    const geri=(m,c)=>{ const g=$('#geri'); g.className='geri '+c; g.textContent=m; };
-    ciz();
-  };
-  tur();
-}
-function karistir(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
-function ekHarf(K){ const h='BDEGKMORTU'.split('').filter(x=>!K.includes(x)); return karistir(h).slice(0,2).join(''); }
-function soyle(t){ try{ const s=speechSynthesis; s.cancel(); const u=new SpeechSynthesisUtterance(t.toLowerCase()); u.lang='en-US'; u.rate=.85; s.speak(u);}catch(e){} }
-
-kopru();
+$('#topla').onclick=()=>{dizi=[];bitti=false;$('#araba').classList.remove('gec');geri('','');ciz()};
 })();
 </script>
 
