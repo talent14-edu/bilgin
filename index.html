@@ -451,6 +451,11 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
 
 
 .metin .mobil-damga{display:none}
+
+/* sağ sayfa: örümcek ağı beceri haritası notu */
+.sahne .beceri-baslik,.sahne .arti,.sahne .eksen,.sahne .grafik{display:none!important}
+.beceri-ag{left:63.5%;top:4%;width:26%;height:auto;transform:rotate(3deg);filter:drop-shadow(0 .8cqw 1cqw rgba(11,46,79,.22));z-index:2}
+@media (prefers-reduced-motion:no-preference){ .beceri-ag{animation:yapis .7s 1.2s cubic-bezier(.2,1.5,.4,1) backwards} }
 @media (max-width:860px){.metin .mobil-damga{display:inline-flex}}
 /* Maarif mührü ve damgası: mürekkep, defter dünyasının parçası */
 .maarif-muhur{left:41.2%;top:30%;width:8.4%;height:auto;color:#8E3F12;transform:rotate(-12deg);mix-blend-mode:multiply;pointer-events:none}
@@ -553,7 +558,8 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
     <div class="p denklem" id="hDenklem" role="img" aria-label="Bir bölü iki artı bir bölü dört artı bir bölü dört eşittir bir"><span class="kesir">1<hr>2</span>+<span class="kesir">1<hr>4</span>+<span class="kesir">1<hr>4</span>=<u>1</u></div>
     <div class="p beceri-baslik"><span>Beceri haritası</span></div>
     <span class="p arti">+1 beceri</span>
-    <img class="p grafik" src="assets/skill-chart.png" alt="Kesirlerden akıl yürütmeye yükselen beceri çizgisi">
+    <img class="p grafik" src="assets/skill-chart.png" alt="" hidden>
+    <img class="p beceri-ag" src="assets/beceri-notu.png" alt="Beceri haritası: her oyunda bir adım ileri">
     <span class="eksen e1" id="hE1">Kesirler</span><span class="eksen e2" id="hE2">Problem<br>çözme</span><span class="eksen e3" id="hE3">Akıl<br>yürütme</span>
     <svg class="p ok-k" viewBox="0 0 124 120" aria-hidden="true"><path d="M8 112 C40 100 80 70 104 18" fill="none" stroke="#FF8A3D" stroke-width="5" stroke-linecap="round" stroke-dasharray="6 7"/><path d="M90 26 104 14 108 34" fill="none" stroke="#FF8A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <img class="p cikartma" src="assets/sticker.png" alt="">
