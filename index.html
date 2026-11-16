@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght,BNCE,INFM@0,300..800,-100..100,0..100&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="iop/iop.css">
 <style>
 /* Kareli Defter: sayfa açık bir kareli okul defteri; ders defterin üstünde oynanıyor. Tek tema (açık). */
 :root{
@@ -392,11 +393,15 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
 .oyun-ad{border-radius:999px;padding:8px 16px;font:600 16px var(--el)}
 .oyun-ad.acik{background:var(--lacivert);color:#fff}
 .oyun-ad.kilitli{box-shadow:inset 0 0 0 2px #D9C9A3;color:var(--kalem)}
+button.oyun-ad{border:0;cursor:pointer;background:transparent;color:var(--lacivert);box-shadow:inset 0 0 0 2px var(--lacivert);transition:transform .15s}
+button.oyun-ad:hover{transform:translateY(-2px)}
+button.oyun-ad.acik{background:var(--lacivert);color:#fff;box-shadow:none}
 .bitis{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding-block:20px}
 .bitis img{width:150px}
 :root[data-theme="dark"] .dolap-alt{color:#AFC6D3} :root[data-theme="dark"] .dolap-alt b{color:#FFB27E}
 :root[data-theme="dark"] .oyun-ad.kilitli{color:#AFC6D3;box-shadow:inset 0 0 0 2px #4E6A80}
 :root[data-theme="dark"] .oyun-ad.acik{background:var(--mandalina);color:var(--lacivert)}
+:root[data-theme="dark"] button.oyun-ad:not(.acik){color:#EAF3F7;box-shadow:inset 0 0 0 2px #EAF3F7}
 .sec sup{font-size:.6em}
 
 
@@ -514,7 +519,6 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
 </style>
 </head>
 <body>
-
 
 <header class="ust">
   <div class="ic">
@@ -660,6 +664,8 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
 </main>
 <footer><div class="ic"><img class="logo-acik" src="assets/logo.png" alt="BİLGİN"><img class="logo-koyu" src="assets/logo_beyaz.png" alt="BİLGİN"><nav class="alt-nav" aria-label="Alt menü"><a href="kvkk/">KVKK</a><a href="#kurumlar">Demo talebi</a><a href="https://ai-la.ai" target="_blank" rel="noopener">ai-la.ai</a></nav><span>Bilgin bir <a href="https://ai-la.ai" target="_blank" rel="noopener">AI-LA ekosistem</a> ürünüdür. İçerikler Türkiye Yüzyılı Maarif Modeli öğretim programlarına göre hazırlanır. Oyun adları ve puanlar tanıtım örneğidir.</span></div></footer>
 
+<script src="iop/icerik.js"></script>
+<script src="iop/iop.js"></script>
 <script>
 (()=>{
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1004,15 +1010,32 @@ function dolapCiz(k){
 function dolapOyna(){
   const k=dolapSinif, d=dolapDers, adlar=(OY[d]||{})[k]||[];
   $$('.goz').forEach(g=>g.setAttribute('aria-pressed',g.dataset.d===d));
-  $('#oyunSekme').innerHTML=adlar.map((a,i)=>i===0?`<span class="oyun-ad acik">▶ ${a}</span>`:`<span class="oyun-ad kilitli" title="Tam sürümde">${a} · tam sürümde</span>`).join('')+`<span class="damga"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 10.5l2.6 2.6L14 7.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Maarif Modeli · ${k}. sınıf ${d}</span>`;
+  const L=window.IOP_DERS&&IOP_DERS[`${k}|${d}`];
+  $('#oyunSekme').innerHTML=`<button class="oyun-ad acik" data-o="0" aria-pressed="true">▶ ${adlar[0]||d}</button>`+(L?`<button class="oyun-ad" data-o="1" aria-pressed="false">▶ ${L.oyun.ad}</button>`:'')+adlar.slice(1).filter(a=>!L||a!==L.oyun.ad).map(a=>`<span class="oyun-ad kilitli" title="Tam sürümde">${a} · tam sürümde</span>`).join('')+`<span class="damga"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 10.5l2.6 2.6L14 7.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Maarif Modeli · ${k}. sınıf ${d}</span>`;
+  if(window.__iop) window.__iop.yukle(k,d); else dolapOyunAc(0);
+}
+/* Oyna adımı: 0 = dolabın oyunu, 1 = dersin oyunu */
+function dolapOyunAc(i){
+  const k=dolapSinif, d=dolapDers, adlar=(OY[d]||{})[k]||[];
+  $$('#oyunSekme button.oyun-ad').forEach(b=>{const on=+b.dataset.o===i; b.classList.toggle('acik',on); b.setAttribute('aria-pressed',on);});
+  if(i===1&&window.__iop) return window.__iop.oyunCiz($('#masa'));
   const oz=OZEL[d]&&OZEL[d][k];
   if(oz) return oz();
   const sorular=URET[k]&&d==='Matematik'?URET[k]():(BANK[d]&&BANK[d][k])||[];
   secim(adlar[0]||d,d,sorular);
 }
+$('#oyunSekme').onclick=e=>{const b=e.target.closest('button.oyun-ad'); if(b){ton('tik'); dolapOyunAc(+b.dataset.o);}};
 $('#dolapRaf').onclick=e=>{const g=e.target.closest('.goz'); if(!g) return; ton('tik'); dolapDers=g.dataset.d; dolapOyna();};
 dolapCiz(4);
 window.__dolapHazir=true;
+/* İzle, oyna, ölç: dolabın masa sütununa üç adım. Oyna = dolabın oyunları, ölç sonucu beceri haritasına. */
+(()=>{
+  const kap=document.createElement('div'); kap.className='iop iop-gomu'; kap.id='dolapIop';
+  $('.dolap').prepend(kap);
+  window.veri=(...a)=>veri(...a);
+  window.__iop=IOP.kur(kap,{gomulu:true,kok:'',sinif:dolapSinif,ders:dolapDers,haritaLink:'#harita',oynaAc:()=>dolapOyunAc(0)});
+  $('#io-p-oyna',kap).append($('#oyunSekme'),$('#masa'));
+})();
 
 
 /* demo formu: Apps Script -> Google E-Tablo "Bilgin Demo Talepleri" (bilgin/form/Kod.gs). Uç nokta yayınlanınca buraya yazılır. */

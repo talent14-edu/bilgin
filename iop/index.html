@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>İzle, oyna, ölç · Bilgin</title>
+<meta name="description" content="Bilgin: 1–8. sınıf her ders için animasyonlu anlatım, oyun ve beceri testi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght,BNCE,INFM@0,300..800,-100..100,0..100&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--lacivert:#0B2E4F;--petrol:#0E6E8C;--mandalina:#FF8A3D;--kiremit:#B4541A;--kenar:#D2F1FB;--kagit:#FBF6E6;--kalem:#3D4F63;
+  --el:'Shantell Sans','Comic Sans MS',ui-rounded,system-ui,sans-serif;--ui:'Nunito',ui-rounded,system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--kenar);color:var(--lacivert);font:700 17px/1.5 var(--ui)}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--mandalina);outline-offset:3px;border-radius:10px}
+.ic{max-width:1440px;margin:0 auto;padding-left:max(clamp(16px,6vw,120px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,6vw,120px),env(safe-area-inset-right,0px))}
+</style>
+<link rel="stylesheet" href="iop.css">
+<style>#iop{--io-ust:0px} #iop .io-siniflar{display:flex}</style>
+</head>
+<body>
+<section id="iop" class="iop iop-bolum" aria-labelledby="io-h"></section>
+<script src="icerik.js"></script>
+<script src="iop.js"></script>
+<script>
+const p=new URLSearchParams(location.search);
+IOP.kur(document.getElementById('iop'),{kok:'../',sinif:+(p.get('k')||5),ders:p.get('d')||'Matematik'});
+</script>
+</body>
+</html>
