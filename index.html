@@ -368,6 +368,32 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
 .harita-ust{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .beceri-notu{width:clamp(200px,20vw,280px);transform:rotate(3deg);filter:drop-shadow(0 18px 20px rgba(11,46,79,.3))}
 @media (min-width:861px){ .siniflar-ust .notlar{display:none!important} }
+
+[hidden]:not([hidden=until-found i]){display:none!important}
+.dolap-ust{display:flex;align-items:baseline;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}
+.dolap-alt{margin:0;font:600 clamp(17px,1.5vw,22px) var(--el);color:var(--kalem)}
+.dolap-alt b{color:var(--kiremit)}
+.dolap-cerceve{margin-top:clamp(20px,2.6vw,34px);background:linear-gradient(#D9A35A,#C98A3A);border-radius:24px;padding:14px;box-shadow:0 24px 36px -24px rgba(11,46,79,.6),inset 0 2px 0 rgba(255,255,255,.35)}
+.dolap-raf{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.goz{border:0;border-radius:16px;background:#FFF4D8;box-shadow:inset 0 -6px 0 rgba(201,138,58,.35),inset 0 0 0 2px #E2C08A;padding:14px 10px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--lacivert);transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .18s}
+.goz img{width:clamp(64px,6vw,92px);height:auto;transition:transform .25s cubic-bezier(.2,1.4,.4,1)}
+.goz b{font:600 clamp(15px,1.2vw,18px)/1.15 var(--el);text-align:center}
+.goz small{font:800 12px var(--ui);color:var(--petrol)}
+.goz:hover{transform:translateY(-3px)}
+.goz:hover img{transform:rotate(-6deg) scale(1.06)}
+.goz[aria-pressed="true"]{background:#fff;box-shadow:0 0 0 4px var(--mandalina),0 14px 22px -12px rgba(11,46,79,.55);transform:translateY(-6px)}
+.goz[aria-pressed="true"] img{transform:scale(1.1) rotate(-4deg)}
+.oyun-sekme{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.oyun-ad{border-radius:999px;padding:8px 16px;font:600 16px var(--el)}
+.oyun-ad.acik{background:var(--lacivert);color:#fff}
+.oyun-ad.kilitli{box-shadow:inset 0 0 0 2px #D9C9A3;color:var(--kalem)}
+.bitis{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding-block:20px}
+.bitis img{width:150px}
+:root[data-theme="dark"] .dolap-alt{color:#AFC6D3} :root[data-theme="dark"] .dolap-alt b{color:#FFB27E}
+:root[data-theme="dark"] .oyun-ad.kilitli{color:#AFC6D3;box-shadow:inset 0 0 0 2px #4E6A80}
+:root[data-theme="dark"] .oyun-ad.acik{background:var(--mandalina);color:var(--lacivert)}
+.sec sup{font-size:.6em}
+
 @media (max-width:860px){ .sekme-kenar{display:none} .sinif-adi{display:none} .beceri-notu{width:180px;margin-inline:auto} }
 
 @media (max-width:860px){
@@ -478,15 +504,12 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
   <div class="ic">
     <div class="dolap-ust">
       <h2 class="bas" id="h-oyna">Oyun dolabı</h2>
-      <div class="sekmeler" role="tablist" aria-label="Oyun seç">
-        <button class="sekme" role="tab" data-oyun="kopru" aria-selected="true">Kesir Köprüsü<small>Mat · 4</small></button>
-        <button class="sekme" role="tab" data-oyun="hucre" aria-selected="false">Hücre Dedektifi<small>Fen · 7</small></button>
-        <button class="sekme" role="tab" data-oyun="kurt" aria-selected="false">Kelime Kurdu<small>İng · 3</small></button>
-        <button class="sekme" role="tab" data-oyun="terazi" aria-selected="false">Denge Terazisi<small>Mat · 7</small></button>
-      </div>
+      <p class="dolap-alt" id="dolapAlt"><b>4. sınıf</b> dolabı · bir gözü aç</p>
     </div>
+    <div class="dolap-cerceve"><div class="dolap-raf" id="dolapRaf" role="group" aria-label="Dersler"></div></div>
+    <div class="oyun-sekme" id="oyunSekme" aria-live="polite"></div>
     <div class="dolap">
-      <div class="masa" id="masa" role="tabpanel"></div>
+      <div class="masa" id="masa" aria-live="polite"></div>
       <aside class="fis" aria-label="Haritaya giden veri">
         <img class="fis-bant" src="assets/tape.png" alt="">
         <b class="el">Haritaya giden veri</b>
@@ -574,12 +597,12 @@ mq.addEventListener('change',yerlestir); yerlestir();
 const DERS={1:['Matematik','Türkçe','Hayat Bilgisi'],2:['Matematik','Türkçe','Hayat Bilgisi','İngilizce'],3:['Matematik','Türkçe','Fen Bilimleri','Hayat Bilgisi','İngilizce'],4:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce'],5:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce','Din Kültürü'],6:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce','Din Kültürü'],7:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce','Din Kültürü'],8:['Matematik','Türkçe','Fen Bilimleri','İnkılap Tarihi','İngilizce','Din Kültürü']};
 const OY={
 'Matematik':{1:['Sayı Treni','Şekil Avı'],2:['Toplama Pazarı','Onluk Kuleleri'],3:['Çarpım Bahçesi','Saat Çarkı'],4:['Kesir Köprüsü','Açı Feneri'],5:['Ondalık Pazarı','Alan Ağılı'],6:['Oran Mutfağı','Tam Sayı Asansörü'],7:['Denge Terazisi','Yüzde İndirimi'],8:['Üslü Roket','Olasılık Çarkı']},
-'Türkçe':{1:['Hece Balonları','Harf Treni'],2:['Kelime Avı','Noktalama Dedektifi'],3:['Eş Anlam Eşleştir','Hikâye Zinciri'],4:['Ana Fikir Avcısı','Yazım Labirenti'],5:['Söz Sanatları Müzesi','Fiil Fabrikası'],6:['Tamlama Yapbozu','Paragraf Bulmacası'],7:['Fiilimsi Fabrikası','Anlatım Tamircisi'],8:['Cümle Ögeleri Laboratuvarı','Metin Türleri Kütüphanesi']},
-'Hayat Bilgisi':{1:['Okul Yolu','Sağlıklı Tabak'],2:['Mevsim Çarkı','Trafik Dedektifi'],3:['Meslekler Kasabası','Doğa Dostu Ev']},
+'Türkçe':{1:['Hece Balonları','Harf Treni'],2:['Noktalama Dedektifi','Kelime Avı'],3:['Eş Anlam Eşleştir','Hikâye Zinciri'],4:['Zıt Anlam Avcısı','Ana Fikir Avcısı'],5:['Fiil Fabrikası','Söz Sanatları Müzesi'],6:['Tamlama Yapbozu','Paragraf Bulmacası'],7:['Fiilimsi Fabrikası','Anlatım Tamircisi'],8:['Cümle Ögeleri Laboratuvarı','Metin Türleri Kütüphanesi']},
+'Hayat Bilgisi':{1:['Güvenli ve Sağlıklı Gün','Okul Yolu'],2:['Mevsim Çarkı','Trafik Dedektifi'],3:['Meslekler Kasabası','Doğa Dostu Ev']},
 'Fen Bilimleri':{3:['Duyu Dedektifi','Maddenin Halleri'],4:['Besin Tabağı','Mıknatıs Avı'],5:['Sürtünme Rampası','Ay’ın Evreleri'],6:['Vücut Turu','Ses Laboratuvarı'],7:['Hücre Dedektifi','Işık Aynası'],8:['DNA Fermuarı','Basınç Kulesi']},
 'Sosyal Bilgiler':{4:['Harita Kâşifi','Haklarım Panosu'],5:['Bölgeler Yolculuğu','Kültür Pazarı'],6:['İpek Yolu Kervanı','İklim Bulmacası'],7:['Zaman Tüneli','Medya Dedektifi']},
-'İnkılap Tarihi':{8:['Kurtuluş Haritası','Cumhuriyet Zaman Çizelgesi']},
-'İngilizce':{2:['Renk Kurdu','Hayvan Sesleri'],3:['Kelime Kurdu','Ev Turu'],4:['Saat Kulesi','Duygu Kartları'],5:['Hava Spikeri','Şehir Turu'],6:['Hobi Kulübü','Kahvaltı Menüsü'],7:['Dizi Sahnesi','Spor Röportajı'],8:['Bilim Fuarı','Arkadaşlık Mektubu']},
+'İnkılap Tarihi':{8:['Cumhuriyet Zaman Çizelgesi','Kurtuluş Haritası']},
+'İngilizce':{2:['Kelime Kurdu','Renk Kurdu'],3:['Kelime Kurdu','Ev Turu'],4:['Saat Kulesi','Duygu Kartları'],5:['Hava Spikeri','Şehir Turu'],6:['Hobi Kulübü','Kahvaltı Menüsü'],7:['Dizi Sahnesi','Spor Röportajı'],8:['Bilim Fuarı','Arkadaşlık Mektubu']},
 'Din Kültürü':{5:['Değerler Ağacı','Yardımlaşma Zinciri'],6:['Hoşgörü Köprüsü','Güzel Söz Kartları'],7:['Değerler Yolu','Paylaşma Sofrası'],8:['Değerler Haritası','Sorumluluk Pusulası']}
 };
 const FOTO={1:[['mat','Sayı Treni','Matematik','poz_selam'],['fen','Hece Balonları','Türkçe','poz_sevinc'],['ing','Okul Yolu','Hayat Bilgisi','poz_dusunme']],2:[['mat','Toplama Pazarı','Matematik','poz_selam'],['fen','Mevsim Çarkı','Hayat Bilgisi','poz_dusunme'],['ing','Renk Kurdu','İngilizce','poz_sevinc']],3:[['mat','Çarpım Bahçesi','Matematik','poz_dusunme'],['fen','Duyu Dedektifi','Fen Bilimleri','poz_ipucu'],['ing','Kelime Kurdu','İngilizce','poz_selam']],4:[['mat','Kesir Köprüsü','Matematik','poz_ipucu'],['fen','Besin Tabağı','Fen Bilimleri','poz_sevinc'],['ing','Saat Kulesi','İngilizce','poz_dusunme']],5:[['mat','Ondalık Pazarı','Matematik','poz_dusunme'],['fen','Sürtünme Rampası','Fen Bilimleri','poz_ipucu'],['ing','Hava Spikeri','İngilizce','poz_selam']],6:[['mat','Oran Mutfağı','Matematik','poz_sevinc'],['fen','Vücut Turu','Fen Bilimleri','poz_ipucu'],['ing','Hobi Kulübü','İngilizce','poz_selam']],7:[['mat','Denge Terazisi','Matematik','poz_dusunme'],['fen','Hücre Dedektifi','Fen Bilimleri','poz_ipucu'],['ing','Dizi Sahnesi','İngilizce','poz_sevinc']],8:[['mat','Üslü Roket','Matematik','poz_sevinc'],['fen','DNA Fermuarı','Fen Bilimleri','poz_ipucu'],['ing','Bilim Fuarı','İngilizce','poz_rozet']]};
@@ -592,6 +615,7 @@ function sinif(k){
   const kartlar=DERS[k].map(d=>({d,o:(OY[d]&&OY[d][k])||[]})).filter(x=>x.o.length);
   $('#oyunSay').textContent=kartlar.reduce((a,x)=>a+x.o.length,0);
   $('#raf').innerHTML=kartlar.map(x=>`<div class="kart" data-ders="${x.d}"><ul>${x.o.map(n=>`<li>${n}</li>`).join('')}</ul></div>`).join('');
+  if(typeof dolapCiz==='function'&&window.__dolapHazir) dolapCiz(k);
 }
 $('#notlar').onclick=e=>{const b=e.target.closest('.not'); if(b){ton('tik');sinif(+b.dataset.k);}};
 $('#sekmeKenar').onclick=e=>{const b=e.target.closest('.sk'); if(!b) return; ton('tik'); sinif(+b.dataset.k); const h=$('#siniflar'); if(h.getBoundingClientRect().top>innerHeight*.6||h.getBoundingClientRect().bottom<0) h.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
@@ -713,10 +737,11 @@ function hucre(){
 
 const RES={APPLE:'<svg viewBox="0 0 100 100"><path d="M50 30c-10-8-34-6-34 22 0 22 16 38 26 38 4 0 6-2 8-2s4 2 8 2c10 0 26-16 26-38 0-28-24-30-34-22z" fill="#E4573A"/><path d="M50 30c0-10 4-16 10-20" stroke="#0B2E4F" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M54 20c8-8 20-6 22-2-8 6-16 6-22 2z" fill="#3E8E3A"/></svg>',BOOK:'<svg viewBox="0 0 100 100"><path d="M10 26q20-8 40 4v58q-20-12-40-4z" fill="#0E6E8C"/><path d="M90 26q-20-8-40 4v58q20-12 40-4z" fill="#0B2E4F"/></svg>',SUN:'<svg viewBox="0 0 100 100"><g stroke="#FF8A3D" stroke-width="6" stroke-linecap="round"><path d="M50 6v14M50 80v14M6 50h14M80 50h14M19 19l10 10M71 71l10 10M81 19 71 29M29 71 19 81"/></g><circle cx="50" cy="50" r="22" fill="#FFB547"/></svg>',FISH:'<svg viewBox="0 0 100 100"><path d="M14 50c14-20 44-24 62 0-18 24-48 20-62 0z" fill="#0E6E8C"/><path d="M76 50l16-14v28z" fill="#FF8A3D"/><circle cx="30" cy="46" r="4" fill="#fff"/></svg>'};
 const KEL=['APPLE','BOOK','SUN','FISH'];
-function kurt(){
-  let w=0;
-  const tur=()=>{ const K=KEL[w]; const harf=(K+'RTE').split('').filter((h,i,a)=>i<K.length||!K.includes(h)).sort(()=>Math.random()-.5); let n=0, ipucu=false, bas=performance.now();
-    masa.innerHTML=`<div class="ust-satir"><span class="tur">Kelime ${w+1}/4</span><button class="gozluk" id="ip">${GOZ} İpucu</button></div>
+RES.CAT='<svg viewBox="0 0 100 100"><path d="M24 34 22 12l18 12h20l18-12-2 22c6 6 8 14 8 22 0 18-16 30-34 30S16 74 16 56c0-8 2-16 8-22z" fill="#FF8A3D"/><circle cx="38" cy="52" r="5" fill="#0B2E4F"/><circle cx="62" cy="52" r="5" fill="#0B2E4F"/><path d="M46 64q4 4 8 0" stroke="#0B2E4F" stroke-width="3" fill="none"/></svg>';
+function kurt(liste){
+  const KL=liste||KEL; let w=0;
+  const tur=()=>{ const K=KL[w]; const harf=(K+'RTE').split('').filter((h,i,a)=>i<K.length||!K.includes(h)).sort(()=>Math.random()-.5); let n=0, ipucu=false, bas=performance.now();
+    masa.innerHTML=`<div class="ust-satir"><span class="tur">Kelime Kurdu · ${w+1}/${KL.length}</span><button class="gozluk" id="ip">${GOZ} İpucu</button></div>
       <p class="soru">Resmin İngilizcesini kurda harf harf yedir.</p>
       <div class="kurt-alan"><div class="resim-k">${RES[K]}</div><div class="govde" id="gv"><img class="bas-k" src="assets/st_bilgin.png" alt="" style="display:none">${K.split('').map(()=>'<div class="bogum bos"></div>').join('')}</div></div>
       <div class="harfler" id="hf">${harf.map(h=>`<button class="harf" data-h="${h}">${h}</button>`).join('')}</div>
@@ -724,7 +749,7 @@ function kurt(){
     $('#ip').onclick=()=>{ipucu=true; const h=$$('.harf',masa).find(x=>!x.classList.contains('kullan')&&x.dataset.h===K[n]); if(h) h.classList.add('isik');};
     $('#hf').onclick=e=>{ const b=e.target.closest('.harf'); if(!b) return;
       if(b.dataset.h===K[n]){ b.classList.add('kullan'); const bg=$$('.bogum',masa)[n]; bg.className='bogum'; bg.textContent=K[n]; n++; ton('tik');
-        if(n===K.length){ ton('bitti'); try{const u=new SpeechSynthesisUtterance(K.toLowerCase());u.lang='en-US';speechSynthesis.speak(u)}catch(x){} geriYaz(`${K.toLowerCase()}!`,'ok'); veri('Kelime Kurdu','İngilizce',ipucu?2:3); const nx=$('#ileri'); nx.hidden=false; nx.onclick=()=>{w=(w+1)%4;tur();}; } }
+        if(n===K.length){ ton('bitti'); try{const u=new SpeechSynthesisUtterance(K.toLowerCase());u.lang='en-US';speechSynthesis.speak(u)}catch(x){} geriYaz(`${K.toLowerCase()}!`,'ok'); veri('Kelime Kurdu','İngilizce',ipucu?2:3); const nx=$('#ileri'); nx.hidden=false; nx.onclick=()=>{w=(w+1)%KL.length;tur();}; } }
       else { const h=hataTuru(bas,ipucu); ton('no'); salla($('#gv')); geriYaz(h==='dikkat'?'Hızlı gittin, resme bir daha bak.':`Sıradaki harf ${b.dataset.h} değil.`,'no'); veri('Kelime Kurdu','İngilizce',-1,h); }
       bas=performance.now(); };
   };
@@ -758,9 +783,99 @@ function terazi(){
   };
   tur();
 }
-const OYUNLAR={kopru,hucre,kurt,terazi};
-$$('.sekme').forEach(s=>s.onclick=()=>{ton('tik');$$('.sekme').forEach(x=>x.setAttribute('aria-selected',x===s));OYUNLAR[s.dataset.oyun]();});
-kopru();
+/* ---------- oyun dolabı: sınıf × ders ---------- */
+const IKON={'Matematik':'matematik','Türkçe':'turkce','Hayat Bilgisi':'hayat','Fen Bilimleri':'fen','Sosyal Bilgiler':'sosyal','İngilizce':'ingilizce','Din Kültürü':'din','İnkılap Tarihi':'inkilap'};
+const AX={'Matematik':'Matematik','Türkçe':'Türkçe','Fen Bilimleri':'Fen','İngilizce':'İngilizce','Sosyal Bilgiler':'Sosyal','Hayat Bilgisi':'Sosyal','Din Kültürü':'Sosyal','İnkılap Tarihi':'Sosyal'};
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const virgul=x=>String(x).replace('.',',');
+function uc(f){ return [f(),f(),f()]; }
+const URET={
+  1:()=>uc(()=>{const a=rnd(1,6),b=rnd(1,4);return [`${a} + ${b} = ?`,[a+b,a+b+1,a+b-1],0];}),
+  2:()=>uc(()=>{const a=rnd(15,58),b=rnd(17,39);return [`${a} + ${b} = ?`,[a+b,a+b+10,a+b-10],0];}),
+  3:()=>uc(()=>{const a=rnd(2,9),b=rnd(3,9);return [`${a} × ${b} = ?`,[a*b,a*b+a,a*b-b],0];}),
+  5:()=>uc(()=>{const x=rnd(2,9)/10, y=rnd(11,98)/100; if(x===y) return ['0,5 ile 0,50 hangisi büyük?',['Eşit','0,5','0,50'],0]; return ['Hangisi daha büyük?',[virgul(Math.max(x,y)),virgul(Math.min(x,y)),'Eşit'],0];}),
+  6:()=>uc(()=>{const e=rnd(2,5),k=rnd(2,4);return [`2 kişilik tarifte ${e} yumurta var. ${2*k} kişi için kaç yumurta gerekir?`,[e*k,e*k+e,e*k-1],0];}),
+  8:()=>uc(()=>{const t=[2,3,5][rnd(0,2)],u=rnd(2,4);return [`${t}<sup>${u}</sup> kaçtır?`,[t**u,t**(u+1),t*u===t**u?t*u+t:t*u],0];})
+};
+const BANK={
+'Türkçe':{
+ 1:[['“kelebek” kaç hecedir?',['3','2','4'],0],['“su” kaç hecedir?',['1','2','3'],0],['“ağaç” kaç hecedir?',['2','1','3'],0]],
+ 2:[['Soru cümlesinin sonuna hangi işaret gelir?',['?','.','!'],0],['“Eyvah, düştüm” cümlesinin sonuna ne gelir?',['!','?',','],0],['Cümleye nasıl başlarız?',['Büyük harfle','Küçük harfle','Rakamla'],0]],
+ 3:[['“okul” kelimesinin eş anlamlısı hangisi?',['mektep','sınıf','defter'],0],['“cevap” kelimesinin eş anlamlısı?',['yanıt','soru','ses'],0],['“kırmızı” kelimesinin eş anlamlısı?',['al','ak','kara'],0]],
+ 4:[['“uzun” kelimesinin zıt anlamlısı?',['kısa','geniş','büyük'],0],['“erken” kelimesinin zıt anlamlısı?',['geç','hızlı','sabah'],0],['“cesur” kelimesinin zıt anlamlısı?',['korkak','güçlü','neşeli'],0]],
+ 5:[['Hangisi bir fiildir?',['koşmak','kalem','mavi'],0],['Hangisi bir fiildir?',['okumak','güzel','masa'],0],['Hangisi bir fiildir?',['yazmak','ağaç','hızlı'],0]],
+ 6:[['“okulun bahçesi” hangi tamlamadır?',['Belirtili isim tamlaması','Sıfat tamlaması','Belirtisiz isim tamlaması'],0],['“kırmızı elma” hangi tamlamadır?',['Sıfat tamlaması','Belirtili isim tamlaması','Belirtisiz isim tamlaması'],0],['“kapı kolu” hangi tamlamadır?',['Belirtisiz isim tamlaması','Sıfat tamlaması','Belirtili isim tamlaması'],0]],
+ 7:[['“Koşan çocuk düştü.” cümlesindeki fiilimsi hangisi?',['koşan','çocuk','düştü'],0],['“Okumayı çok severim.” cümlesindeki fiilimsi hangisi?',['okumayı','çok','severim'],0],['“Eve gelince ara.” cümlesindeki fiilimsi hangisi?',['gelince','eve','ara'],0]],
+ 8:[['“Ali kitabı okudu.” cümlesinin öznesi hangisi?',['Ali','kitabı','okudu'],0],['“Kuşlar sabah öttü.” cümlesinde zarf tümleci hangisi?',['sabah','kuşlar','öttü'],0],['“Annem çiçekleri suladı.” cümlesinde nesne hangisi?',['çiçekleri','annem','suladı'],0]]},
+'Hayat Bilgisi':{
+ 1:[['Karşıdan karşıya nereden geçeriz?',['Yaya geçidinden','Arabaların arasından','Köşeden koşarak'],0],['Hangisi sağlıklı bir ara öğündür?',['Meyve','Gazlı içecek','Cips'],0],['Ellerimizi ne zaman yıkarız?',['Yemekten önce','Yalnız akşam','Hiç'],0]],
+ 2:[['Kar en çok hangi mevsimde yağar?',['Kış','Yaz','İlkbahar'],0],['Trafik ışığında kırmızı ne demektir?',['Dur','Geç','Hızlan'],0],['Ağaçlar hangi mevsimde yaprak döker?',['Sonbahar','Yaz','İlkbahar'],0]],
+ 3:[['Hastaları tedavi eden meslek hangisi?',['Doktor','Pilot','Aşçı'],0],['Atık kâğıdı nereye atarız?',['Geri dönüşüm kutusuna','Yere','Dereye'],0],['Musluğu açık bırakmak neyi israf eder?',['Suyu','Havayı','Toprağı'],0]]},
+'Fen Bilimleri':{
+ 3:[['Tatları hangi organımızla algılarız?',['Dil','Kulak','Burun'],0],['Sesleri hangi organımızla duyarız?',['Kulak','Göz','Deri'],0],['Sıcağı ve soğuğu hangi organımız hisseder?',['Deri','Dil','Göz'],0]],
+ 4:[['Hangisi proteince zengindir?',['Yumurta','Şeker','Tereyağı'],0],['Vitamin ve mineral deposu hangisi?',['Meyve ve sebze','Cips','Kola'],0],['Mıknatıs hangisini çeker?',['Demir çivi','Plastik kaşık','Tahta kalem'],0]],
+ 5:[['Hangi yüzeyde sürtünme daha fazladır?',['Halı','Buz','Cam'],0],['Ay’ın görünmediği evre hangisi?',['Yeni ay','Dolunay','İlk dördün'],0],['Kuvvetin birimi nedir?',['Newton','Metre','Kilogram'],0]],
+ 6:[['Kanı vücuda pompalayan organ hangisi?',['Kalp','Akciğer','Mide'],0],['Gaz alışverişi hangi organda olur?',['Akciğer','Böbrek','Karaciğer'],0],['Ses hangi ortamda yayılamaz?',['Boşluk','Su','Hava'],0]],
+ 8:[['DNA’nın yapı birimi nedir?',['Nükleotit','Protein','Glikoz'],0],['Sivri çivi tahtaya neden kolay girer?',['Yüzey küçük, basınç büyük','Çivi çok hafif','Tahta çok yumuşak'],0],['Kalıtsal özellikleri taşıyan birim hangisi?',['Gen','Hücre zarı','Koful'],0]]},
+'Sosyal Bilgiler':{
+ 4:[['Haritalarda kuzey genellikle hangi taraftadır?',['Üst','Alt','Sol'],0],['Pusula ne gösterir?',['Yönleri','Saati','Sıcaklığı'],0],['Çocuk hakları kimi korur?',['Çocukları','Yalnız büyükleri','Yalnız öğretmenleri'],0]],
+ 5:[['Türkiye kaç coğrafi bölgeye ayrılır?',['7','5','9'],0],['Karadeniz Bölgesi’nde en çok hangi ürün yetişir?',['Fındık','Pamuk','Muz'],0],['Türkiye’nin başkenti neresidir?',['Ankara','İstanbul','İzmir'],0]],
+ 6:[['İpek Yolu hangi bölgeleri birbirine bağlardı?',['Çin ve Avrupa','Afrika ve Amerika','Avustralya ve Asya'],0],['Ekvatora yaklaştıkça sıcaklık genelde ne olur?',['Artar','Azalır','Değişmez'],0],['Türklerin kullandığı ilk alfabelerden biri hangisi?',['Göktürk alfabesi','Latin alfabesi','Kiril alfabesi'],0]],
+ 7:[['Osmanlı Devleti’nin kurucusu kimdir?',['Osman Bey','Fatih Sultan Mehmet','Kanuni Sultan Süleyman'],0],['İstanbul hangi yıl fethedildi?',['1453','1071','1923'],0],['Bir haberin doğruluğunu kontrol etmek hangi beceridir?',['Medya okuryazarlığı','Hızlı okuma','Ezber'],0]]},
+'İnkılap Tarihi':{
+ 8:[['Milli Mücadele’nin başlangıcı sayılan tarih hangisi?',['19 Mayıs 1919','29 Ekim 1923','23 Nisan 1920'],0],['Cumhuriyet hangi tarihte ilan edildi?',['29 Ekim 1923','30 Ağustos 1922','1 Kasım 1922'],0],['TBMM hangi tarihte açıldı?',['23 Nisan 1920','19 Mayıs 1919','9 Eylül 1922'],0]]},
+'Din Kültürü':{
+ 5:[['Hangisi yardımlaşmaya örnektir?',['Arkadaşına ders çalışmada yardım etmek','Sırayı bozmak','Başkasının eşyasını izinsiz almak'],0],['Doğru sözlü olmak ne demektir?',['Yalan söylememek','Çok konuşmak','Hiç konuşmamak'],0],['Komşuluk ilişkisinde hangisi güzel davranıştır?',['Selam vermek','Gürültü yapmak','Kapıyı çarpmak'],0]],
+ 6:[['Hoşgörü hangisidir?',['Farklı düşünceye saygı göstermek','Herkesi susturmak','Alay etmek'],0],['Hangisi güzel bir sözdür?',['Teşekkür ederim','Sus!','Çekil!'],0],['Emanete nasıl davranılır?',['Korunur ve geri verilir','Saklanır','Atılır'],0]],
+ 7:[['Hangisi paylaşmaya örnektir?',['Azığını arkadaşınla bölmek','Hepsini saklamak','İsraf etmek'],0],['Sorumluluk sahibi öğrenci ne yapar?',['Ödevini zamanında yapar','Ödevini unutur','Başkasına yaptırır'],0],['Çevreyi korumak için ne yaparız?',['Çöpü çöp kutusuna atarız','Ağaca zarar veririz','Suyu boşa akıtırız'],0]],
+ 8:[['Adaletli davranış hangisidir?',['Herkese eşit davranmak','Kayırmak','Haksızlığa göz yummak'],0],['Sabırlı kişi zor durumda ne yapar?',['Sakin kalır','Hemen kızar','Vazgeçer'],0],['İsraftan kaçınmaya örnek hangisi?',['Yemeği tabakta bırakmamak','Işıkları açık bırakmak','Suyu açık bırakmak'],0]]},
+'İngilizce':{
+ 4:[['“It is three o’clock.” Saat kaç?',['3:00','3:30','2:00'],0],['“half past four” saat kaç?',['4:30','4:15','5:30'],0],['“quarter past two” saat kaç?',['2:15','2:45','3:15'],0]],
+ 5:[['“It is rainy.” ne demektir?',['Hava yağmurlu','Hava güneşli','Hava karlı'],0],['“sunny” ne demektir?',['güneşli','rüzgârlı','bulutlu'],0],['“cold” ne demektir?',['soğuk','sıcak','ılık'],0]],
+ 6:[['“I like playing chess.” Hobisi ne?',['Satranç','Futbol','Resim'],0],['“breakfast” ne demektir?',['kahvaltı','akşam yemeği','öğle yemeği'],0],['“I’m good at drawing.” ne demektir?',['Resim çizmekte iyiyim','Şarkı söylemekte iyiyim','Yüzmekte iyiyim'],0]],
+ 7:[['“fastest” ne demektir?',['en hızlı','daha hızlı','hızlı'],0],['“I watched a series yesterday.” hangi zaman?',['Geçmiş','Şimdi','Gelecek'],0],['“The match starts at 8.” ne demektir?',['Maç 8’de başlıyor','Maç 8 dakika sürüyor','8 maç var'],0]],
+ 8:[['“experiment” ne demektir?',['deney','sonuç','laboratuvar'],0],['“science fair” ne demektir?',['bilim fuarı','bilim kitabı','bilim insanı'],0],['“I would like to…” neyi anlatır?',['Kibar bir istek','Bir yasak','Bir emir'],0]]}
+};
+const OZEL={'Matematik':{4:()=>kopru(),7:()=>terazi()},'Fen Bilimleri':{7:()=>hucre()},'İngilizce':{2:()=>kurt(['CAT','SUN','FISH']),3:()=>kurt(['APPLE','BOOK','SUN','FISH'])}};
+
+function secim(oyun,ders,sorular){
+  let q=0, dogru=0, bas=performance.now();
+  const ciz=()=>{
+    if(q>=sorular.length){ masa.innerHTML=`<div class="bitis"><img src="img/poz_rozet.webp" alt=""><p class="soru">${oyun} tamam! ${dogru}/${sorular.length} doğru.</p><p class="geri ok">Pasaporta bir damga, haritaya bir veri.</p><button class="hap turuncu" id="yeniden" style="font-size:15px;padding:10px 18px">Yeniden oyna</button></div>`; $('#yeniden').onclick=()=>dolapOyna(); return; }
+    const [s,ops,d]=sorular[q]; const sira=ops.map((o,i)=>[o,i]).sort(()=>Math.random()-.5);
+    masa.innerHTML=`<div class="ust-satir"><span class="tur">${oyun} · Soru ${q+1}/${sorular.length}</span></div>
+      <p class="soru">${s}</p>
+      <div class="secenekler" id="sc">${sira.map(([o,i])=>`<button class="sec" data-i="${i}">${o}</button>`).join('')}</div>
+      <div class="durum"><span class="geri" id="geri" aria-live="polite"></span><button class="hap turuncu" id="ileri" hidden style="font-size:15px;padding:10px 16px">Sonraki soru →</button></div>`;
+    $('#sc').onclick=e=>{ const b=e.target.closest('.sec'); if(!b||b.disabled) return;
+      if(+b.dataset.i===d){ b.classList.add('ok'); ton('ok'); dogru++; geriYaz('Doğru!','ok'); veri(oyun,AX[ders],3); $$('.sec',masa).forEach(x=>x.disabled=true); const nx=$('#ileri'); nx.hidden=false; nx.onclick=()=>{q++;bas=performance.now();ciz();}; }
+      else { const h=hataTuru(bas,false); b.classList.add('no'); b.disabled=true; ton('no'); geriYaz(h==='dikkat'?'Biraz acele ettin, soruyu bir daha oku.':'Olmadı, bir daha dene.','no'); veri(oyun,AX[ders],-1,h); bas=performance.now(); } };
+  };
+  ciz();
+}
+
+let dolapSinif=4, dolapDers=null;
+function dolapCiz(k){
+  dolapSinif=k;
+  const dersler=DERS[k];
+  if(!dersler.includes(dolapDers)) dolapDers=dersler[0];
+  $('#dolapAlt').innerHTML=`<b>${k}. sınıf</b> dolabı · bir gözü aç`;
+  $('#dolapRaf').innerHTML=dersler.map(d=>`<button class="goz" data-d="${d}" aria-pressed="${d===dolapDers}"><img src="assets/ders/${IKON[d]}.png" alt=""><b>${d}</b><small>${((OY[d]||{})[k]||[]).length} oyun</small></button>`).join('');
+  dolapOyna();
+}
+function dolapOyna(){
+  const k=dolapSinif, d=dolapDers, adlar=(OY[d]||{})[k]||[];
+  $$('.goz').forEach(g=>g.setAttribute('aria-pressed',g.dataset.d===d));
+  $('#oyunSekme').innerHTML=adlar.map((a,i)=>i===0?`<span class="oyun-ad acik">▶ ${a}</span>`:`<span class="oyun-ad kilitli" title="Tam sürümde">${a} · tam sürümde</span>`).join('');
+  const oz=OZEL[d]&&OZEL[d][k];
+  if(oz) return oz();
+  const sorular=URET[k]&&d==='Matematik'?URET[k]():(BANK[d]&&BANK[d][k])||[];
+  secim(adlar[0]||d,d,sorular);
+}
+$('#dolapRaf').onclick=e=>{const g=e.target.closest('.goz'); if(!g) return; ton('tik'); dolapDers=g.dataset.d; dolapOyna();};
+dolapCiz(4);
+window.__dolapHazir=true;
+
 
 /* demo formu: Apps Script -> Google E-Tablo "Bilgin Demo Talepleri" (bilgin/form/Kod.gs). Uç nokta yayınlanınca buraya yazılır. */
 const FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwuvwyYjnMRO0B9KzTe0G0AAi-b9wpCECtTDJmkP36qJ8QePmTeMN14RY8Irdkk1DXA/exec';
