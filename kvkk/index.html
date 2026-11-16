@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>KVKK · Bilgin</title>
+<meta name="description" content="Bilgin kişisel verilerin korunması: politika ve aydınlatma metinleri.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@600;800&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--lacivert:#0B2E4F;--petrol:#0E6E8C;--mandalina:#FF8A3D;--kiremit:#B4541A;--kenar:#D2F1FB;--kagit:#FBF6E6;--kalem:#3D4F63;
+  --el:'Shantell Sans','Comic Sans MS',ui-rounded,system-ui,sans-serif;--ui:'Nunito',ui-rounded,system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--kenar);color:var(--lacivert);font:700 17px/1.6 var(--ui)}
+::selection{background:var(--mandalina);color:var(--lacivert)}
+a{color:var(--petrol);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--mandalina);outline-offset:3px;border-radius:8px}
+.ic{max-width:1040px;margin:0 auto;padding-left:max(clamp(16px,5vw,64px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,5vw,64px),env(safe-area-inset-right,0px))}
+header .ic{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px}
+header img{height:52px;width:auto;display:block}
+.geri{font:800 16px var(--ui);color:var(--lacivert);text-decoration:none;border-radius:999px;padding:10px 18px;box-shadow:inset 0 0 0 2.5px var(--lacivert)}
+main{padding-block:12px 70px}
+h1{font:800 clamp(32px,5vw,58px)/1.08 var(--el);margin:10px 0 14px;text-wrap:balance}
+h1 u{text-decoration:underline;text-decoration-color:var(--mandalina);text-decoration-thickness:.14em;text-underline-offset:.14em}
+.giris{max-width:62ch;margin:0 0 30px;font-weight:700;color:var(--kalem)}
+.belgeler{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.belge{background:#FFF9EA;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:8px;box-shadow:0 12px 20px -14px rgba(11,46,79,.45)}
+.belge:nth-child(odd){transform:rotate(-.6deg)} .belge:nth-child(even){transform:rotate(.5deg)}
+.belge b{font:600 19px/1.2 var(--el)}
+.belge p{margin:0;font-weight:700;font-size:15px;color:var(--kalem)}
+.belge a{margin-top:auto;align-self:flex-start;font:800 15px var(--ui);color:var(--lacivert);background:var(--mandalina);border-radius:999px;padding:9px 16px;text-decoration:none}
+.metin{margin-top:54px;background:var(--kagit) url(../assets/kareli.png) repeat;background-size:auto 46px;border-radius:12px;padding:clamp(22px,4vw,48px);box-shadow:0 30px 50px -34px rgba(11,46,79,.55)}
+.metin h2{font:800 clamp(26px,3.4vw,40px)/1.1 var(--el);margin:0 0 6px}
+.metin h3{font:600 21px var(--el);margin:26px 0 6px}
+.metin p,.metin li{max-width:72ch}
+.metin .tarih{font-size:14px;color:var(--kalem);margin:0}
+.iletisim{margin-top:34px;font-weight:700}
+footer{background:var(--lacivert);color:#C9D6E2;font:700 14px var(--ui)}
+footer .ic{padding-block:22px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{color:#fff}
+</style>
+</head>
+<body>
+<header><div class="ic"><a href="../" aria-label="Bilgin ana sayfa"><img src="../assets/logo.png" alt="BİLGİN"></a><a class="geri" href="../">Ana sayfaya dön</a></div></header>
+<main class="ic">
+  <h1>Kişisel Verilerin <u>Korunması</u> (KVKK)</h1>
+  <p class="giris">Kişisel verilerinizin güvenliği bizim için önceliklidir. Politika ve aydınlatma metinlerimizi aşağıdan PDF olarak okuyabilirsiniz.</p>
+  <div class="belgeler">
+    <article class="belge"><b>Çerez ve Gizlilik Politikası</b><p>Web sitemizde kullanılan çerezler ve kişisel verilerinizin nasıl korunduğuna dair politikamız.</p><a href="https://bilisimschool.com/kvkk/cerez_ve_gizlilik_politikasi.pdf" target="_blank" rel="noopener">Oku / İndir</a></article>
+    <article class="belge"><b>Santral Hizmetleri Aydınlatma Metni</b><p>Santral hizmetleri kapsamında kişisel verilerinizin işlenmesine ilişkin aydınlatma metni.</p><a href="https://bilisimschool.com/kvkk/santral_hizmetleri_aydinlatma_metni.pdf" target="_blank" rel="noopener">Oku / İndir</a></article>
+    <article class="belge"><b>Öğrenci ve Veli Aydınlatma Metni</b><p>Öğrenci ve veli kişisel verilerinin işlenmesi ve korunmasına dair aydınlatma metni.</p><a href="https://bilisimschool.com/kvkk/ogrenci_ve_veli_aydınlatma_metni.pdf" target="_blank" rel="noopener">Oku / İndir</a></article>
+    <article class="belge"><b>Kişisel Veri Saklama ve İmha Politikası</b><p>Kişisel verilerin ne kadar süreyle saklandığı ve nasıl imha edildiğine dair politikamız.</p><a href="https://bilisimschool.com/kvkk/Kişisel_Veri_Saklama_ve_İmha_Politikası.pdf" target="_blank" rel="noopener">Oku / İndir</a></article>
+    <article class="belge"><b>İlgili Kişi Başvuru Formu</b><p>KVKK kapsamında haklarınızı kullanmak için başvuru formu ve bilgilendirme yazısı.</p><a href="https://bilisimschool.com/kvkk/ilgili_kisi_basvuru_formu_ve_bilgilendirme_yazisi.pdf" target="_blank" rel="noopener">Oku / İndir</a></article>
+    <article class="belge"><b>Mesafeli Satış Sözleşmesi</b><p>Uzaktan satış işlemlerine ilişkin yasal koşulları düzenleyen sözleşme metni.</p><a href="https://bilisimschool.com/kvkk/mesafeli_satis_sozlesmesi.pdf" target="_blank" rel="noopener">Oku / İndir</a></article>
+  </div>
+
+  <section class="metin" id="demo-formu" aria-labelledby="h-form">
+    <h2 id="h-form">Demo talep formu aydınlatma metni</h2>
+    <p class="tarih">Son güncelleme: 16.11.2026 · 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında</p>
+    <h3>1. Veri sorumlusu</h3>
+    <p>Kişisel verileriniz, veri sorumlusu sıfatıyla Bilişim School Eğitim Teknolojileri A.Ş. tarafından işlenir. Adres: Mustafa Kemal Mah. Mahall Ankara D-2 Blok No:24, 06510 Çankaya/Ankara. KVKK başvuruları: <a href="mailto:kvkk@bilisimschool.com">kvkk@bilisimschool.com</a>.</p>
+    <h3>2. İşlenen veriler</h3>
+    <ul><li><b>Kimlik:</b> ad soyad, göreviniz</li><li><b>İletişim:</b> e-posta adresi, telefon numarası</li><li><b>Kurum:</b> okul veya kurum adı, yaklaşık öğrenci sayısı, ilgilendiğiniz sınıf düzeyi</li><li><b>İşlem kaydı:</b> talebin tarihi ve saati, talep numarası, sayfaya ulaştığınız bağlantının kaynak ve kampanya bilgisi</li></ul>
+    <h3>3. Amaç</h3>
+    <p>Demo talebinizin alınması ve kaydedilmesi, sizinle e-posta veya telefonla iletişime geçilmesi, demo görüşmesinin planlanması ve deneme hesaplarının açılması, taleplerin hangi kanaldan geldiğinin ölçülmesi ve hukuki yükümlülüklerin yerine getirilmesi.</p>
+    <h3>4. Hukuki sebep</h3>
+    <p>KVKK m.5/2: (c) bir sözleşmenin kurulmasıyla doğrudan ilgili olması (demo ve teklif öncesi görüşme), (ç) hukuki yükümlülük, (f) temel hak ve özgürlüklerinize zarar vermemek kaydıyla meşru menfaat (taleplerin takibi ve kampanya ölçümü).</p>
+    <h3>5. Aktarım</h3>
+    <p>Verileriniz yalnızca bu amaçlarla ve gerektiği ölçüde; talebi yanıtlayan AI-LA ekibiyle, kayıtların tutulduğu ve bildirim e-postalarının gönderildiği bulut hizmeti sağlayıcısıyla (Google Workspace: Google E-Tablolar ve Gmail) ve talep hâlinde yetkili kamu kurumlarıyla paylaşılır. Bulut hizmetinin sunucuları yurt dışında bulunabilir; bu aktarım KVKK m.9 ve Kurul kararlarına uygun olarak yapılır.</p>
+    <h3>6. Toplama yöntemi ve saklama süresi</h3>
+    <p>Veriler, bu sitedeki demo formunu doldurmanızla elektronik ortamda toplanır. Kanuni süreler dışında iki (2) yıl saklanır; süre dolunca ya da amaç ortadan kalkınca silinir, yok edilir veya anonim hâle getirilir.</p>
+    <h3>7. Haklarınız</h3>
+    <p>KVKK m.11 uyarınca verilerinizin işlenip işlenmediğini öğrenme, bilgi isteme, amacını ve aktarıldığı kişileri öğrenme, düzeltilmesini, silinmesini veya yok edilmesini isteme, otomatik analiz sonucuna itiraz etme ve zararın giderilmesini isteme haklarına sahipsiniz. Başvurularınızı İlgili Kişi Başvuru Formu ile <a href="mailto:kvkk@bilisimschool.com">kvkk@bilisimschool.com</a> adresine ya da şirket adresine iletebilirsiniz.</p>
+  </section>
+  <p class="iletisim">Kişisel verilerinizle ilgili sorularınız için <a href="mailto:info@ai-la.ai">info@ai-la.ai</a> adresine yazabilirsiniz.</p>
+</main>
+<footer><div class="ic"><span>© 2026 AI-LA · Tüm hakları saklıdır.</span><span>Bilgin bir <a href="https://ai-la.ai" target="_blank" rel="noopener">AI-LA ekosistem</a> ürünüdür.</span></div></footer>
+</body>
+</html>
