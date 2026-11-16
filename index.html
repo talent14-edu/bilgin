@@ -316,6 +316,60 @@ footer img{height:38px;width:auto;background:#fff;border-radius:999px;padding:4p
 .alt-nav{display:flex;gap:18px}
 .alt-nav a,footer span a{color:#fff;text-underline-offset:3px}
 
+
+/* GECE: masada lamba altında açık duran defter. Kâğıt nesneler açık kalır, çevre lacivertleşir. */
+.tema{border:0;background:transparent;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:var(--lacivert);box-shadow:inset 0 0 0 2.5px currentColor;flex:none}
+.tema svg{width:22px;height:22px}
+.tema .ay{display:none}
+:root[data-theme="dark"]{--kenar:#0D2338;color-scheme:dark}
+:root[data-theme="dark"] body{background:#0D2338;color:#EAF3F7}
+:root[data-theme="dark"] body::before{background:#0D2338}
+:root[data-theme="dark"] .ust{background:color-mix(in srgb,#0D2338 90%,transparent)}
+:root[data-theme="dark"] .ust nav a{color:#EAF3F7}
+:root[data-theme="dark"] .ust .logo,:root[data-theme="dark"] footer img{background:#FFFDF6;border-radius:999px;padding:4px 14px}
+:root[data-theme="dark"] .tema{color:#FFC89E}
+:root[data-theme="dark"] .tema .gunes{display:none} :root[data-theme="dark"] .tema .ay{display:block}
+:root[data-theme="dark"] .hap.koyu{background:var(--mandalina);color:var(--lacivert)}
+:root[data-theme="dark"] .sahne .defter,:root[data-theme="dark"] .sahne .p:is(img){filter:brightness(.94) saturate(.95)}
+:root[data-theme="dark"] .sahne{filter:drop-shadow(0 30px 40px rgba(0,0,0,.45))}
+:root[data-theme="dark"] .sahne-dis > .metin{background:#0D2338;color:#EAF3F7}
+:root[data-theme="dark"] .sahne-dis > .metin h1,:root[data-theme="dark"] .sahne-dis > .metin p{color:#EAF3F7}
+:root[data-theme="dark"] .sahne-dis > .metin .hap.cizgi{color:#EAF3F7;box-shadow:inset 0 0 0 2.5px #EAF3F7}
+:root[data-theme="dark"] .kareli{background:#102A40;background-image:linear-gradient(rgba(126,190,210,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(126,190,210,.09) 1px,transparent 1px);background-size:38px 30px}
+:root[data-theme="dark"] .sinif-bant,:root[data-theme="dark"] .harita-bolum{background:#0D2338}
+:root[data-theme="dark"] .bas,:root[data-theme="dark"] .sayac-el,:root[data-theme="dark"] .masa .soru,:root[data-theme="dark"] .masa .durum,:root[data-theme="dark"] .kaynak b{color:#EAF3F7}
+:root[data-theme="dark"] .sayac-el b{color:#7FD0E6}
+:root[data-theme="dark"] .raf-not,:root[data-theme="dark"] .kaynak small{color:#AFC6D3}
+:root[data-theme="dark"] .tur{color:#FFB27E}
+:root[data-theme="dark"] .gozluk{color:#7FD0E6;box-shadow:inset 0 0 0 2.5px #7FD0E6}
+:root[data-theme="dark"] .geri.ok{color:#8FE0AE} :root[data-theme="dark"] .geri.no{color:#FFB27E}
+:root[data-theme="dark"] .masa .hap.cizgi{color:#EAF3F7;box-shadow:inset 0 0 0 2.5px #EAF3F7}
+:root[data-theme="dark"] .bogum.bos{box-shadow:inset 0 0 0 2.5px #4E6A80}
+:root[data-theme="dark"] .resim-k{background:#1C3A52}
+:root[data-theme="dark"] .kapanis,:root[data-theme="dark"] footer{background:#071827}
+:root[data-theme="dark"] .alt-nav a,:root[data-theme="dark"] footer span a{color:#FFC89E}
+
+
+/* kâğıt nesneler gece de lacivert mürekkeple yazılır */
+.polaroid,.kart,.not,.sekme,.fis,.karne,.form,.sec,.harf,.tk,.hata div{color:var(--lacivert)}
+.sekme[aria-selected="true"],.not[aria-pressed="true"]{color:#fff}
+section{scroll-margin-top:clamp(72px,7vw,104px)}
+/* K1–K8 defter sekmeleri: sayfanın sağ kenarından taşar, sınıf buradan seçilir */
+.sekme-kenar{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:25;display:flex;flex-direction:column;gap:6px;padding-right:env(safe-area-inset-right,0px)}
+.sk{border:0;width:58px;height:52px;border-radius:14px 0 0 14px;font:800 20px var(--ui);display:grid;place-items:center;padding-right:6px;box-shadow:-3px 4px 8px -4px rgba(11,46,79,.45);transform:translateX(8px);transition:transform .18s cubic-bezier(.2,.8,.2,1)}
+.sk:hover{transform:translateX(0)}
+.sk[aria-pressed="true"]{transform:translateX(-10px);width:68px;box-shadow:-6px 6px 12px -4px rgba(11,46,79,.5)}
+.sk1{background:#0B2E4F;color:#fff} .sk2{background:#0E6E8C;color:#fff} .sk3{background:#FF8A3D;color:#0B2E4F} .sk4{background:#BFE6F2;color:#0B2E4F}
+.sk5{background:#FFD3B8;color:#8A3E10} .sk6{background:#CFE3F7;color:#0B2E4F} .sk7{background:#CDEBD6;color:#1F5E3A} .sk8{background:#FCE3A6;color:#6B4A0C}
+.sinif-adi{margin:0;font:600 clamp(18px,1.5vw,22px) var(--el);color:var(--kalem)}
+.sinif-adi b{color:var(--kiremit)}
+:root[data-theme="dark"] .sinif-adi{color:#AFC6D3} :root[data-theme="dark"] .sinif-adi b{color:#FFB27E}
+/* beceri notu */
+.harita-ust{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.beceri-notu{width:clamp(200px,20vw,280px);transform:rotate(3deg);filter:drop-shadow(0 18px 20px rgba(11,46,79,.3))}
+@media (min-width:861px){ .siniflar-ust .notlar{display:none!important} }
+@media (max-width:860px){ .sekme-kenar{display:none} .sinif-adi{display:none} .beceri-notu{width:180px;margin-inline:auto} }
+
 @media (max-width:860px){
   .ust nav{display:none}
   .ust .hap{margin-left:auto}
@@ -363,10 +417,12 @@ footer img{height:38px;width:auto;background:#fff;border-radius:999px;padding:4p
   <div class="ic">
     <a class="logo" href="#" aria-label="BİLGİN ana sayfa"><img src="assets/logo.png" alt="BİLGİN"></a>
     <nav aria-label="Ana menü"><a href="#siniflar">Sınıflar</a><a href="#oyna">Oyunlar</a><a href="#ekosistem">Beceri haritası</a><a href="#kurumlar">Kurumlar</a></nav>
+    <button class="tema" id="tema" type="button" aria-label="Koyu temaya geç"><svg class="gunes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="ay" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
     <a class="hap koyu" href="#kurumlar">Demo talep et</a>
   </div>
 </header>
 
+<nav class="sekme-kenar" id="sekmeKenar" aria-label="Sınıf sekmeleri"><button class="sk sk1" data-k="1" aria-pressed="false" aria-label="1. sınıf">K1</button><button class="sk sk2" data-k="2" aria-pressed="false" aria-label="2. sınıf">K2</button><button class="sk sk3" data-k="3" aria-pressed="false" aria-label="3. sınıf">K3</button><button class="sk sk4" data-k="4" aria-pressed="false" aria-label="4. sınıf">K4</button><button class="sk sk5" data-k="5" aria-pressed="false" aria-label="5. sınıf">K5</button><button class="sk sk6" data-k="6" aria-pressed="false" aria-label="6. sınıf">K6</button><button class="sk sk7" data-k="7" aria-pressed="false" aria-label="7. sınıf">K7</button><button class="sk sk8" data-k="8" aria-pressed="false" aria-label="8. sınıf">K8</button></nav>
 <main>
 <section class="sahne-dis" aria-labelledby="h1">
   <div class="sahne" id="sahne">
@@ -405,6 +461,7 @@ footer img{height:38px;width:auto;background:#fff;border-radius:999px;padding:4p
 <section id="siniflar" aria-labelledby="h-sinif">
   <div class="sinif-bant"><div class="ic siniflar-ust">
       <h2 class="bas" id="h-sinif">Her <u>durak</u> bir ders. Her oyun bir iz.</h2>
+      <p class="sinif-adi" id="sinifAdi">Sağdaki sekmelerden sınıf seç · şu an <b>4. sınıf</b></p>
       <div class="notlar" id="notlar" role="group" aria-label="Sınıf seç"></div>
   </div></div>
   <div class="kareli bolum" style="padding-top:clamp(40px,5vw,72px)"><div class="ic">
@@ -442,7 +499,7 @@ footer img{height:38px;width:auto;background:#fff;border-radius:999px;padding:4p
 
 <section class="harita-bolum" id="harita" aria-labelledby="h-harita">
   <div class="ic">
-    <h2 class="bas" id="h-harita">Altı platform, <u>tek</u> beceri haritası.</h2>
+    <div class="harita-ust"><h2 class="bas" id="h-harita">Altı platform, <u>tek</u> beceri haritası.</h2><img class="beceri-notu" src="assets/beceri-notu.png" alt="Beceri haritası: her oyunda bir adım ileri"></div>
     <div class="akis">
       <ul class="kaynaklar" id="kaynaklar" aria-label="Veri kaynakları"></ul>
       <svg class="akis-cizgi" id="akisCizgi" aria-hidden="true"></svg>
@@ -499,6 +556,16 @@ const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelect
 let ac=null;
 function ton(k){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();({ok:[660,880],no:[300,230],tik:[560],bitti:[392,523,659,784]}[k]||[500]).forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+i*.09;o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.13,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.24);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.26)})}catch(e){}}
 
+
+/* tema: kayıtlı seçim, yoksa cihazın ayarı */
+(()=>{
+  const kok=document.documentElement, btn=$('#tema'), mq2=matchMedia('(prefers-color-scheme: dark)');
+  let kayit=null; try{ kayit=localStorage.getItem('bilgin-tema'); }catch(e){}
+  const uygula=t=>{ kok.setAttribute('data-theme',t); btn.setAttribute('aria-label',t==='dark'?'Açık temaya geç':'Koyu temaya geç'); btn.setAttribute('aria-pressed',t==='dark'); };
+  uygula(kayit||kok.getAttribute('data-theme')||(mq2.matches?'dark':'light'));
+  btn.onclick=()=>{ const t=kok.getAttribute('data-theme')==='dark'?'light':'dark'; uygula(t); try{ localStorage.setItem('bilgin-tema',t); }catch(e){} };
+})();
+
 /* mobilde başlık bloğunu sahnenin üstüne taşı */
 const mq=matchMedia('(max-width:860px)'), metin=$('#metin'), sahne=$('#sahne');
 function yerlestir(){ if(mq.matches) sahne.parentNode.insertBefore(metin,sahne); else sahne.insertBefore(metin,sahne.querySelector(".etiket")); }
@@ -520,12 +587,15 @@ const FOTO={1:[['mat','Sayı Treni','Matematik','poz_selam'],['fen','Hece Balonl
 $('#notlar').innerHTML=[1,2,3,4,5,6,7,8].map(k=>`<button class="not" data-k="${k}" aria-pressed="false">${k}. sınıf</button>`).join('');
 function sinif(k){
   $$('.not').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k==k));
+  $$('.sk').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k==k));
+  const sa=$('#sinifAdi'); if(sa) sa.innerHTML=`Sağdaki sekmelerden sınıf seç · şu an <b>${k}. sınıf</b>`;
   $('#foto').innerHTML=FOTO[k].map(o=>`<article class="polaroid ${o[0]}" data-ders="${o[2]}"><div class="resim"><img src="img/${o[3]}.webp" alt="" loading="lazy"></div><b>${o[1]}</b></article>`).join('');
   const kartlar=DERS[k].map(d=>({d,o:(OY[d]&&OY[d][k])||[]})).filter(x=>x.o.length);
   $('#oyunSay').textContent=kartlar.reduce((a,x)=>a+x.o.length,0);
   $('#raf').innerHTML=kartlar.map(x=>`<div class="kart" data-ders="${x.d}"><ul>${x.o.map(n=>`<li>${n}</li>`).join('')}</ul></div>`).join('');
 }
 $('#notlar').onclick=e=>{const b=e.target.closest('.not'); if(b){ton('tik');sinif(+b.dataset.k);}};
+$('#sekmeKenar').onclick=e=>{const b=e.target.closest('.sk'); if(!b) return; ton('tik'); sinif(+b.dataset.k); const h=$('#siniflar'); if(h.getBoundingClientRect().top>innerHeight*.6||h.getBoundingClientRect().bottom<0) h.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
 sinif(4);
 
 /* ---------- beceri haritası ---------- */
