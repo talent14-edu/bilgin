@@ -394,6 +394,14 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
 :root[data-theme="dark"] .oyun-ad.acik{background:var(--mandalina);color:var(--lacivert)}
 .sec sup{font-size:.6em}
 
+
+/* açıklamalar ikonun solunda: akış çizgisi yazıya değmez */
+@media (min-width:861px){
+  .akis{grid-template-columns:minmax(260px,360px) minmax(110px,1fr) minmax(0,640px)}
+  .kaynak{flex-direction:row-reverse;justify-content:flex-start}
+  .kaynak span{text-align:right}
+  .kaynak img{flex:none}
+}
 @media (max-width:860px){ .sekme-kenar{display:none} .sinif-adi{display:none} .beceri-notu{width:180px;margin-inline:auto} }
 
 @media (max-width:860px){
