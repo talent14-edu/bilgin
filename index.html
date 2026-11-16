@@ -174,7 +174,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .kapanis img{width:min(100%,360px);justify-self:center;filter:drop-shadow(0 20px 26px rgba(0,0,0,.35))}
 footer{background:var(--lacivert);color:#B9CAD9;border-top:1px solid rgba(255,255,255,.12)}
 footer .ic{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-block:22px 30px;font:700 14px var(--ui)}
-footer img{height:38px;width:auto;background:#fff;border-radius:999px;padding:4px 12px}
+footer img{height:42px;width:auto}
+footer .logo-acik{display:none!important} footer .logo-koyu{display:block!important}
 
 
 /* sınıf rafı */
@@ -327,7 +328,10 @@ footer img{height:38px;width:auto;background:#fff;border-radius:999px;padding:4p
 :root[data-theme="dark"] body::before{background:#0D2338}
 :root[data-theme="dark"] .ust{background:color-mix(in srgb,#0D2338 90%,transparent)}
 :root[data-theme="dark"] .ust nav a{color:#EAF3F7}
-:root[data-theme="dark"] .ust .logo,:root[data-theme="dark"] footer img{background:#FFFDF6;border-radius:999px;padding:4px 14px}
+.logo-koyu{display:none!important}
+:root[data-theme="dark"] .logo-koyu{display:block!important}
+:root[data-theme="dark"] .logo-acik{display:none!important}
+footer .logo-koyu{height:38px;width:auto}
 :root[data-theme="dark"] .tema{color:#FFC89E}
 :root[data-theme="dark"] .tema .gunes{display:none} :root[data-theme="dark"] .tema .ay{display:block}
 :root[data-theme="dark"] .hap.koyu{background:var(--mandalina);color:var(--lacivert)}
@@ -514,7 +518,7 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
 
 <header class="ust">
   <div class="ic">
-    <a class="logo" href="#" aria-label="BİLGİN ana sayfa"><img src="assets/logo.png" alt="BİLGİN"></a>
+    <a class="logo" href="#" aria-label="BİLGİN ana sayfa"><img class="logo-acik" src="assets/logo.png" alt="BİLGİN"><img class="logo-koyu" src="assets/logo_beyaz.png" alt="BİLGİN"></a>
     <nav aria-label="Ana menü"><a href="#siniflar">Sınıflar</a><a href="#oyna">Oyunlar</a><a href="#ekosistem">Beceri haritası</a><a href="#kurumlar">Kurumlar</a></nav>
     <button class="tema" id="tema" type="button" aria-label="Koyu temaya geç"><svg class="gunes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="ay" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
     <a class="hap koyu" href="#kurumlar">Demo talep et</a>
@@ -655,7 +659,7 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
   </div>
 </section>
 </main>
-<footer><div class="ic"><img src="assets/logo.png" alt="BİLGİN"><nav class="alt-nav" aria-label="Alt menü"><a href="kvkk/">KVKK</a><a href="#kurumlar">Demo talebi</a><a href="https://ai-la.ai" target="_blank" rel="noopener">ai-la.ai</a></nav><span>Bilgin bir <a href="https://ai-la.ai" target="_blank" rel="noopener">AI-LA ekosistem</a> ürünüdür. İçerikler Türkiye Yüzyılı Maarif Modeli öğretim programlarına göre hazırlanır. Oyun adları ve puanlar tanıtım örneğidir.</span></div></footer>
+<footer><div class="ic"><img class="logo-acik" src="assets/logo.png" alt="BİLGİN"><img class="logo-koyu" src="assets/logo_beyaz.png" alt="BİLGİN"><nav class="alt-nav" aria-label="Alt menü"><a href="kvkk/">KVKK</a><a href="#kurumlar">Demo talebi</a><a href="https://ai-la.ai" target="_blank" rel="noopener">ai-la.ai</a></nav><span>Bilgin bir <a href="https://ai-la.ai" target="_blank" rel="noopener">AI-LA ekosistem</a> ürünüdür. İçerikler Türkiye Yüzyılı Maarif Modeli öğretim programlarına göre hazırlanır. Oyun adları ve puanlar tanıtım örneğidir.</span></div></footer>
 
 <script>
 (()=>{
