@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Bilgin: AI-LA ekosisteminin 1–8. sınıf oyunlaştırılmış ders platformu.">
+<meta name="description" content="Bilgin: AI-LA ekosisteminin 1–8. sınıf oyunlaştırılmış ders platformu. Türkiye Yüzyılı Maarif Modeli öğretim programlarına uygun.">
 <title>Bilgin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -449,6 +449,17 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
 @keyframes sayfaCevir{0%{transform:rotateY(0)}100%{transform:rotateY(-180deg)}}
 @media (prefers-reduced-motion:reduce){.cevir.donuyor{display:none}}
 
+
+.metin .mobil-damga{display:none}
+@media (max-width:860px){.metin .mobil-damga{display:inline-flex}}
+/* Maarif mührü ve damgası: mürekkep, defter dünyasının parçası */
+.maarif-muhur{left:41.2%;top:30%;width:8.4%;height:auto;color:var(--kiremit);transform:rotate(-12deg);opacity:.82;mix-blend-mode:multiply;pointer-events:none}
+.damga{display:inline-flex;align-items:center;gap:6px;margin-left:auto;border:2.5px solid var(--kiremit);color:#8A3E10;border-radius:10px;padding:5px 12px;font:900 12px/1 var(--ui);letter-spacing:.06em;text-transform:uppercase;transform:rotate(-2.5deg)}
+.damga svg{width:16px;height:16px;flex:none}
+.oyun-sekme{align-items:center}
+:root[data-theme="dark"] .damga{color:#FFB27E;border-color:#FFB27E}
+@media (max-width:860px){ .maarif-muhur{display:none} .damga{margin-left:0} }
+
 @media (max-width:860px){ .oyun-sahne{grid-template-columns:1fr} .bilgin-yan{flex-direction:row;justify-content:center} .bilgin-yan img{max-width:110px} .cevap{min-width:96px;min-height:72px} }
 
 @media (max-width:860px){ .sekme-kenar{display:none} .sinif-adi{display:none} .beceri-notu{width:180px;margin-inline:auto} }
@@ -514,12 +525,21 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
       <svg class="kivilcim" viewBox="0 0 40 40" aria-hidden="true"><g stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"><path d="M8 30 2 22"/><path d="M18 22 14 10"/><path d="M28 24 32 12"/></g></svg>
       <h1 id="h1">1–8. sınıf dersleri<br class="kir"> oynanan duraklara<br class="kir"> <span class="alt-cizgi">dönüşür<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 14 C50 4 120 6 198 10" fill="none" stroke="#FF8A3D" stroke-width="7" stroke-linecap="round"/></svg></span></h1>
       <p>Her oyun, öğrencinin beceri haritasını büyütür.</p>
+      <span class="damga mobil-damga">Türkiye Yüzyılı Maarif Modeli’ne uygun</span>
       <svg class="kivilcim k2" viewBox="0 0 40 40" aria-hidden="true"><g stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"><path d="M8 30 2 22"/><path d="M18 22 14 10"/><path d="M28 24 32 12"/></g></svg>
       <div class="cta">
         <a class="hap turuncu" href="#kurumlar">Demo talep et <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
         <a class="hap cizgi" href="#oyna">Bir oyun dene <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></a>
       </div>
     </div>
+<svg class="p maarif-muhur" viewBox="0 0 200 200" role="img" aria-label="Türkiye Yüzyılı Maarif Modeli öğretim programlarına uygun, 1–8. sınıf">
+      <defs><path id="muhurYol" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0"/></defs>
+      <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="5"/>
+      <circle cx="100" cy="100" r="56" fill="none" stroke="currentColor" stroke-width="3"/>
+      <text font-family="Nunito,sans-serif" font-weight="900" font-size="17" letter-spacing="2.6" fill="currentColor"><textPath href="#muhurYol" startOffset="0">TÜRKİYE YÜZYILI MAARİF MODELİ ★ ÖĞRETİM PROGRAMLARINA UYGUN ★</textPath></text>
+      <text x="100" y="96" text-anchor="middle" font-family="Shantell Sans,sans-serif" font-weight="800" font-size="34" fill="currentColor">1–8</text>
+      <text x="100" y="122" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="14" letter-spacing="1.5" fill="currentColor">SINIF</text>
+    </svg>
     <div class="p etiket" aria-hidden="true"><b id="hOyun">Kesir Köprüsü</b></div>
     <span class="hap-k sinif" id="hSinif" aria-hidden="true">4. sınıf · Matematik</span>
     <span class="hap-k simdi" aria-hidden="true"><i></i>Şimdi oynanıyor</span>
@@ -553,7 +573,7 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
     <div class="foto" id="foto" aria-live="polite"></div>
     <div class="raf-ust">
       <p class="sayac-el"><b id="oyunSay">10</b> oyun bu sınıfta</p>
-      <span class="raf-not">Her dersin her temasında yeni bir durak açılır.</span>
+      <span class="raf-not">Türkiye Yüzyılı Maarif Modeli öğretim programlarının temalarına göre: her temada yeni bir durak.</span>
     </div>
     <div class="raf" id="raf" aria-live="polite"></div>
   </div></div>
@@ -610,7 +630,7 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
   <div class="ic">
     <div class="kapanis-sol">
       <h2 class="bas" id="h-son">Okulunuzda <u>bir ders</u> oynatalım.</h2>
-      <p class="kapanis-not">Formu bırakın; AI-LA ekibi demo hesaplarını açıp sizinle bir ders seçsin.</p>
+      <p class="kapanis-not">Formu bırakın; AI-LA ekibi demo hesaplarını açıp sizinle bir ders seçsin. Bütün duraklar Türkiye Yüzyılı Maarif Modeli öğretim programlarına göre hazırlanır.</p>
       <img src="img/poz_rozet.webp" alt="Rozet tutan Bilgin">
     </div>
     <form class="form" id="form" novalidate>
@@ -629,7 +649,7 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
   </div>
 </section>
 </main>
-<footer><div class="ic"><img src="assets/logo.png" alt="BİLGİN"><nav class="alt-nav" aria-label="Alt menü"><a href="kvkk/">KVKK</a><a href="#kurumlar">Demo talebi</a><a href="https://ai-la.ai" target="_blank" rel="noopener">ai-la.ai</a></nav><span>Bilgin bir <a href="https://ai-la.ai" target="_blank" rel="noopener">AI-LA ekosistem</a> ürünüdür. Oyun adları ve puanlar tanıtım örneğidir.</span></div></footer>
+<footer><div class="ic"><img src="assets/logo.png" alt="BİLGİN"><nav class="alt-nav" aria-label="Alt menü"><a href="kvkk/">KVKK</a><a href="#kurumlar">Demo talebi</a><a href="https://ai-la.ai" target="_blank" rel="noopener">ai-la.ai</a></nav><span>Bilgin bir <a href="https://ai-la.ai" target="_blank" rel="noopener">AI-LA ekosistem</a> ürünüdür. İçerikler Türkiye Yüzyılı Maarif Modeli öğretim programlarına göre hazırlanır. Oyun adları ve puanlar tanıtım örneğidir.</span></div></footer>
 
 <script>
 (()=>{
@@ -975,7 +995,7 @@ function dolapCiz(k){
 function dolapOyna(){
   const k=dolapSinif, d=dolapDers, adlar=(OY[d]||{})[k]||[];
   $$('.goz').forEach(g=>g.setAttribute('aria-pressed',g.dataset.d===d));
-  $('#oyunSekme').innerHTML=adlar.map((a,i)=>i===0?`<span class="oyun-ad acik">▶ ${a}</span>`:`<span class="oyun-ad kilitli" title="Tam sürümde">${a} · tam sürümde</span>`).join('');
+  $('#oyunSekme').innerHTML=adlar.map((a,i)=>i===0?`<span class="oyun-ad acik">▶ ${a}</span>`:`<span class="oyun-ad kilitli" title="Tam sürümde">${a} · tam sürümde</span>`).join('')+`<span class="damga"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 10.5l2.6 2.6L14 7.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Maarif Modeli · ${k}. sınıf ${d}</span>`;
   const oz=OZEL[d]&&OZEL[d][k];
   if(oz) return oz();
   const sorular=URET[k]&&d==='Matematik'?URET[k]():(BANK[d]&&BANK[d][k])||[];
