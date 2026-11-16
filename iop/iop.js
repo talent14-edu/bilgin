@@ -137,8 +137,8 @@ function kur(kok,ayar){
   }
   /* bölüm görünür alanda değilse tam oturt (bir kez, yumuşak) */
   function hizala(){
-    const r=kok.getBoundingClientRect(), ust=parseFloat(getComputedStyle(kok).scrollMarginTop)||0;
-    if(Math.abs(r.top-ust)>40 && r.height<=innerHeight){ kok.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}); }
+    const hk=ayar.hizalaKok||kok, r=hk.getBoundingClientRect(), ust=parseFloat(getComputedStyle(hk).scrollMarginTop)||0;
+    if(Math.abs(r.top-ust)>40 && r.height<=innerHeight){ hk.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}); }
   }
   kok.addEventListener('click',e=>{
     const a=e.target.closest('.io-adim'); if(a){ ton('tik'); git(a.dataset.p); return; }
@@ -205,7 +205,8 @@ function kur(kok,ayar){
     const p=q('#io-p-izle'), v=q('#io-video'); if(p.hidden) return;
     const altH=q('.io-altyazi').offsetHeight+q('.io-kontrol').offsetHeight;
     const ust=parseFloat(getComputedStyle(kok).scrollMarginTop)||0;
-    const h=G?innerHeight-ust-q('.io-adimlar').offsetHeight-altH-40:p.clientHeight-altH, w=p.clientWidth;
+    const tek=G&&matchMedia('(min-width:861px)').matches;
+    const h=G&&!tek?innerHeight-ust-q('.io-adimlar').offsetHeight-altH-40:p.clientHeight-altH, w=p.clientWidth;
     v.style.width=Math.max(260,Math.min(w,h*16/9))+'px';
   }
   if('ResizeObserver' in window) new ResizeObserver(sigdir).observe(q('#io-p-izle')); addEventListener('resize',sigdir);
@@ -220,7 +221,7 @@ function kur(kok,ayar){
     q('.io-adim[data-p="oyna"]').classList.add('bitti'); ton('bitti');
     oG(oHata===0?'Kusursuz! Hiç hata yok.':`Tamamlandı! ${oHata} kez yeniden denedin.`,'ok','rozet');
     const b=q('#io-oileri'); b.hidden=false; b.onclick=()=>git('olc');
-    haritaya(L.oyun.ad,ders,oHata===0?4:2);
+    haritaya(L.oyun.ad,ders,oHata===0?4:2,oHata?'konu':undefined);
   }
   function oyunKur(){
     oDogru=0; oHata=0; const O=L.oyun, el=q('#io-oyun');
@@ -235,7 +236,7 @@ function kur(kok,ayar){
         if(!sec){ oG('Önce bir karta dokun.','no','ipucu'); salla(q('#io-tepsi')); return; }
         const dogruK=O.ogeler[+sec.dataset.i][1];
         if(+kv.dataset.k===dogruK){ ton('ok'); oDogru++; $('.ic-l',kv).insertAdjacentHTML('beforeend',`<span>${sec.innerHTML}</span>`); sec.remove(); sec=null; $$('.io-kova',el).forEach(k=>k.classList.remove('hazir','yanlis')); oIl(oDogru,O.ogeler.length); oG('Doğru!','ok','sevinc'); if(oDogru===O.ogeler.length) oyunBitti(); }
-        else { ton('no'); oHata++; kv.classList.add('yanlis'); salla(kv); setTimeout(()=>kv.classList.remove('yanlis'),600); oG('Bu kutu değil, bir daha düşün.','no','ipucu'); haritaya(O.ad,ders,-1,'konu'); }
+        else { ton('no'); oHata++; kv.classList.add('yanlis'); salla(kv); setTimeout(()=>kv.classList.remove('yanlis'),600); oG('Bu kutu değil, bir daha düşün.','no','ipucu'); }
       };
     }
     else if(O.tip==='eslestir'){
@@ -248,7 +249,7 @@ function kur(kok,ayar){
         if(b.dataset.s==='sol'){ ton('tik'); secS=b; $$('.io-es[data-s="sol"]',el).forEach(x=>x.setAttribute('aria-pressed',x===b)); oG('Şimdi sağdan eşini seç.','', 'dusunme'); return; }
         if(!secS){ oG('Önce soldan bir karta dokun.','no','ipucu'); salla(b); return; }
         if(b.dataset.i===secS.dataset.i){ ton('ok'); const r='m'+(oDogru%5); [b,secS].forEach(x=>{x.classList.add('m',r); x.setAttribute('aria-pressed','false'); x.setAttribute('aria-disabled','true');}); secS=null; oDogru++; oIl(oDogru,O.ciftler.length); oG('Eşleşti!','ok','sevinc'); if(oDogru===O.ciftler.length) oyunBitti(); }
-        else { ton('no'); oHata++; salla(b); oG('Eşi bu değil, bir daha bak.','no','ipucu'); haritaya(O.ad,ders,-1,'konu'); }
+        else { ton('no'); oHata++; salla(b); oG('Eşi bu değil, bir daha bak.','no','ipucu'); }
       };
     }
     else if(O.tip==='sirala'){
@@ -258,7 +259,7 @@ function kur(kok,ayar){
       el.onclick=e=>{
         const b=e.target.closest('.io-tas'); if(!b) return;
         if(+b.dataset.i===oDogru){ ton('ok'); const y=q(`.io-yuva[data-y="${oDogru}"]`); y.innerHTML=b.innerHTML; y.classList.add('dolu'); y.classList.remove('sirada'); b.remove(); oDogru++; oIl(oDogru,n); const s=q(`.io-yuva[data-y="${oDogru}"]`); if(s) s.classList.add('sirada'); oG(oDogru<n?`Güzel! Şimdi ${oDogru+1}. sıra.`:'Sıralama tamam!','ok','sevinc'); if(oDogru===n) oyunBitti(); }
-        else { ton('no'); oHata++; salla(b); oG('Bu kart şimdi değil, sırayı düşün.','no','ipucu'); haritaya(O.ad,ders,-1,'konu'); }
+        else { ton('no'); oHata++; salla(b); oG('Bu kart şimdi değil, sırayı düşün.','no','ipucu'); }
       };
     }
     else if(O.tip==='kesici'){
@@ -285,7 +286,7 @@ function kur(kok,ayar){
         if(c.dataset.d==='1'){ c.classList.add('ok'); ton('ok'); $$('.io-cevap',el).forEach(x=>x.disabled=true); oIl(s+1,O.sayilar.length);
           if(s<O.sayilar.length-1){ oG('Doğru okudun!','ok','sevinc'); const nx=q('#io-oileri'); nx.hidden=false; nx.textContent='Sonraki sayı →'; nx.onclick=()=>{ s++; ciz(); }; }
           else oyunBitti(); }
-        else { c.classList.add('no'); c.disabled=true; ton('no'); oHata++; salla(c); oG('Bölük adlarına bir daha bak.','no','ipucu'); haritaya(O.ad,ders,-1,'konu'); }
+        else { c.classList.add('no'); c.disabled=true; ton('no'); oHata++; salla(c); oG('Bölük adlarına bir daha bak.','no','ipucu'); }
       };
       ciz();
     }

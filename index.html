@@ -516,6 +516,55 @@ button.oyun-ad.acik{background:var(--lacivert);color:#fff;box-shadow:none}
   .kapanis .ic{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+/* Oyun dolabı tek ekran: başlık + K1–K8, solda raf, ortada izle-oyna-ölç, sağda fiş */
+#oyna{--d-ust:clamp(64px,6.6vw,96px);scroll-margin-top:var(--d-ust)}
+.dolap-k{display:flex;gap:6px;flex-wrap:wrap}
+.dk{border:0;min-width:46px;height:40px;padding:0 10px;border-radius:12px;font:800 16px var(--ui);box-shadow:0 4px 8px -5px rgba(11,46,79,.5);transition:transform .16s cubic-bezier(.2,.8,.2,1)}
+.dk:hover{transform:translateY(-2px)}
+.dk[aria-pressed="true"]{transform:translateY(-3px) rotate(-3deg);box-shadow:0 0 0 3px var(--kagit),0 0 0 6px var(--lacivert),0 8px 14px -6px rgba(11,46,79,.5)}
+.dk1{background:#0B2E4F;color:#fff} .dk2{background:#0E6E8C;color:#fff} .dk3{background:#FF8A3D;color:#0B2E4F} .dk4{background:#BFE6F2;color:#0B2E4F}
+.dk5{background:#FFD3B8;color:#8A3E10} .dk6{background:#CFE3F7;color:#0B2E4F} .dk7{background:#CDEBD6;color:#1F5E3A} .dk8{background:#FCE3A6;color:#6B4A0C}
+:root[data-theme="dark"] .dk1{box-shadow:inset 0 0 0 2px #4E6A80}
+:root[data-theme="dark"] .dk[aria-pressed="true"]{box-shadow:0 0 0 3px #0E2236,0 0 0 6px var(--mandalina)}
+.dolap-ust .gorunmez{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#dolapIop .oyun-sekme{margin:0 0 12px}
+#dolapIop .oyun-ad{font-size:14px;padding:6px 12px}
+.sekme-kenar{transition:transform .25s,opacity .25s}
+body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%,-50%)}
+@media (min-width:861px){
+  #oyna.bolum{padding-block:0}
+  #oyna>.ic{height:calc(100svh - var(--d-ust));min-height:600px;max-height:1050px;display:flex;flex-direction:column;gap:clamp(10px,1.8vh,18px);padding-block:clamp(10px,2vh,22px);padding-inline:max(clamp(16px,4vw,64px),env(safe-area-inset-left,0px))}
+  #oyna .dolap-ust{align-items:center;flex-wrap:nowrap}
+  #oyna .dolap-ust .bas{font-size:clamp(30px,min(3vw,5.4vh),52px);margin:0;white-space:nowrap}
+  #oyna .dolap{flex:1;min-height:0;margin:0;grid-template-columns:clamp(150px,13vw,210px) minmax(0,1fr) clamp(210px,17vw,260px);gap:clamp(14px,1.8vw,30px);align-items:stretch}
+  #oyna .dolap-cerceve{margin:0;padding:10px;border-radius:20px;overflow-y:auto;scrollbar-width:none;align-self:start;max-height:100%}
+  #oyna .dolap-raf{grid-template-columns:1fr;gap:8px}
+  #oyna .goz{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;row-gap:2px;align-items:center;padding:8px 10px;text-align:left}
+  #oyna .goz img{grid-row:1/3;width:clamp(36px,min(3.4vw,6vh),54px)}
+  #oyna .goz b{font-size:clamp(14px,1.1vw,17px);text-align:left;align-self:end}
+  #oyna .goz small{align-self:start}
+  #oyna .goz:hover{transform:translateX(3px)}
+  #oyna .goz[aria-pressed="true"]{transform:translateX(6px)}
+  #dolapIop{min-height:0}
+  #dolapIop .io-panel{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+  #dolapIop #io-p-izle{overflow:hidden}
+  #dolapIop .io-adimlar{max-width:none}
+  #dolapIop #io-p-izle{align-items:center}
+  #oyna .fis{min-height:0;align-self:start;max-height:100%;padding:34px 16px 16px;transform:rotate(.8deg)}
+  #oyna .fis b{font-size:clamp(16px,1.3vw,19px);line-height:1.2}
+  #oyna .fis ol{min-height:96px;overflow:hidden;font-size:14px}
+}
+@media (max-width:860px){
+  #oyna .dolap-k{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));width:100%;gap:5px}
+  #oyna .dk{min-width:0;padding:0;height:38px;font-size:14px}
+  #oyna .dolap-raf{display:flex;overflow-x:auto;scrollbar-width:none;gap:8px}
+  #oyna .goz{flex:none;width:112px;padding:10px 6px}
+  #oyna .goz img{width:48px}
+  #oyna .goz[aria-pressed="true"]{transform:translateY(-3px)}
+  #oyna .dolap{margin-top:16px}
+  #oyna .dolap>*{min-width:0}
+  #oyna .fis ol{min-height:0}
+}
 </style>
 </head>
 <body>
@@ -596,11 +645,12 @@ button.oyun-ad.acik{background:var(--lacivert);color:#fff;box-shadow:none}
   <div class="ic">
     <div class="dolap-ust">
       <h2 class="bas" id="h-oyna">Oyun dolabı</h2>
-      <p class="dolap-alt" id="dolapAlt"><b>4. sınıf</b> dolabı · bir gözü aç</p>
+      <div class="dolap-k" id="dolapK" role="group" aria-label="Sınıf seç"><button class="dk dk1" data-k="1" aria-pressed="false" aria-label="1. sınıf">K1</button><button class="dk dk2" data-k="2" aria-pressed="false" aria-label="2. sınıf">K2</button><button class="dk dk3" data-k="3" aria-pressed="false" aria-label="3. sınıf">K3</button><button class="dk dk4" data-k="4" aria-pressed="false" aria-label="4. sınıf">K4</button><button class="dk dk5" data-k="5" aria-pressed="false" aria-label="5. sınıf">K5</button><button class="dk dk6" data-k="6" aria-pressed="false" aria-label="6. sınıf">K6</button><button class="dk dk7" data-k="7" aria-pressed="false" aria-label="7. sınıf">K7</button><button class="dk dk8" data-k="8" aria-pressed="false" aria-label="8. sınıf">K8</button></div>
+      <p class="dolap-alt gorunmez" id="dolapAlt" aria-live="polite"><b>4. sınıf</b> dolabı</p>
     </div>
-    <div class="dolap-cerceve"><div class="dolap-raf" id="dolapRaf" role="group" aria-label="Dersler"></div></div>
-    <div class="oyun-sekme" id="oyunSekme" aria-live="polite"></div>
     <div class="dolap">
+      <div class="dolap-cerceve"><div class="dolap-raf" id="dolapRaf" role="group" aria-label="Dersler"></div></div>
+      <div class="oyun-sekme" id="oyunSekme" aria-live="polite"></div>
       <div class="masa" id="masa" aria-live="polite"></div>
       <aside class="fis" aria-label="Haritaya giden veri">
         <img class="fis-bant" src="assets/tape.png" alt="">
@@ -747,6 +797,11 @@ function sinif(k){
 }
 $('#notlar').onclick=e=>{const b=e.target.closest('.not'); if(b){sinif(+b.dataset.k);}};
 $('#sekmeKenar').onclick=e=>{const b=e.target.closest('.sk'); if(!b) return; sinif(+b.dataset.k);};
+$('#dolapK').onclick=e=>{const b=e.target.closest('.dk'); if(!b) return; ton('tik');
+  /* üstteki bölümler sınıfla yeniden çizilir; dolap yerinden oynamasın */
+  const o=$('#oyna'), y=o.getBoundingClientRect().top; sinif(+b.dataset.k); const f=o.getBoundingClientRect().top-y; if(Math.abs(f)>1) scrollBy(0,f);};
+/* dolap ekrandayken kenar sekmeleri çekilir: sınıf seçimi dolabın kendi satırında */
+if('IntersectionObserver' in window) new IntersectionObserver(([g])=>document.body.classList.toggle('dolapta',g.isIntersecting),{rootMargin:'-45% 0px -45% 0px'}).observe($('#oyna'));
 sinif(4);
 window.__heroHazir=true;
 
@@ -1003,7 +1058,8 @@ function dolapCiz(k){
   dolapSinif=k;
   const dersler=DERS[k];
   if(!dersler.includes(dolapDers)) dolapDers=dersler[0];
-  $('#dolapAlt').innerHTML=`<b>${k}. sınıf</b> dolabı · bir gözü aç`;
+  $('#dolapAlt').innerHTML=`<b>${k}. sınıf</b> dolabı`;
+  $$('.dk').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k==k));
   $('#dolapRaf').innerHTML=dersler.map(d=>`<button class="goz" data-d="${d}" aria-pressed="${d===dolapDers}"><img src="assets/ders/${IKON[d]}.png" alt=""><b>${d}</b><small>${((OY[d]||{})[k]||[]).length} oyun</small></button>`).join('');
   dolapOyna();
 }
@@ -1031,10 +1087,18 @@ window.__dolapHazir=true;
 /* İzle, oyna, ölç: dolabın masa sütununa üç adım. Oyna = dolabın oyunları, ölç sonucu beceri haritasına. */
 (()=>{
   const kap=document.createElement('div'); kap.className='iop iop-gomu'; kap.id='dolapIop';
-  $('.dolap').prepend(kap);
+  $('.dolap-cerceve').after(kap);
   window.veri=(...a)=>veri(...a);
-  window.__iop=IOP.kur(kap,{gomulu:true,kok:'',sinif:dolapSinif,ders:dolapDers,haritaLink:'#harita',oynaAc:()=>dolapOyunAc(0)});
+  window.__iop=IOP.kur(kap,{gomulu:true,kok:'',sinif:dolapSinif,ders:dolapDers,haritaLink:'#harita',hizalaKok:$('#oyna'),oynaAc:()=>dolapOyunAc(0)});
   $('#io-p-oyna',kap).append($('#oyunSekme'),$('#masa'));
+  /* tek ekran: dolabın oyunu panele sığmazsa küçülür, sayfa kaymaz */
+  const masa=$('#masa'), pnl=$('#io-p-oyna',kap), mq=matchMedia('(min-width:861px)'); let bek=0;
+  const sig=()=>{ bek=0; masa.style.zoom=''; if(!mq.matches||pnl.hidden) return;
+    const yer=pnl.clientHeight-$('#oyunSekme').offsetHeight-14, h=masa.scrollHeight;
+    if(h>yer) masa.style.zoom=Math.max(.55,yer/h).toFixed(3); };
+  const iste=()=>{ if(!bek) bek=requestAnimationFrame(sig); };
+  new MutationObserver(iste).observe(masa,{childList:true,subtree:true,characterData:true});
+  if('ResizeObserver' in window) new ResizeObserver(iste).observe(pnl); addEventListener('resize',iste);
 })();
 
 
