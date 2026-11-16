@@ -73,7 +73,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .kopru{left:3.90%;top:52.72%;width:76.18%;height:31.51%}
 .kurt{left:35.9%;top:28.2%;width:28.6%;height:36.5%;transform-origin:50% 100%;animation:kurt 3.4s ease-in-out infinite}
 @keyframes kurt{50%{transform:translateY(-1.2%) rotate(-.6deg)}}
-.tahta{position:absolute;top:59.6%;translate:-50% 0;font:600 2.1cqw/1 var(--el);color:var(--lacivert);display:flex;flex-direction:column;align-items:center;line-height:.9}
+.tahta{position:absolute;top:59.6%;translate:-50% 0;z-index:3;text-shadow:0 0 6px #F3D9A4,0 0 3px #F3D9A4;font:600 2.1cqw/1 var(--el);color:var(--lacivert);display:flex;flex-direction:column;align-items:center;line-height:.9}
 .tahta hr{width:1.8cqw;border:0;border-top:.2cqw solid var(--lacivert);margin:.35cqw 0;border-radius:2px}
 .t1{left:38.12%} .t2{left:53.56%} .t3{left:63.94%}
 .denklem{left:19.4%;top:82%;font:400 2.5cqw/1 var(--el);color:var(--kalem);display:flex;align-items:center;gap:.4cqw}
@@ -431,6 +431,24 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
 .cevap.ok::after{content:"✓";position:absolute;right:-12px;top:-14px;width:40px;height:40px;border-radius:50%;background:#2E7D52;color:#fff;display:grid;place-items:center;font:800 22px var(--ui);transform:rotate(12deg);box-shadow:0 4px 8px -3px rgba(0,0,0,.4)}
 .cevap.no{background:#FFD9CC;opacity:.75}
 .cevap:disabled{cursor:default}
+
+/* sınıfa göre değişen sahne + sayfa çevirme */
+.sahne{perspective:2400px}
+.sahne-img{left:23%;top:49%;width:46%;height:42%;object-fit:contain;object-position:50% 100%;transition:opacity .25s}
+.sahne.k-diger .denklem{left:5%;top:76%;width:17%;flex-wrap:wrap;font-size:2.1cqw;line-height:1.3}
+.denklem sup{font-size:.62em;align-self:flex-start;margin-top:-.2em}
+.etiket{width:auto!important;padding-inline:1.6cqw;white-space:nowrap}
+.etiket b{white-space:nowrap}
+.sahne.k-diger .k4{display:none!important}
+.sahne-icerik-gecis .etiket,.sahne-icerik-gecis .hap-k,.sahne-icerik-gecis .denklem,.sahne-icerik-gecis .eksen,.sahne-icerik-gecis .sahne-img,.sahne-icerik-gecis .k4{opacity:0}
+.etiket,.hap-k,.denklem,.eksen,.sahne-img,.k4{transition:opacity .22s}
+.cevir{position:absolute;left:50%;top:1.5%;width:48.6%;height:96%;transform-origin:0 50%;transform-style:preserve-3d;pointer-events:none;z-index:6;display:none;border-radius:0 10px 10px 0;
+  background:url(assets/notebook.webp) 100% 50%/205.8% 104.2% no-repeat}
+.cevir::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,rgba(11,46,79,.28),rgba(255,255,255,0) 30%,rgba(11,46,79,.12))}
+.cevir.donuyor{display:block;animation:sayfaCevir .82s cubic-bezier(.45,.05,.3,1) forwards}
+@keyframes sayfaCevir{0%{transform:rotateY(0)}100%{transform:rotateY(-180deg)}}
+@media (prefers-reduced-motion:reduce){.cevir.donuyor{display:none}}
+
 @media (max-width:860px){ .oyun-sahne{grid-template-columns:1fr} .bilgin-yan{flex-direction:row;justify-content:center} .bilgin-yan img{max-width:110px} .cevap{min-width:96px;min-height:72px} }
 
 @media (max-width:860px){ .sekme-kenar{display:none} .sinif-adi{display:none} .beceri-notu{width:180px;margin-inline:auto} }
@@ -502,19 +520,21 @@ section{scroll-margin-top:clamp(72px,7vw,104px)}
         <a class="hap cizgi" href="#oyna">Bir oyun dene <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></a>
       </div>
     </div>
-    <div class="p etiket" aria-hidden="true"><b>Kesir Köprüsü</b></div>
-    <span class="hap-k sinif" aria-hidden="true">4. sınıf · Matematik</span>
+    <div class="p etiket" aria-hidden="true"><b id="hOyun">Kesir Köprüsü</b></div>
+    <span class="hap-k sinif" id="hSinif" aria-hidden="true">4. sınıf · Matematik</span>
     <span class="hap-k simdi" aria-hidden="true"><i></i>Şimdi oynanıyor</span>
-    <img class="p kopru" src="assets/bridge2.png" alt="Kesir tahtalarından nehrin üstüne kurulan köprü ve yük bekleyen kamyon">
-    <svg class="p kiv-kamyon" viewBox="0 0 40 40" aria-hidden="true"><g stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"><path d="M8 30 2 22"/><path d="M18 22 14 10"/><path d="M28 24 32 12"/></g></svg>
-    <img class="p kamyon-h" src="assets/kamyon.png" alt="">
-    <img class="p kurt" src="assets/worm.png" alt="Bilgin köprünün üstünde ilerliyor">
-    <span class="tahta t1" aria-hidden="true">1<hr>2</span><span class="tahta t2" aria-hidden="true">1<hr>4</span><span class="tahta t3" aria-hidden="true">1<hr>4</span>
-    <div class="p denklem" role="img" aria-label="Bir bölü iki artı bir bölü dört artı bir bölü dört eşittir bir"><span class="kesir">1<hr>2</span>+<span class="kesir">1<hr>4</span>+<span class="kesir">1<hr>4</span>=<u>1</u></div>
+    <img class="p kopru k4" src="assets/bridge2.png" alt="Kesir tahtalarından nehrin üstüne kurulan köprü ve yük bekleyen kamyon">
+    <svg class="p kiv-kamyon k4" viewBox="0 0 40 40" aria-hidden="true"><g stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"><path d="M8 30 2 22"/><path d="M18 22 14 10"/><path d="M28 24 32 12"/></g></svg>
+    <img class="p kamyon-h k4" src="assets/kamyon.png" alt="">
+    <img class="p sahne-img" id="hSahne" src="assets/sahne/k1.png" alt="" hidden>
+    <div class="cevir" id="cevir" aria-hidden="true"></div>
+    <img class="p kurt k4" src="assets/worm.png" alt="Bilgin köprünün üstünde ilerliyor">
+    <span class="tahta t1 k4" aria-hidden="true">1<hr>2</span><span class="tahta t2 k4" aria-hidden="true">1<hr>4</span><span class="tahta t3 k4" aria-hidden="true">1<hr>4</span>
+    <div class="p denklem" id="hDenklem" role="img" aria-label="Bir bölü iki artı bir bölü dört artı bir bölü dört eşittir bir"><span class="kesir">1<hr>2</span>+<span class="kesir">1<hr>4</span>+<span class="kesir">1<hr>4</span>=<u>1</u></div>
     <div class="p beceri-baslik"><span>Beceri haritası</span></div>
     <span class="p arti">+1 beceri</span>
     <img class="p grafik" src="assets/skill-chart.png" alt="Kesirlerden akıl yürütmeye yükselen beceri çizgisi">
-    <span class="eksen e1">Kesirler</span><span class="eksen e2">Problem<br>çözme</span><span class="eksen e3">Akıl<br>yürütme</span>
+    <span class="eksen e1" id="hE1">Kesirler</span><span class="eksen e2" id="hE2">Problem<br>çözme</span><span class="eksen e3" id="hE3">Akıl<br>yürütme</span>
     <svg class="p ok-k" viewBox="0 0 124 120" aria-hidden="true"><path d="M8 112 C40 100 80 70 104 18" fill="none" stroke="#FF8A3D" stroke-width="5" stroke-linecap="round" stroke-dasharray="6 7"/><path d="M90 26 104 14 108 34" fill="none" stroke="#FF8A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <img class="p cikartma" src="assets/sticker.png" alt="">
     <span class="p cikartma-yazi">Öğrenme görünür.</span>
@@ -632,6 +652,39 @@ const mq=matchMedia('(max-width:860px)'), metin=$('#metin'), sahne=$('#sahne');
 function yerlestir(){ if(mq.matches) sahne.parentNode.insertBefore(metin,sahne); else sahne.insertBefore(metin,sahne.querySelector(".etiket")); }
 mq.addEventListener('change',yerlestir); yerlestir();
 
+
+/* ---------- ana sahne sınıfa göre ---------- */
+const HERO={
+ 1:['Sayı Treni','1. sınıf · Matematik','3 + 2 = <u>5</u>',['Sayma','Toplama','Dikkat']],
+ 2:['Toplama Pazarı','2. sınıf · Matematik','28 + 33 = <u>61</u>',['Toplama','Onluklar','Problem<br>çözme']],
+ 3:['Çarpım Bahçesi','3. sınıf · Matematik','4 × 5 = <u>20</u>',['Çarpma','Örüntü','Akıl<br>yürütme']],
+ 4:null,
+ 5:['Sürtünme Rampası','5. sınıf · Fen Bilimleri','halı &gt; buz',['Kuvvet','Deney','Gözlem']],
+ 6:['Oran Mutfağı','6. sınıf · Matematik','2 kişi : 3 yumurta',['Oran','Ölçekleme','Problem<br>çözme']],
+ 7:['Hücre Dedektifi','7. sınıf · Fen Bilimleri','çekirdek · kloroplast',['Hücre','Gözlem','Sınıflama']],
+ 8:['Üslü Roket','8. sınıf · Matematik','2<sup>5</sup> = <u>32</u>',['Üslü<br>sayılar','Örüntü','Akıl<br>yürütme']]
+};
+const H4={oyun:$('#hOyun').innerHTML,sinif:$('#hSinif').innerHTML,denk:$('#hDenklem').innerHTML,e:[$('#hE1').innerHTML,$('#hE2').innerHTML,$('#hE3').innerHTML]};
+const sesSayfa=new Audio('assets/sayfa.mp3'); sesSayfa.volume=.7;
+let heroSinif=4;
+function heroIcerik(k){
+  const st=$('#sahne'), h=HERO[k], img=$('#hSahne');
+  if(!h){ st.classList.remove('k-diger'); img.hidden=true; $('#hOyun').innerHTML=H4.oyun; $('#hSinif').innerHTML=H4.sinif; $('#hDenklem').innerHTML=H4.denk; ['hE1','hE2','hE3'].forEach((id,i)=>$('#'+id).innerHTML=H4.e[i]); return; }
+  st.classList.add('k-diger'); img.src=`assets/sahne/k${k}.png`; img.alt=`${h[0]} sahnesinde Bilgin`; img.hidden=false;
+  $('#hOyun').innerHTML=h[0]; $('#hSinif').innerHTML=h[1]; $('#hDenklem').innerHTML=h[2]; ['hE1','hE2','hE3'].forEach((id,i)=>$('#'+id).innerHTML=h[3][i]);
+}
+function heroDegis(k){
+  if(k===heroSinif) return; heroSinif=k;
+  const st=$('#sahne'), cv=$('#cevir');
+  try{ sesSayfa.currentTime=0; sesSayfa.play().catch(()=>{}); }catch(e){}
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ heroIcerik(k); return; }
+  st.classList.add('sahne-icerik-gecis');
+  cv.classList.remove('donuyor'); void cv.offsetWidth; cv.classList.add('donuyor');
+  setTimeout(()=>{ heroIcerik(k); }, 380);
+  setTimeout(()=>{ st.classList.remove('sahne-icerik-gecis'); }, 470);
+  setTimeout(()=>{ cv.classList.remove('donuyor'); }, 860);
+}
+
 /* ---------- sınıflar ve oyun rafı ---------- */
 const DERS={1:['Matematik','Türkçe','Hayat Bilgisi'],2:['Matematik','Türkçe','Hayat Bilgisi','İngilizce'],3:['Matematik','Türkçe','Fen Bilimleri','Hayat Bilgisi','İngilizce'],4:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce'],5:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce','Din Kültürü'],6:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce','Din Kültürü'],7:['Matematik','Türkçe','Fen Bilimleri','Sosyal Bilgiler','İngilizce','Din Kültürü'],8:['Matematik','Türkçe','Fen Bilimleri','İnkılap Tarihi','İngilizce','Din Kültürü']};
 const OY={
@@ -655,10 +708,12 @@ function sinif(k){
   $('#oyunSay').textContent=kartlar.reduce((a,x)=>a+x.o.length,0);
   $('#raf').innerHTML=kartlar.map(x=>`<div class="kart" data-ders="${x.d}"><ul>${x.o.map(n=>`<li>${n}</li>`).join('')}</ul></div>`).join('');
   if(typeof dolapCiz==='function'&&window.__dolapHazir) dolapCiz(k);
+  if(window.__heroHazir) heroDegis(k);
 }
-$('#notlar').onclick=e=>{const b=e.target.closest('.not'); if(b){ton('tik');sinif(+b.dataset.k);}};
-$('#sekmeKenar').onclick=e=>{const b=e.target.closest('.sk'); if(!b) return; ton('tik'); sinif(+b.dataset.k); const h=$('#siniflar'); if(h.getBoundingClientRect().top>innerHeight*.6||h.getBoundingClientRect().bottom<0) h.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
+$('#notlar').onclick=e=>{const b=e.target.closest('.not'); if(b){sinif(+b.dataset.k);}};
+$('#sekmeKenar').onclick=e=>{const b=e.target.closest('.sk'); if(!b) return; sinif(+b.dataset.k);};
 sinif(4);
+window.__heroHazir=true;
 
 /* ---------- beceri haritası ---------- */
 const KAY=[
