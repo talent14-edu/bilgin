@@ -636,6 +636,53 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
   .patika-kart{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){ .patika-bilgin,.durak b,.tas{transition:none} }
+/* patika rafı kartları: oyun değil patika sayısı */
+.pt-kart{gap:6px}
+.pt-say{margin:0;font:600 clamp(16px,1.3vw,20px) var(--el)}
+.pt-say b{font:800 clamp(30px,2.8vw,42px)/1 var(--el);color:var(--petrol);margin-right:4px}
+.pt-iz{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pt-iz i{width:12px;height:12px;border-radius:50%;background:var(--mandalina);box-shadow:inset 0 0 0 2px #fff}
+.pt-iz i:nth-child(odd){transform:translateY(-3px)}
+.pt-ilk{margin:2px 0 0;font:600 13px/1.25 var(--el);color:var(--kalem)}
+.pt-ilk::before{content:"1. patika: ";font-weight:800}
+/* patika zemini: çayır yeşili, iz kum rengi */
+.patika-bolum{background:linear-gradient(180deg,#E4F3DC,#D6EDCB);position:relative}
+.patika-bolum::before{content:"";position:absolute;inset:0;background:url(assets/kareli.png) repeat;background-size:auto 46px;opacity:.28;mix-blend-mode:multiply;pointer-events:none}
+.patika-bolum>.ic{position:relative}
+.patika-bolum .durak span{background:color-mix(in srgb,#DDF0D3 85%,transparent)}
+.patika-bolum .patika-svg .iz-golge{stroke:#F1E3C2}
+.pk-ac{grid-column:1/-1;justify-self:start;font-size:15px!important;padding:10px 18px!important;order:3}
+:root[data-theme="dark"] .patika-bolum{background:linear-gradient(180deg,#16352F,#122C29)}
+:root[data-theme="dark"] .patika-bolum::before{opacity:.12}
+:root[data-theme="dark"] .patika-bolum .durak span{background:transparent}
+:root[data-theme="dark"] .patika-bolum .patika-svg .iz-golge{stroke:#2C4F45}
+:root[data-theme="dark"] .pt-say b{color:#7FD0E6}
+/* geçit: patikadaki daire açılır, izle-oyna-ölçe dönüşür, Bilgin dolaba taşır */
+.gecit{position:relative;height:170vh;background:linear-gradient(180deg,#D6EDCB 0,var(--kagit) 70%)}
+:root[data-theme="dark"] .gecit{background:linear-gradient(180deg,#122C29 0,#0E2236 70%)}
+.gecit-sahne{position:sticky;top:var(--d-ust-g,clamp(64px,6.6vw,96px));height:calc(100svh - clamp(64px,6.6vw,96px));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,2vh,24px);overflow:hidden}
+.gc-yazi{margin:0 0 clamp(36px,7vh,84px);font:700 clamp(22px,2.4vw,36px)/1.15 var(--el);color:var(--lacivert);text-align:center}
+.gc-yazi b{color:#8A3E10}
+:root[data-theme="dark"] .gc-yazi{color:#EAF3F7} :root[data-theme="dark"] .gc-yazi b{color:#FFB27E}
+.gc-orta{position:relative;width:min(640px,92vw);height:min(400px,52svh)}
+.gc-dal{position:absolute;left:0;right:0;top:22%;height:62%;width:100%;overflow:visible}
+.gc-dal path{fill:none;stroke:#C98A3A;stroke-width:4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke}
+.gc-daire{position:absolute;left:50%;top:22%;width:clamp(80px,9vw,120px);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%) scale(var(--s,1));background:var(--mandalina);color:var(--lacivert);display:grid;place-items:center;align-content:center;box-shadow:inset 0 0 0 4px var(--lacivert),0 18px 30px -16px rgba(11,46,79,.6);z-index:2}
+.gc-daire b{font:800 clamp(30px,3.2vw,44px)/1 var(--ui)}
+.gc-daire span{font:700 12px/1.1 var(--el);max-width:86%;text-align:center;opacity:var(--a,0)}
+.gc-uc{position:absolute;left:0;right:0;top:84%;height:0}
+.gc-e:nth-child(1){left:16.667%} .gc-e:nth-child(2){left:50%} .gc-e:nth-child(3){left:83.333%}
+.gc-e{position:absolute;top:0;width:clamp(92px,10vw,124px);display:flex;flex-direction:column;align-items:center;gap:6px;font:800 clamp(16px,1.5vw,20px) var(--el);color:var(--lacivert);transform:translate(-50%,calc((1 - var(--e,0)) * 30px)) scale(calc(.4 + var(--e,0) * .6));opacity:var(--e,0)}
+.gc-e i{width:clamp(52px,5.4vw,68px);aspect-ratio:1;border-radius:18px;display:grid;place-items:center;background:var(--lacivert);color:#fff;box-shadow:0 14px 20px -12px rgba(11,46,79,.6)}
+.gc-e i svg{width:46%;height:46%}
+.gc-e:nth-child(2) i{background:var(--petrol)} .gc-e:nth-child(3) i{background:#8A3E10}
+:root[data-theme="dark"] .gc-e{color:#EAF3F7}
+.gc-bilgin{position:absolute;width:clamp(64px,6vw,86px);left:var(--bx,50%);top:var(--by,22%);transform:translate(-50%,-112%);z-index:3;filter:drop-shadow(0 8px 8px rgba(11,46,79,.25));pointer-events:none}
+@media (max-width:860px){ .gecit{height:140vh} .gc-orta{height:min(340px,48svh)} }
+@media (prefers-reduced-motion:reduce){
+  .gecit{height:auto;padding-block:48px} .gecit-sahne{position:static;height:auto}
+  .gc-orta{--s:1.25;--a:1} .gc-dal path{stroke-dashoffset:0} .gc-e{--e:1}
+}
 </style>
 </head>
 <body>
@@ -704,32 +751,11 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
   <div class="kareli bolum" style="padding-top:clamp(40px,5vw,72px)"><div class="ic">
     <div class="foto" id="foto" aria-live="polite"></div>
     <div class="raf-ust">
-      <p class="sayac-el"><b id="oyunSay">10</b> oyun bu sınıfta</p>
-      <span class="raf-not">Türkiye Yüzyılı Maarif Modeli öğretim programlarının temalarına göre: her temada yeni bir durak.</span>
+      <p class="sayac-el"><b id="oyunSay">21</b> patika bu sınıfta</p>
+      <span class="raf-not">Türkiye Yüzyılı Maarif Modeli’nde her tema bir patika.</span>
     </div>
     <div class="raf" id="raf" aria-live="polite"></div>
   </div></div>
-</section>
-
-<section class="kareli bolum" id="oyna" aria-labelledby="h-oyna" style="padding-top:0">
-  <div class="ic">
-    <div class="dolap-ust">
-      <h2 class="bas" id="h-oyna">Oyun dolabı</h2>
-      <div class="dolap-k" id="dolapK" role="group" aria-label="Sınıf seç"><button class="dk dk1" data-k="1" aria-pressed="false" aria-label="1. sınıf">K1</button><button class="dk dk2" data-k="2" aria-pressed="false" aria-label="2. sınıf">K2</button><button class="dk dk3" data-k="3" aria-pressed="false" aria-label="3. sınıf">K3</button><button class="dk dk4" data-k="4" aria-pressed="false" aria-label="4. sınıf">K4</button><button class="dk dk5" data-k="5" aria-pressed="false" aria-label="5. sınıf">K5</button><button class="dk dk6" data-k="6" aria-pressed="false" aria-label="6. sınıf">K6</button><button class="dk dk7" data-k="7" aria-pressed="false" aria-label="7. sınıf">K7</button><button class="dk dk8" data-k="8" aria-pressed="false" aria-label="8. sınıf">K8</button></div>
-      <p class="dolap-alt gorunmez" id="dolapAlt" aria-live="polite"><b>4. sınıf</b> dolabı</p>
-    </div>
-    <div class="dolap">
-      <div class="dolap-cerceve"><div class="dolap-raf" id="dolapRaf" role="group" aria-label="Dersler"></div></div>
-      <div class="oyun-sekme" id="oyunSekme" aria-live="polite"></div>
-      <div class="masa" id="masa" aria-live="polite"></div>
-      <aside class="fis" aria-label="Haritaya giden veri">
-        <img class="fis-bant" src="assets/tape.png" alt="">
-        <b class="el">Haritaya giden veri</b>
-        <ol id="fis"><li class="bos">Oynadıkça buraya düşer.</li></ol>
-        <a class="hap cizgi" href="#harita" style="font-size:15px;padding:10px 16px">Beceri haritasına bak ↓</a>
-      </aside>
-    </div>
-  </div>
 </section>
 
 <section class="kareli patika-bolum" id="patika" aria-labelledby="h-patika">
@@ -752,6 +778,43 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
     </div>
     <div class="patika-kart" id="patikaKart" aria-live="polite"></div>
     <p class="patika-kaynak">Türkiye Yüzyılı Maarif Modeli · Matematik öğretim programı</p>
+  </div>
+</section>
+
+<div class="gecit" id="gecit" aria-hidden="true">
+  <div class="gecit-sahne">
+    <p class="gc-yazi" id="gcYazi">Bir adım açılır…</p>
+    <div class="gc-orta">
+      <svg class="gc-dal" viewBox="0 0 600 240" preserveAspectRatio="none"><path id="gcD0" d="M300 20 C 300 130, 100 110, 100 236"/><path id="gcD1" d="M300 20 L 300 236"/><path id="gcD2" d="M300 20 C 300 130, 500 110, 500 236"/></svg>
+      <div class="gc-daire" id="gcDaire"><b id="gcNo">1</b><span id="gcAd">Adım</span></div>
+      <div class="gc-uc">
+        <span class="gc-e"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></i>İzle</span>
+        <span class="gc-e"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="3" y="7" width="18" height="11" rx="5"/><path d="M8 11v3M6.5 12.5h3M15 11.5h.01M17.5 13.5h.01"/></svg></i>Oyna</span>
+        <span class="gc-e"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></i>Ölç</span>
+      </div>
+      <img class="gc-bilgin" id="gcBilgin" src="img/poz_sevinc.webp" alt="">
+    </div>
+  </div>
+</div>
+
+<section class="kareli bolum" id="oyna" aria-labelledby="h-oyna" style="padding-top:0">
+  <div class="ic">
+    <div class="dolap-ust">
+      <h2 class="bas" id="h-oyna">Oyun dolabı</h2>
+      <div class="dolap-k" id="dolapK" role="group" aria-label="Sınıf seç"><button class="dk dk1" data-k="1" aria-pressed="false" aria-label="1. sınıf">K1</button><button class="dk dk2" data-k="2" aria-pressed="false" aria-label="2. sınıf">K2</button><button class="dk dk3" data-k="3" aria-pressed="false" aria-label="3. sınıf">K3</button><button class="dk dk4" data-k="4" aria-pressed="false" aria-label="4. sınıf">K4</button><button class="dk dk5" data-k="5" aria-pressed="false" aria-label="5. sınıf">K5</button><button class="dk dk6" data-k="6" aria-pressed="false" aria-label="6. sınıf">K6</button><button class="dk dk7" data-k="7" aria-pressed="false" aria-label="7. sınıf">K7</button><button class="dk dk8" data-k="8" aria-pressed="false" aria-label="8. sınıf">K8</button></div>
+      <p class="dolap-alt gorunmez" id="dolapAlt" aria-live="polite"><b>4. sınıf</b> dolabı</p>
+    </div>
+    <div class="dolap">
+      <div class="dolap-cerceve"><div class="dolap-raf" id="dolapRaf" role="group" aria-label="Dersler"></div></div>
+      <div class="oyun-sekme" id="oyunSekme" aria-live="polite"></div>
+      <div class="masa" id="masa" aria-live="polite"></div>
+      <aside class="fis" aria-label="Haritaya giden veri">
+        <img class="fis-bant" src="assets/tape.png" alt="">
+        <b class="el">Haritaya giden veri</b>
+        <ol id="fis"><li class="bos">Oynadıkça buraya düşer.</li></ol>
+        <a class="hap cizgi" href="#harita" style="font-size:15px;padding:10px 16px">Beceri haritasına bak ↓</a>
+      </aside>
+    </div>
   </div>
 </section>
 
@@ -810,6 +873,7 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
 <script src="iop/icerik.js"></script>
 <script src="iop/iop.js"></script>
 <script src="iop/patika.js"></script>
+<script src="iop/temalar.js"></script>
 <script>
 (()=>{
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -882,9 +946,9 @@ function sinif(k){
   $$('.not').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k==k));
   $$('.sk').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k==k));
   $('#foto').innerHTML=FOTO[k].map(o=>`<article class="polaroid ${o[0]}" data-ders="${o[2]}"><div class="resim"><img src="img/${o[3]}.webp" alt="" loading="lazy"></div><b>${o[1]}</b></article>`).join('');
-  const kartlar=DERS[k].map(d=>({d,o:(OY[d]&&OY[d][k])||[]})).filter(x=>x.o.length);
-  $('#oyunSay').textContent=kartlar.reduce((a,x)=>a+x.o.length,0);
-  $('#raf').innerHTML=kartlar.map(x=>`<div class="kart" data-ders="${x.d}"><ul>${x.o.map(n=>`<li>${n}</li>`).join('')}</ul></div>`).join('');
+  const kartlar=DERS[k].map(d=>({d,t:(window.TEMALAR&&TEMALAR[`${k}|${d}`])||[]})).filter(x=>x.t.length);
+  $('#oyunSay').textContent=kartlar.reduce((a,x)=>a+x.t.length,0);
+  $('#raf').innerHTML=kartlar.map(x=>`<div class="kart pt-kart" data-ders="${x.d}" title="${x.t.map((t,i)=>`${i+1}. ${t}`).join('&#10;')}"><p class="pt-say"><b>${x.t.length}</b> patika</p><div class="pt-iz" aria-hidden="true">${x.t.map(()=>'<i></i>').join('')}</div><p class="pt-ilk">${x.t[0]}</p></div>`).join('');
   if(typeof dolapCiz==='function'&&window.__dolapHazir) dolapCiz(k);
   if(window.__heroHazir) heroDegis(k);
   if(window.patikaCiz) patikaCiz(k);
@@ -895,7 +959,7 @@ $('#dolapK').onclick=e=>{const b=e.target.closest('.dk'); if(!b) return; ton('ti
   /* üstteki bölümler sınıfla yeniden çizilir; dolap yerinden oynamasın */
   const o=$('#oyna'), y=o.getBoundingClientRect().top; sinif(+b.dataset.k); const f=o.getBoundingClientRect().top-y; if(Math.abs(f)>1) scrollBy(0,f);};
 /* dolap ekrandayken kenar sekmeleri çekilir: sınıf seçimi dolabın kendi satırında */
-if('IntersectionObserver' in window){ const ic=new Set(); const io=new IntersectionObserver(gl=>{gl.forEach(g=>g.isIntersecting?ic.add(g.target):ic.delete(g.target)); document.body.classList.toggle('dolapta',ic.size>0);},{rootMargin:'-45% 0px -45% 0px'}); [$('#oyna'),$('#patika')].forEach(el=>el&&io.observe(el)); }
+if('IntersectionObserver' in window){ const ic=new Set(); const io=new IntersectionObserver(gl=>{gl.forEach(g=>g.isIntersecting?ic.add(g.target):ic.delete(g.target)); document.body.classList.toggle('dolapta',ic.size>0);},{rootMargin:'-45% 0px -45% 0px'}); [$('#oyna'),$('#patika'),$('#gecit')].forEach(el=>el&&io.observe(el)); }
 sinif(4);
 window.__heroHazir=true;
 
@@ -1209,8 +1273,10 @@ window.__dolapHazir=true;
     $$('.durak',du).forEach(b=>b.setAttribute('aria-pressed',+b.dataset.i===i));
     $$('.tas',du).forEach(t=>t.classList.toggle('on',+t.dataset.i===i));
     bil.style.left=yer[i][0]+'%'; bil.style.top=yer[i][1]+'%';
+    if(window.gecitAdim) gecitAdim(i+1,P.adim[i].ad);
     const a=P.adim[i], ilk=a.surec.slice(0,4), harf='abcçdefgğh';
     kart.innerHTML=`<div><span class="pk-kod">${es(a.kod)}</span><p class="pk-cikti">${es(a.cikti)}</p></div>`+
+      `<button class="hap turuncu pk-ac" id="pkAc">Bu adımı aç: izle, oyna, ölç ↓</button>`+
       (a.surec.length?`<ol class="pk-surec" aria-label="Süreç bileşenleri">${ilk.map((t,j)=>`<li><i>${harf[j]}</i><span>${es(t)}</span></li>`).join('')}${a.surec.length>4?`<li class="daha">+${a.surec.length-4} süreç bileşeni daha</li>`:''}</ol>`:'<p class="pk-surec">Bu çıktı tek adımda gösterilir.</p>');
   }
   window.patikaCiz=k=>{
@@ -1230,6 +1296,38 @@ window.__dolapHazir=true;
   $('#patikaK').onclick=e=>{const b=e.target.closest('.dk'); if(!b) return; ton('tik');
     const o=$('#patika'), y=o.getBoundingClientRect().top; sinif(+b.dataset.k); const f=o.getBoundingClientRect().top-y; if(Math.abs(f)>1) scrollBy(0,f);};
   patikaCiz(dolapSinif);
+
+/* geçit: kaydırdıkça patikadaki adım açılır, izle-oyna-ölçe dönüşür */
+(()=>{
+  const g=$('#gecit'), da=$('#gcDaire'), bi=$('#gcBilgin'), ya=$('#gcYazi'), dal=[0,1,2].map(i=>$('#gcD'+i)), uc=$$('.gc-e');
+  const az=matchMedia('(prefers-reduced-motion: reduce)');
+  dal.forEach(d=>{ d.setAttribute('pathLength','1'); });
+  const kis=(v,a,b)=>Math.min(1,Math.max(0,(v-a)/(b-a))), yum=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  let son=-1, acildi='';
+  window.gecitAdim=(no,ad)=>{ $('#gcNo').textContent=no; $('#gcAd').textContent=ad; };
+  { const P0=window.PATIKA&&PATIKA[dolapSinif]; if(P0) gecitAdim(1,P0.adim[0].ad); }
+  function ciz(){
+    if(az.matches){ ya.innerHTML='Bir adım açılır: <b>izle, oyna, ölç.</b>'; return; }
+    const r=g.getBoundingClientRect(), sh=g.firstElementChild.offsetHeight, top=parseFloat(getComputedStyle(g.firstElementChild).top)||0;
+    const p=kis(top-r.top,0,Math.max(1,r.height-sh)); if(Math.abs(p-son)<.002) return; const once=son; son=p;
+    const a=yum(kis(p,0,.3)), b=kis(p,.28,.62), c=yum(kis(p,.58,.9));
+    da.style.setProperty('--s',(1+a*.7*(1-b*.35)).toFixed(3)); da.style.setProperty('--a',a.toFixed(2));
+    dal.forEach((d,i)=>d.style.strokeDashoffset=(1-kis(b,i*.15,.6+i*.15)).toFixed(3));
+    uc.forEach((e,i)=>e.style.setProperty('--e',yum(kis(p,.42+i*.07,.62+i*.07)).toFixed(3)));
+    /* Bilgin: daireden İzle'ye iner */
+    const oh=da.parentElement.offsetHeight||1, y0=22-(da.offsetHeight/2*parseFloat(da.style.getPropertyValue('--s')||1))/oh*100+3, x0=50, x1=16.66, y1=84; bi.style.setProperty('--bx',(x0+(x1-x0)*c)+'%'); bi.style.setProperty('--by',(y0+(y1-y0)*c-Math.sin(c*Math.PI)*12)+'%');
+    ya.innerHTML=p<.3?'Bir adım açılır…':p<.62?'…ve bir etkinliğe dönüşür:':'Bir adım açılır: <b>izle, oyna, ölç.</b>';
+    /* geçidin sonunda dolap bu adımın dersine (Matematik) geçer, bir kez */
+    const anahtar=$('#gcNo').textContent+'|'+dolapSinif;
+    if(once>=0&&once<.92&&p>=.92&&p<1&&acildi!==anahtar){ acildi=anahtar; if(dolapDers!=='Matematik'){ dolapDers='Matematik'; dolapOyna(); } }
+  }
+  let bek=0; const iste=()=>{ if(!bek) bek=requestAnimationFrame(()=>{bek=0;ciz();}); };
+  addEventListener('scroll',iste,{passive:true}); addEventListener('resize',iste); ciz();
+  /* kart düğmesi: geçidi kaydırarak dolaba in */
+  $('#patikaKart').addEventListener('click',e=>{ if(!e.target.closest('#pkAc')) return; ton('tik');
+    if(dolapDers!=='Matematik'){ dolapDers='Matematik'; dolapOyna(); }
+    $('#oyna').scrollIntoView({behavior:az.matches?'auto':'smooth',block:'start'}); });
+})();
 })();
 
 
