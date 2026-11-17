@@ -570,7 +570,7 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
     box-shadow:inset 0 0 0 4px #94561F,inset 0 0 0 6px rgba(255,220,160,.22),0 26px 30px -22px rgba(11,46,79,.6)}
   #oyna .dolap-cerceve::before{content:"";position:absolute;left:-10px;right:-10px;top:-15px;height:19px;border-radius:9px 9px 3px 3px;background:linear-gradient(#B06E2D,#8A501E);box-shadow:inset 0 2px 0 rgba(255,222,170,.4),inset 0 -3px 0 rgba(70,35,8,.35),0 5px 7px -4px rgba(60,30,5,.55)}
   #oyna .dolap-cerceve::after{content:"";position:absolute;left:12px;right:12px;bottom:-13px;height:13px;background:linear-gradient(#8A501E,#6E3E16) left/24px 100% no-repeat,linear-gradient(#8A501E,#6E3E16) right/24px 100% no-repeat}
-  #oyna .dolap-raf{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;gap:15px;padding:3px 0 9px}
+  #oyna .dolap-raf{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;gap:15px;padding:3px 0 9px;align-content:start}
   #oyna .goz{border-radius:5px;background:#FBEACB;box-shadow:inset 0 14px 14px -11px rgba(110,60,15,.5),inset 0 0 0 2px #B97A35,0 9px 0 -1px #94561F,0 10px 0 -1px rgba(255,220,160,.35)}
   #oyna .goz:hover{transform:translateY(-2px)}
   #oyna .goz[aria-pressed="true"]{background:#fff;transform:translateY(-3px);box-shadow:0 0 0 3px var(--mandalina),0 12px 0 -1px #94561F,0 14px 16px -8px rgba(60,30,5,.5)}
@@ -586,6 +586,56 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
   #oyna .dolap>*{min-width:0}
   #oyna .fis ol{min-height:0}
 }
+/* Maarif patikası: tema = patika, büyük durak = öğrenme çıktısı, küçük taşlar = süreç bileşenleri */
+.patika-bolum{padding-block:clamp(36px,4vw,72px)}
+.patika-ust{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 28px;flex-wrap:wrap}
+.patika-ust .bas{margin:0}
+.lj{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.patika-alt{margin:10px 0 0;display:flex;align-items:center;flex-wrap:wrap;gap:6px 22px;font:600 clamp(15px,1.25vw,18px) var(--el);color:var(--kalem)}
+.lj-durak{width:22px;height:22px;border-radius:50%;background:var(--mandalina);box-shadow:inset 0 0 0 3px var(--lacivert)}
+.lj-tas{display:inline-flex;gap:4px}
+.lj-tas i{width:9px;height:9px;border-radius:50%;background:var(--petrol)}
+.patika-yol{position:relative;height:clamp(230px,21vw,300px);margin-top:clamp(14px,1.8vw,26px)}
+.patika-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.patika-svg path{fill:none;vector-effect:non-scaling-stroke;stroke-linecap:round}
+.patika-svg .iz-golge{stroke:#EAD9B4;stroke-width:34}
+.patika-svg .iz{stroke:#C98A3A;stroke-width:3;stroke-dasharray:2 12}
+.tabela{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 16px 12px;border-radius:10px;
+  background:linear-gradient(90deg,#B4702C,#D69C52 50%,#B4702C);box-shadow:inset 0 0 0 3px #94561F,0 12px 16px -12px rgba(60,30,5,.6);color:#FFF4D8;transform:rotate(-2deg);max-width:min(300px,46%)}
+.tabela::after{content:"";position:absolute;left:28px;top:100%;width:10px;height:clamp(40px,6vw,80px);background:linear-gradient(90deg,#8A501E,#A9672A);border-radius:0 0 3px 3px;z-index:-1}
+.tabela small{font:800 12px var(--ui);letter-spacing:.06em;text-transform:uppercase;color:#FFE0B0}
+.tabela b{font:700 clamp(17px,1.5vw,22px)/1.15 var(--el)}
+.tas{position:absolute;width:12px;height:12px;border-radius:50%;transform:translate(-50%,-50%);background:#D9C29A;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12);transition:background .25s,transform .25s}
+.tas.on{background:var(--petrol);transform:translate(-50%,-50%) scale(1.25)}
+.durak{position:absolute;transform:translate(-50%,-50%);border:0;padding:0;background:transparent;display:grid;justify-items:center;cursor:pointer}
+.durak b{width:clamp(48px,4.6vw,64px);height:clamp(48px,4.6vw,64px);border-radius:50%;display:grid;place-items:center;background:#FFFDF6;color:var(--lacivert);font:800 clamp(20px,1.9vw,26px) var(--ui);box-shadow:inset 0 0 0 3px var(--lacivert),0 10px 14px -10px rgba(11,46,79,.6);transition:transform .2s cubic-bezier(.2,1.4,.4,1),background .2s}
+.durak span{position:absolute;top:calc(100% + 8px);white-space:nowrap;font:700 clamp(14px,1.2vw,18px) var(--el);color:var(--lacivert);background:color-mix(in srgb,var(--kagit) 85%,transparent);padding:0 6px;border-radius:6px}
+.durak:hover b{transform:scale(1.08)}
+.durak[aria-pressed="true"] b{background:var(--mandalina);transform:scale(1.15)}
+.patika-bilgin{position:absolute;width:clamp(54px,5vw,72px);height:auto;transform:translate(-50%,-128%);pointer-events:none;transition:left .55s cubic-bezier(.3,1.3,.5,1),top .55s cubic-bezier(.3,1.3,.5,1);filter:drop-shadow(0 6px 6px rgba(11,46,79,.25))}
+.patika-kart{position:relative;margin-top:clamp(18px,2.2vw,30px);background:#fff;border-radius:16px;padding:clamp(16px,2vw,26px);box-shadow:0 22px 34px -26px rgba(11,46,79,.6);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(14px,2.4vw,40px);color:var(--lacivert)}
+.pk-kod{display:inline-block;font:800 13px var(--ui);letter-spacing:.04em;color:#fff;background:var(--lacivert);border-radius:999px;padding:5px 11px}
+.pk-cikti{margin:10px 0 0;font:700 clamp(18px,1.6vw,23px)/1.3 var(--el)}
+.pk-surec{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px;font:600 clamp(14px,1.1vw,16px)/1.35 var(--el);color:#3D5366}
+.pk-surec li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start}
+.pk-surec li i{width:22px;height:22px;border-radius:50%;background:var(--petrol);color:#fff;font:800 12px/22px var(--ui);text-align:center;font-style:normal}
+.pk-surec .daha{color:var(--kalem);font-weight:700;padding-left:30px}
+.patika-kaynak{margin:12px 0 0;font:700 12px var(--ui);color:var(--kalem);letter-spacing:.03em}
+:root[data-theme="dark"] .patika-alt,:root[data-theme="dark"] .patika-kaynak{color:#AFC6D3}
+:root[data-theme="dark"] .patika-svg .iz-golge{stroke:#28455C}
+:root[data-theme="dark"] .durak span{color:#EAF3F7;background:transparent}
+:root[data-theme="dark"] .tas{background:#4E6A80}
+:root[data-theme="dark"] .tas.on{background:#7FD0E6}
+@media (max-width:860px){
+  #patika .dolap-k{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));width:100%;gap:5px}
+  #patika .dk{min-width:0;padding:0;height:38px;font-size:14px}
+  .patika-yol{height:240px;margin-top:60px}
+  .tabela{top:-52px;max-width:80%}
+  .tabela::after{display:none}
+  .durak span{font-size:13px;white-space:normal;width:80px;text-align:center;line-height:1.1}
+  .patika-kart{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){ .patika-bilgin,.durak b,.tas{transition:none} }
 </style>
 </head>
 <body>
@@ -649,7 +699,6 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
 <section id="siniflar" aria-labelledby="h-sinif">
   <div class="sinif-bant"><div class="ic siniflar-ust">
       <h2 class="bas" id="h-sinif">Her <u>durak</u> bir ders. Her oyun bir iz.</h2>
-      <p class="sinif-adi" id="sinifAdi">Sağdaki sekmelerden sınıf seç · şu an <b>4. sınıf</b></p>
       <div class="notlar" id="notlar" role="group" aria-label="Sınıf seç"></div>
   </div></div>
   <div class="kareli bolum" style="padding-top:clamp(40px,5vw,72px)"><div class="ic">
@@ -680,6 +729,29 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
         <a class="hap cizgi" href="#harita" style="font-size:15px;padding:10px 16px">Beceri haritasına bak ↓</a>
       </aside>
     </div>
+  </div>
+</section>
+
+<section class="kareli patika-bolum" id="patika" aria-labelledby="h-patika">
+  <div class="ic">
+    <div class="patika-ust">
+      <div>
+        <h2 class="bas" id="h-patika">Her tema bir <u>patika</u>.</h2>
+        <p class="patika-alt"><span class="lj"><span class="lj-durak" aria-hidden="true"></span>adım = öğrenme çıktısı</span><span class="lj"><span class="lj-tas" aria-hidden="true"><i></i><i></i><i></i></span>taşlar = süreç bileşenleri</span></p>
+      </div>
+      <div class="dolap-k" id="patikaK" role="group" aria-label="Sınıf seç"><button class="dk dk1" data-k="1" aria-pressed="false" aria-label="1. sınıf">K1</button><button class="dk dk2" data-k="2" aria-pressed="false" aria-label="2. sınıf">K2</button><button class="dk dk3" data-k="3" aria-pressed="false" aria-label="3. sınıf">K3</button><button class="dk dk4" data-k="4" aria-pressed="false" aria-label="4. sınıf">K4</button><button class="dk dk5" data-k="5" aria-pressed="false" aria-label="5. sınıf">K5</button><button class="dk dk6" data-k="6" aria-pressed="false" aria-label="6. sınıf">K6</button><button class="dk dk7" data-k="7" aria-pressed="false" aria-label="7. sınıf">K7</button><button class="dk dk8" data-k="8" aria-pressed="false" aria-label="8. sınıf">K8</button></div>
+    </div>
+    <div class="patika-yol" id="patikaYol">
+      <svg class="patika-svg" viewBox="0 0 1000 240" preserveAspectRatio="none" aria-hidden="true">
+        <path class="iz-golge" d="M40 200 C 160 200, 170 90, 300 95 S 470 205, 610 170 S 760 55, 880 75 S 965 140, 990 130"/>
+        <path class="iz" id="patikaIz" d="M40 200 C 160 200, 170 90, 300 95 S 470 205, 610 170 S 760 55, 880 75 S 965 140, 990 130"/>
+      </svg>
+      <div class="tabela" id="patikaTabela"></div>
+      <div id="patikaDuraklar"></div>
+      <img class="patika-bilgin" id="patikaBilgin" src="img/poz_selam.webp" alt="">
+    </div>
+    <div class="patika-kart" id="patikaKart" aria-live="polite"></div>
+    <p class="patika-kaynak">Türkiye Yüzyılı Maarif Modeli · Matematik öğretim programı</p>
   </div>
 </section>
 
@@ -737,6 +809,7 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
 
 <script src="iop/icerik.js"></script>
 <script src="iop/iop.js"></script>
+<script src="iop/patika.js"></script>
 <script>
 (()=>{
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -808,13 +881,13 @@ $('#notlar').innerHTML=[1,2,3,4,5,6,7,8].map(k=>`<button class="not" data-k="${k
 function sinif(k){
   $$('.not').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k==k));
   $$('.sk').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k==k));
-  const sa=$('#sinifAdi'); if(sa) sa.innerHTML=`Sağdaki sekmelerden sınıf seç · şu an <b>${k}. sınıf</b>`;
   $('#foto').innerHTML=FOTO[k].map(o=>`<article class="polaroid ${o[0]}" data-ders="${o[2]}"><div class="resim"><img src="img/${o[3]}.webp" alt="" loading="lazy"></div><b>${o[1]}</b></article>`).join('');
   const kartlar=DERS[k].map(d=>({d,o:(OY[d]&&OY[d][k])||[]})).filter(x=>x.o.length);
   $('#oyunSay').textContent=kartlar.reduce((a,x)=>a+x.o.length,0);
   $('#raf').innerHTML=kartlar.map(x=>`<div class="kart" data-ders="${x.d}"><ul>${x.o.map(n=>`<li>${n}</li>`).join('')}</ul></div>`).join('');
   if(typeof dolapCiz==='function'&&window.__dolapHazir) dolapCiz(k);
   if(window.__heroHazir) heroDegis(k);
+  if(window.patikaCiz) patikaCiz(k);
 }
 $('#notlar').onclick=e=>{const b=e.target.closest('.not'); if(b){sinif(+b.dataset.k);}};
 $('#sekmeKenar').onclick=e=>{const b=e.target.closest('.sk'); if(!b) return; sinif(+b.dataset.k);};
@@ -822,7 +895,7 @@ $('#dolapK').onclick=e=>{const b=e.target.closest('.dk'); if(!b) return; ton('ti
   /* üstteki bölümler sınıfla yeniden çizilir; dolap yerinden oynamasın */
   const o=$('#oyna'), y=o.getBoundingClientRect().top; sinif(+b.dataset.k); const f=o.getBoundingClientRect().top-y; if(Math.abs(f)>1) scrollBy(0,f);};
 /* dolap ekrandayken kenar sekmeleri çekilir: sınıf seçimi dolabın kendi satırında */
-if('IntersectionObserver' in window) new IntersectionObserver(([g])=>document.body.classList.toggle('dolapta',g.isIntersecting),{rootMargin:'-45% 0px -45% 0px'}).observe($('#oyna'));
+if('IntersectionObserver' in window){ const ic=new Set(); const io=new IntersectionObserver(gl=>{gl.forEach(g=>g.isIntersecting?ic.add(g.target):ic.delete(g.target)); document.body.classList.toggle('dolapta',ic.size>0);},{rootMargin:'-45% 0px -45% 0px'}); [$('#oyna'),$('#patika')].forEach(el=>el&&io.observe(el)); }
 sinif(4);
 window.__heroHazir=true;
 
@@ -1120,6 +1193,43 @@ window.__dolapHazir=true;
   const iste=()=>{ if(!bek) bek=requestAnimationFrame(sig); };
   new MutationObserver(iste).observe(masa,{childList:true,subtree:true,characterData:true});
   if('ResizeObserver' in window) new ResizeObserver(iste).observe(pnl); addEventListener('resize',iste);
+  /* dolabın ayakları izle videosunun alt çizgisine basar */
+  const cer=$('.dolap-cerceve'), vid=$('#io-video',kap);
+  const zemin=()=>{ if(!mq.matches){ cer.style.height=''; return; } if(!vid.offsetParent) return;
+    const h=vid.getBoundingClientRect().bottom-cer.getBoundingClientRect().top-13; if(h>160) cer.style.height=h+'px'; };
+  if('ResizeObserver' in window) new ResizeObserver(zemin).observe(vid); addEventListener('resize',zemin); zemin();
+})();
+/* Maarif patikası */
+(()=>{
+  const iz=$('#patikaIz'), du=$('#patikaDuraklar'), kart=$('#patikaKart'), bil=$('#patikaBilgin'), tab=$('#patikaTabela');
+  const es=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const L=iz.getTotalLength(), nok=f=>{const p=iz.getPointAtLength(L*f); return [p.x/10,p.y/240*100];};
+  let P=null, yer=[];
+  function sec(i){
+    $$('.durak',du).forEach(b=>b.setAttribute('aria-pressed',+b.dataset.i===i));
+    $$('.tas',du).forEach(t=>t.classList.toggle('on',+t.dataset.i===i));
+    bil.style.left=yer[i][0]+'%'; bil.style.top=yer[i][1]+'%';
+    const a=P.adim[i], ilk=a.surec.slice(0,4), harf='abcçdefgğh';
+    kart.innerHTML=`<div><span class="pk-kod">${es(a.kod)}</span><p class="pk-cikti">${es(a.cikti)}</p></div>`+
+      (a.surec.length?`<ol class="pk-surec" aria-label="Süreç bileşenleri">${ilk.map((t,j)=>`<li><i>${harf[j]}</i><span>${es(t)}</span></li>`).join('')}${a.surec.length>4?`<li class="daha">+${a.surec.length-4} süreç bileşeni daha</li>`:''}</ol>`:'<p class="pk-surec">Bu çıktı tek adımda gösterilir.</p>');
+  }
+  window.patikaCiz=k=>{
+    P=window.PATIKA&&PATIKA[k]; if(!P) return;
+    const n=P.adim.length, fr=i=>n===1?.45:.12+i*(.72/(n-1));
+    tab.innerHTML=`<small>${P.no}. tema</small><b>${es(P.tema)}</b>`;
+    let h=''; yer=[];
+    P.adim.forEach((a,i)=>{
+      const f0=fr(i), f1=i<n-1?fr(i+1):.985, m=Math.min(a.surec.length,8);
+      for(let j=0;j<m;j++){ const [x,y]=nok(f0+(f1-f0)*(j+1)/(m+1)); h+=`<i class="tas" data-i="${i}" style="left:${x.toFixed(2)}%;top:${y.toFixed(2)}%"></i>`; }
+      const [x,y]=nok(f0); yer.push([x,y]);
+      h+=`<button class="durak" data-i="${i}" style="left:${x.toFixed(2)}%;top:${y.toFixed(2)}%" aria-pressed="false" aria-label="${i+1}. adım: ${es(a.ad)}"><b>${i+1}</b><span>${es(a.ad)}</span></button>`;
+    });
+    du.innerHTML=h; sec(0);
+  };
+  du.onclick=e=>{const b=e.target.closest('.durak'); if(b){ ton('tik'); sec(+b.dataset.i); }};
+  $('#patikaK').onclick=e=>{const b=e.target.closest('.dk'); if(!b) return; ton('tik');
+    const o=$('#patika'), y=o.getBoundingClientRect().top; sinif(+b.dataset.k); const f=o.getBoundingClientRect().top-y; if(Math.abs(f)>1) scrollBy(0,f);};
+  patikaCiz(dolapSinif);
 })();
 
 
