@@ -50,6 +50,36 @@ button{font:inherit;color:inherit;cursor:pointer}
 .ust nav a{text-decoration:none}
 .ust nav a:hover{color:var(--petrol)}
 .ust .hap{margin-left:clamp(8px,2vw,40px)}
+.ust .giris-btn{background:transparent;color:var(--lacivert);box-shadow:inset 0 0 0 2.5px var(--lacivert);margin-left:0}
+.ust .giris-btn:hover{background:#fff}
+.ust .giris-btn+.hap{margin-left:clamp(8px,1vw,16px)}
+.ust .hap{white-space:nowrap}
+@media (max-width:520px){.ust .hap.koyu{display:none}.ust .giris-btn{font-size:15px;padding:.75em 1.2em}}
+.giris-dlg{width:min(460px,92vw);margin:auto;padding:30px 30px 26px;border:0;border-radius:28px;background:var(--kagit) url(assets/kareli.png) repeat;background-size:auto 46px;color:var(--lacivert);text-align:center;box-shadow:0 40px 90px -30px rgba(11,46,79,.6);overflow:visible;font:700 16px/1.5 var(--ui)}
+.giris-dlg[open]{animation:girisAc .38s cubic-bezier(.3,1.3,.4,1)}
+@keyframes girisAc{from{opacity:0;transform:translateY(18px) scale(.94)}}
+.giris-dlg::backdrop{background:rgba(11,46,79,.55);backdrop-filter:blur(3px)}
+.giris-maskot{display:block;width:150px;height:auto;margin:-110px auto 0;filter:drop-shadow(0 14px 16px rgba(11,46,79,.3));animation:girisSallan 3s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes girisSallan{50%{transform:rotate(-4deg) translateY(-3px)}}
+.giris-rozet{display:flex;justify-content:center;gap:7px;margin:8px 0 0}
+.giris-rozet span{width:9px;height:9px;border-radius:50%;background:var(--mandalina);animation:hazirlik 1.2s ease-in-out infinite}
+.giris-rozet span:nth-child(2){animation-delay:.15s;background:var(--petrol)}
+.giris-rozet span:nth-child(3){animation-delay:.3s;background:var(--lacivert)}
+@keyframes hazirlik{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-6px);opacity:1}}
+.giris-dlg h2{margin:10px 0 0;font:800 clamp(25px,5vw,31px)/1.15 var(--el);letter-spacing:-.02em;transform:rotate(-1.5deg)}
+.giris-dlg p{margin:10px 0 0}
+.giris-dlg .giris-alt{color:var(--kalem);font-size:15px;font-weight:600}
+.giris-btnler{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.giris-btnler .hap{font-size:16px}
+.giris-x{position:absolute;top:14px;right:14px;width:38px;height:38px;border:0;border-radius:50%;background:#F3D9A4;display:grid;place-items:center;color:var(--lacivert);cursor:pointer}
+.giris-x svg{width:17px;height:17px}
+:root[data-theme="dark"] .ust .giris-btn{color:#EAF3F7;box-shadow:inset 0 0 0 2.5px #EAF3F7}
+:root[data-theme="dark"] .ust .giris-btn:hover{background:rgba(255,255,255,.1)}
+:root[data-theme="dark"] .giris-dlg{background:#15324D;color:#EAF3F7}
+:root[data-theme="dark"] .giris-dlg .giris-alt{color:#B9CAD9}
+:root[data-theme="dark"] .giris-rozet span:nth-child(3){background:#EAF3F7}
+:root[data-theme="dark"] .giris-dlg .hap.cizgi{color:#EAF3F7;box-shadow:inset 0 0 0 2.5px #EAF3F7}
+@media (prefers-reduced-motion:reduce){.giris-dlg[open],.giris-maskot,.giris-rozet span{animation:none}}
 
 .sahne-dis{padding-bottom:clamp(8px,2vw,24px)}
 .sahne{position:relative;aspect-ratio:1536/822;container-type:inline-size;width:min(100%,calc((100svh - clamp(64px,6.6vw,96px) - 130px) * 1.8686));margin-inline:auto}
@@ -504,6 +534,8 @@ button.oyun-ad.acik{background:var(--lacivert);color:#fff;box-shadow:none}
 @media (max-width:860px){
   .ust nav{display:none}
   .ust .hap{margin-left:auto}
+  .ust .giris-btn{padding-inline:1em}
+  .ust .giris-btn+.hap{margin-left:8px}
   .sahne-dis{display:flex;flex-direction:column;overflow:hidden}
   .sahne{width:190%;margin-left:-45%}
   .etiket,.hap-k,.beceri-baslik,.arti,.eksen,.grafik,.ok-k,.cikartma,.cikartma-yazi,.bant,.kiv-kamyon,.kamyon-h,.denklem,.kalem{display:none!important}
@@ -709,9 +741,19 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
     <a class="logo" href="#" aria-label="BİLGİN ana sayfa"><img class="logo-acik" src="assets/logo.png" alt="BİLGİN"><img class="logo-koyu" src="assets/logo_beyaz.png" alt="BİLGİN"></a>
     <nav aria-label="Ana menü"><a href="#siniflar">Sınıflar</a><a href="#oyna">Oyunlar</a><a href="#ekosistem">Beceri haritası</a><a href="#kurumlar">Kurumlar</a></nav>
     <button class="tema" id="tema" type="button" aria-label="Koyu temaya geç"><svg class="gunes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="ay" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
+    <button class="hap giris-btn" id="giris" type="button">Giriş yap</button>
     <a class="hap koyu" href="#kurumlar">Demo talep et</a>
   </div>
 </header>
+<dialog class="giris-dlg" id="girisDlg" aria-labelledby="girisBaslik">
+  <button class="giris-x" type="button" data-kapat aria-label="Kapat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <img class="giris-maskot" src="img/poz_selam.webp" alt="">
+  <p class="giris-rozet" aria-hidden="true"><span></span><span></span><span></span></p>
+  <h2 id="girisBaslik">Sizin için hazırlanıyoruz</h2>
+  <p>Bilgin’de öğrenci, öğretmen ve veli girişi çok yakında açılıyor. Patikalar, oyunlar ve beceri haritası sizin için hazırlanıyor.</p>
+  <p class="giris-alt">Okulunuzu ilk açılanlar arasına almak için şimdiden demo talep edebilirsiniz.</p>
+  <div class="giris-btnler"><button class="hap turuncu" id="girisDemo" type="button">Demo talep et</button><button class="hap cizgi" type="button" data-kapat>Tamam</button></div>
+</dialog>
 
 <nav class="sekme-kenar" id="sekmeKenar" aria-label="Sınıf sekmeleri"><button class="sk sk1" data-k="1" aria-pressed="false" aria-label="1. sınıf">K1</button><button class="sk sk2" data-k="2" aria-pressed="false" aria-label="2. sınıf">K2</button><button class="sk sk3" data-k="3" aria-pressed="false" aria-label="3. sınıf">K3</button><button class="sk sk4" data-k="4" aria-pressed="false" aria-label="4. sınıf">K4</button><button class="sk sk5" data-k="5" aria-pressed="false" aria-label="5. sınıf">K5</button><button class="sk sk6" data-k="6" aria-pressed="false" aria-label="6. sınıf">K6</button><button class="sk sk7" data-k="7" aria-pressed="false" aria-label="7. sınıf">K7</button><button class="sk sk8" data-k="8" aria-pressed="false" aria-label="8. sınıf">K8</button></nav>
 <main>
@@ -892,6 +934,11 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
 <script src="iop/patika.js"></script>
 <script src="iop/temalar.js"></script>
 <script>
+(()=>{ const dlg=document.getElementById('girisDlg'); if(!dlg) return;
+  document.getElementById('giris').addEventListener('click',()=>dlg.showModal());
+  dlg.addEventListener('click',e=>{ if(e.target===dlg||e.target.closest('[data-kapat]')) dlg.close(); });
+  document.getElementById('girisDemo').addEventListener('click',()=>{ dlg.close(); document.getElementById('kurumlar').scrollIntoView({behavior:'smooth'}); });
+})();
 (()=>{
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 let ac=null;
