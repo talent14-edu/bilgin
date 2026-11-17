@@ -455,11 +455,24 @@ button.oyun-ad.acik{background:var(--lacivert);color:#fff;box-shadow:none}
 .etiket b{white-space:nowrap}
 .sahne.k-diger .k4{display:none!important}
 .sahne-icerik-gecis .etiket,.sahne-icerik-gecis .hap-k,.sahne-icerik-gecis .denklem,.sahne-icerik-gecis .eksen,.sahne-icerik-gecis .sahne-img,.sahne-icerik-gecis .k4{opacity:0}
-.etiket,.hap-k,.denklem,.eksen,.sahne-img,.k4{transition:opacity .22s}
+.etiket,.hap-k,.denklem,.eksen,.sahne-img,.k4{transition:opacity .28s ease-out}
+.sahne-icerik-gecis .etiket,.sahne-icerik-gecis .hap-k,.sahne-icerik-gecis .denklem,.sahne-icerik-gecis .eksen,.sahne-icerik-gecis .sahne-img,.sahne-icerik-gecis .k4{transition-duration:.16s}
 .cevir{position:absolute;left:50%;top:1.5%;width:48.6%;height:96%;transform-origin:0 50%;transform-style:preserve-3d;pointer-events:none;z-index:6;display:none;border-radius:0 10px 10px 0;
   background:url(assets/notebook.webp) 100% 50%/205.8% 104.2% no-repeat}
 .cevir::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,rgba(11,46,79,.28),rgba(255,255,255,0) 30%,rgba(11,46,79,.12))}
 .cevir.donuyor{display:block;animation:sayfaCevir .82s cubic-bezier(.45,.05,.3,1) forwards}
+/* çevrilen yaprak: önü sağ sayfa, arkası sol sayfa; kalkarken kararır, inerken açılır */
+.cevir{background:none!important}
+.cevir::after{display:none}
+.cevir .yz{position:absolute;inset:0;border-radius:inherit;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:url(assets/notebook.webp) 100% 50%/205.8% 104.2% no-repeat}
+.cevir .yz.arka{transform:rotateY(180deg);background-position:0 50%;border-radius:10px 0 0 10px}
+.cevir .yz::after{content:"";position:absolute;inset:0;border-radius:inherit;opacity:0}
+.cevir .yz.on::after{background:linear-gradient(90deg,rgba(11,46,79,.34),rgba(11,46,79,.06) 38%,rgba(255,255,255,.18))}
+.cevir .yz.arka::after{background:linear-gradient(270deg,rgba(11,46,79,.30),rgba(11,46,79,.05) 38%,rgba(255,255,255,.12))}
+.cevir.donuyor .yz.on::after{animation:yzOn .82s ease-in forwards}
+.cevir.donuyor .yz.arka::after{animation:yzArka .82s ease-out forwards}
+@keyframes yzOn{0%{opacity:0}50%,100%{opacity:1}}
+@keyframes yzArka{0%,50%{opacity:1}100%{opacity:0}}
 @keyframes sayfaCevir{0%{transform:rotateY(0)}100%{transform:rotateY(-180deg)}}
 @media (prefers-reduced-motion:reduce){.cevir.donuyor{display:none}}
 
@@ -651,7 +664,6 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
 .patika-bolum>.ic{position:relative}
 .patika-bolum .durak span{background:color-mix(in srgb,#DDF0D3 85%,transparent)}
 .patika-bolum .patika-svg .iz-golge{stroke:#F1E3C2}
-.pk-ac{grid-column:1/-1;justify-self:start;font-size:15px!important;padding:10px 18px!important;order:3}
 :root[data-theme="dark"] .patika-bolum{background:linear-gradient(180deg,#16352F,#122C29)}
 :root[data-theme="dark"] .patika-bolum::before{opacity:.12}
 :root[data-theme="dark"] .patika-bolum .durak span{background:transparent}
@@ -726,8 +738,8 @@ body.dolapta .sekme-kenar{opacity:0;pointer-events:none;transform:translate(100%
     <img class="p kopru k4" src="assets/bridge2.png" alt="Kesir tahtalarından nehrin üstüne kurulan köprü ve yük bekleyen kamyon">
     <svg class="p kiv-kamyon k4" viewBox="0 0 40 40" aria-hidden="true"><g stroke="#FF8A3D" stroke-width="4" stroke-linecap="round"><path d="M8 30 2 22"/><path d="M18 22 14 10"/><path d="M28 24 32 12"/></g></svg>
     <img class="p kamyon-h k4" src="assets/kamyon.png" alt="">
-    <img class="p sahne-img" id="hSahne" src="assets/sahne/k1.png" alt="" hidden>
-    <div class="cevir" id="cevir" aria-hidden="true"></div>
+    <img class="p sahne-img" id="hSahne" src="assets/sahne/k1.webp" alt="" decoding="async" hidden>
+    <div class="cevir" id="cevir" aria-hidden="true"><i class="yz on"></i><i class="yz arka"></i></div>
     <img class="p kurt k4" src="assets/worm.png" alt="Bilgin köprünün üstünde ilerliyor">
     <span class="tahta t1 k4" aria-hidden="true">1<hr>2</span><span class="tahta t2 k4" aria-hidden="true">1<hr>4</span><span class="tahta t3 k4" aria-hidden="true">1<hr>4</span>
     <div class="p denklem" id="hDenklem" role="img" aria-label="Bir bölü iki artı bir bölü dört artı bir bölü dört eşittir bir"><span class="kesir">1<hr>2</span>+<span class="kesir">1<hr>4</span>+<span class="kesir">1<hr>4</span>=<u>1</u></div>
@@ -913,19 +925,34 @@ let heroSinif=4;
 function heroIcerik(k){
   const st=$('#sahne'), h=HERO[k], img=$('#hSahne');
   if(!h){ st.classList.remove('k-diger'); img.hidden=true; $('#hOyun').innerHTML=H4.oyun; $('#hSinif').innerHTML=H4.sinif; $('#hDenklem').innerHTML=H4.denk; ['hE1','hE2','hE3'].forEach((id,i)=>$('#'+id).innerHTML=H4.e[i]); return; }
-  st.classList.add('k-diger'); img.src=`assets/sahne/k${k}.png`; img.alt=`${h[0]} sahnesinde Bilgin`; img.hidden=false;
+  st.classList.add('k-diger'); img.src=`assets/sahne/k${k}.webp`; img.alt=`${h[0]} sahnesinde Bilgin`; img.hidden=false;
   $('#hOyun').innerHTML=h[0]; $('#hSinif').innerHTML=h[1]; $('#hDenklem').innerHTML=h[2]; ['hE1','hE2','hE3'].forEach((id,i)=>$('#'+id).innerHTML=h[3][i]);
 }
+/* sahne görselleri: sayfa açılınca boşta indirilip çözülür, çevirmede bekleme olmaz */
+const SAHNE={};
+function sahneYukle(k){
+  if(!HERO[k]) return Promise.resolve();
+  if(!SAHNE[k]){ const im=new Image(); im.decoding='async'; im.src=`assets/sahne/k${k}.webp`;
+    SAHNE[k]=(im.decode?im.decode():new Promise((r,j)=>{im.onload=r;im.onerror=j;})).catch(()=>{}); }
+  return SAHNE[k];
+}
+addEventListener('load',()=>{ const f=()=>[5,3,1,6,2,7,8].forEach((k,i)=>setTimeout(()=>sahneYukle(k),i*250));
+  'requestIdleCallback' in window?requestIdleCallback(f,{timeout:2500}):setTimeout(f,1200); });
+let heroNo=0;
 function heroDegis(k){
-  if(k===heroSinif) return; heroSinif=k;
-  const st=$('#sahne'), cv=$('#cevir');
+  if(k===heroSinif) return; heroSinif=k; const no=++heroNo;
+  const st=$('#sahne'), cv=$('#cevir'), t0=performance.now();
   try{ sesSayfa.currentTime=0; sesSayfa.play().catch(()=>{}); }catch(e){}
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ heroIcerik(k); return; }
+  const hazir=sahneYukle(k);
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ hazir.then(()=>{ if(no===heroNo) heroIcerik(k); }); return; }
   st.classList.add('sahne-icerik-gecis');
   cv.classList.remove('donuyor'); void cv.offsetWidth; cv.classList.add('donuyor');
-  setTimeout(()=>{ heroIcerik(k); }, 380);
-  setTimeout(()=>{ st.classList.remove('sahne-icerik-gecis'); }, 470);
-  setTimeout(()=>{ cv.classList.remove('donuyor'); }, 860);
+  /* yaprak dikleşince (yarısı) ve görsel çözülünce değiş; yaprak sol sayfaya inerken belir */
+  Promise.all([hazir,new Promise(r=>setTimeout(r,330))]).then(()=>{
+    if(no!==heroNo) return; heroIcerik(k);
+    setTimeout(()=>{ if(no===heroNo) st.classList.remove('sahne-icerik-gecis'); }, Math.max(40,420-(performance.now()-t0)));
+  });
+  setTimeout(()=>{ if(no===heroNo) cv.classList.remove('donuyor'); }, 860);
 }
 
 /* ---------- sınıflar ve oyun rafı ---------- */
@@ -1276,7 +1303,6 @@ window.__dolapHazir=true;
     if(window.gecitAdim) gecitAdim(i+1,P.adim[i].ad);
     const a=P.adim[i], ilk=a.surec.slice(0,4), harf='abcçdefgğh';
     kart.innerHTML=`<div><span class="pk-kod">${es(a.kod)}</span><p class="pk-cikti">${es(a.cikti)}</p></div>`+
-      `<button class="hap turuncu pk-ac" id="pkAc">Bu adımı aç: izle, oyna, ölç ↓</button>`+
       (a.surec.length?`<ol class="pk-surec" aria-label="Süreç bileşenleri">${ilk.map((t,j)=>`<li><i>${harf[j]}</i><span>${es(t)}</span></li>`).join('')}${a.surec.length>4?`<li class="daha">+${a.surec.length-4} süreç bileşeni daha</li>`:''}</ol>`:'<p class="pk-surec">Bu çıktı tek adımda gösterilir.</p>');
   }
   window.patikaCiz=k=>{
@@ -1323,10 +1349,6 @@ window.__dolapHazir=true;
   }
   let bek=0; const iste=()=>{ if(!bek) bek=requestAnimationFrame(()=>{bek=0;ciz();}); };
   addEventListener('scroll',iste,{passive:true}); addEventListener('resize',iste); ciz();
-  /* kart düğmesi: geçidi kaydırarak dolaba in */
-  $('#patikaKart').addEventListener('click',e=>{ if(!e.target.closest('#pkAc')) return; ton('tik');
-    if(dolapDers!=='Matematik'){ dolapDers='Matematik'; dolapOyna(); }
-    $('#oyna').scrollIntoView({behavior:az.matches?'auto':'smooth',block:'start'}); });
 })();
 })();
 
