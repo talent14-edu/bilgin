@@ -316,6 +316,7 @@ function kur(kok,ayar){
     requestAnimationFrame(()=>requestAnimationFrame(()=>$$('.io-bec .cubuk b',el).forEach(x=>x.style.width=x.dataset.w+'%')));
     q('#io-yeniden').onclick=()=>testKur();
     haritaya(`${L.konu} testi`,ders,tDogru*2-(T.length-tDogru));
+    if(ayar.testBitti) ayar.testBitti({correct:tDogru, skills:BEC.filter(b=>b[2]).map(([name,correct,total])=>({name,correct,total}))});
   }
 
   function oyunCiz(hedef){ hedef.innerHTML='<div class="io-kart" id="io-oyun"></div>'; oyunKur(); }
