@@ -5,7 +5,7 @@ const icons={'Matematik':'matematik','Fen Bilimleri':'fen','Türkçe':'turkce','
 gradeSelect.onchange=()=>{
  grade=gradeSelect.value;
  if(!subjects().includes(subject))subject=subjects()[0];
- theme='temel';const route=location.hash.slice(1);openRoute(webMode?(route||'masa'):(['profil','pasaport'].includes(route)?route:'dersler'));
+ theme='temel';const route=location.hash.slice(1);openRoute(webMode?(route||'masa'):(['profil','pasaport','hesap'].includes(route)?route:'dersler'));
 };
 function openRoute(route){
  remember();history.replaceState(null,'',url('uygulama.html','#'+route));render();
@@ -62,15 +62,71 @@ function pages(count,index,update){
  const [prev,next]=footer.querySelectorAll('button');prev.disabled=index===0;next.disabled=index===count-1;
  prev.onclick=()=>update(index-1);next.onclick=()=>update(index+1);
 }
+const avatars=[['selam','Selam veren'],['sevinc','Sevinçli'],['dusunme','Düşünceli'],['ipucu','İpucu veren'],['rozet','Rozetli']];
+const accountDefaults={ad:'Deniz',soyad:'Yıldız',eposta:'deniz.yildiz@okul.bilgin.app',avatar:'selam'};
+const escHtml=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+const logoutIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></svg>';
+let accountPane='bilgi';
+function account(){
+ let saved={};try{saved=JSON.parse(stored('bilgin.hesap')||'{}')}catch{}
+ const me={...accountDefaults,...saved};
+ if(!avatars.some(([k])=>k===me.avatar))me.avatar=accountDefaults.avatar;
+ return me;
+}
+function askLogout(){
+ let box=document.querySelector('.logoutDialog');
+ if(!box){
+  box=document.createElement('dialog');box.className='logoutDialog';box.setAttribute('aria-labelledby','logoutTitle');
+  box.innerHTML='<img src="../img/poz_selam.webp" alt=""><h2 id="logoutTitle">Çıkış yapılsın mı?</h2><p>Patikan, damgaların ve rozetlerin bu cihazda saklı kalır. Döndüğünde kaldığın yerden devam edersin.</p><div class="formActions"><button type="button" class="textButton">Vazgeç</button><button type="button" class="action logout">'+logoutIcon+'Çıkış yap</button></div>';
+  document.body.append(box);
+  box.querySelector('.textButton').onclick=()=>box.close();
+  box.querySelector('.action').onclick=()=>{const home=new URL('../',location.href).href;try{top.location.href=home}catch{location.href=home}};
+ }
+ box.showModal();
+}
+document.addEventListener('click',e=>{if(e.target.closest('[data-logout]'))askLogout()});
+function accountSettings(card){
+ const me=account(),info=accountPane==='bilgi';
+ card.className='paper account';
+ card.innerHTML=`<div class="paneSwitch" role="tablist" aria-label="Hesap ayarları"><button type="button" role="tab" data-pane="bilgi" aria-selected="${info}">Profil bilgileri</button><button type="button" role="tab" data-pane="sifre" aria-selected="${!info}">Şifre değiştir</button></div><form class="accountForm" novalidate></form><p class="formNote" role="status" aria-live="polite"></p><button type="button" class="logout accountLogout" data-logout>${logoutIcon}Çıkış yap</button>`;
+ card.querySelectorAll('[data-pane]').forEach(b=>b.onclick=()=>{accountPane=b.dataset.pane;profile('hesap')});
+ const form=card.querySelector('form'),note=card.querySelector('.formNote');
+ const say=(text,bad)=>{note.textContent=text;note.classList.toggle('bad',!!bad)};
+ if(info){
+  form.innerHTML=`<fieldset class="avatarPick"><legend>Avatarım</legend><p>Arkadaşların seni bu resimle tanır.</p><div>${avatars.map(([k,t])=>`<label title="${t}"><input type="radio" name="avatar" value="${k}" ${k===me.avatar?'checked':''}><img src="../img/poz_${k}.webp" alt="${t}"></label>`).join('')}</div></fieldset><div class="fieldRow"><label class="field"><span>Ad</span><input name="ad" value="${escHtml(me.ad)}" autocomplete="given-name" maxlength="40" required></label><label class="field"><span>Soyad</span><input name="soyad" value="${escHtml(me.soyad)}" autocomplete="family-name" maxlength="40" required></label></div><div class="fieldRow"><label class="field locked"><span>E-posta</span><input value="${escHtml(me.eposta)}" readonly></label><label class="field locked"><span>Sınıf seviyesi</span><input value="${grade}. sınıf" readonly></label></div><p class="fieldHint">E-postanı okulun tanımlar. Sınıfını üstteki menüden değiştirebilirsin.</p><div class="formActions"><button type="reset" class="textButton">Sıfırla</button><button class="action">Kaydet</button></div>`;
+  const preview=()=>{const pick=form.querySelector('[name=avatar]:checked');if(pick)screen.querySelectorAll('.avatarNow').forEach(i=>i.src='../img/poz_'+pick.value+'.webp')};
+  form.onchange=preview;form.onreset=()=>{setTimeout(preview);say('')};
+  form.onsubmit=e=>{
+   e.preventDefault();
+   const ad=form.ad.value.trim(),soyad=form.soyad.value.trim();
+   if(!ad||!soyad){say('Ad ve soyad boş kalamaz.',true);(ad?form.soyad:form.ad).focus();return}
+   const next={...me,ad,soyad,avatar:form.querySelector('[name=avatar]:checked').value};
+   if(!write('bilgin.hesap',JSON.stringify(next))){say('Bu tarayıcı kaydetmeye izin vermedi.',true);return}
+   profile('hesap');screen.querySelector('.formNote').textContent='✓ Profilin kaydedildi.';
+  };
+ }else{
+  form.innerHTML=`<label class="field"><span>Mevcut şifre</span><input type="password" name="eski" autocomplete="current-password" required></label><div class="fieldRow"><label class="field"><span>Yeni şifre</span><input type="password" name="yeni" autocomplete="new-password" minlength="6" required></label><label class="field"><span>Yeni şifre (tekrar)</span><input type="password" name="tekrar" autocomplete="new-password" required></label></div><p class="fieldHint">En az 6 karakter. Harf ile rakamı birlikte kullan.</p><div class="formActions"><button type="reset" class="textButton">Temizle</button><button class="action">Şifreyi güncelle</button></div>`;
+  form.onreset=()=>say('');
+  form.onsubmit=e=>{
+   e.preventDefault();
+   const {eski,yeni,tekrar}=form;
+   if(!eski.value){say('Önce mevcut şifreni yaz.',true);eski.focus();return}
+   if(yeni.value.length<6||!/\d/.test(yeni.value)||!/\p{L}/u.test(yeni.value)){say('Yeni şifre en az 6 karakter olmalı, harf ve rakam içermeli.',true);yeni.focus();return}
+   if(yeni.value!==tekrar.value){say('İki yeni şifre birbirini tutmuyor.',true);tekrar.focus();return}
+   if(yeni.value===eski.value){say('Yeni şifre eskisiyle aynı olamaz.',true);yeni.focus();return}
+   form.reset();say('✓ Şifren güncellendi.');
+  };
+ }
+}
 function profile(page){
  const stamps=earned(),list=subjects();
  const counts=new Map(list.map(s=>[s,stamps.filter(x=>x.grade===grade&&x.subject===s).length]));
  const badges=[...counts.values()].filter(Boolean).length;
  const passport=page==='pasaport';
- screen.innerHTML=`<div class="heading"><h1>Profilim</h1></div><div class="profileSummary"><img src="../img/poz_rozet.webp" alt=""><div><strong>${stamps.length} damga</strong><small>Tüm sınıflardaki pasaportum</small></div></div><div class="profileTabs"><a href="#pasaport" ${passport?'aria-current="page"':''}><img src="../mobil/ikon/defter.png" alt="">Pasaportum</a><a href="#profil" ${!passport?'aria-current="page"':''}><img src="../mobil/ikon/madalya.png" alt="">Rozetlerim</a></div><article class="paper collection"></article><div class="pager"></div>`;
- const links=document.querySelector('#profileLinks');
- if(links)screen.append(links.content.cloneNode(true));
+ const me=account(),settings=page==='hesap';
+ screen.innerHTML=`<div class="heading"><h1>Profilim</h1></div><div class="profileSummary"><img class="avatarNow" src="../img/poz_${me.avatar}.webp" alt=""><div><strong>${escHtml(me.ad+' '+me.soyad)}</strong><small>${stamps.length} damga · ${grade}. sınıf</small></div></div><div class="profileTabs"><a href="#pasaport" ${passport?'aria-current="page"':''}><img src="../mobil/ikon/defter.png" alt="">Pasaportum</a><a href="#profil" ${page==='profil'?'aria-current="page"':''}><img src="../mobil/ikon/madalya.png" alt="">Rozetlerim</a><a href="#hesap" ${settings?'aria-current="page"':''}><img class="avatarNow" src="../img/poz_${me.avatar}.webp" alt="">Hesabım</a></div><article class="paper collection"></article><div class="pager"></div>`;
  const card=screen.querySelector('.collection');
+ if(settings){screen.querySelector('.pager').remove();accountSettings(card);return}
  if(passport){
   if(!stamps.length){card.innerHTML='<h2>İlk damganı kazan</h2><p>Bir temanın İzle, Oyna ve Ölç adımlarını bitir. Tema damgan bu pasaporta işlenecek.</p><a class="action" href="#dersler">Tema seç →</a>';return}
   stampPage=Math.min(stampPage,stamps.length-1);const entry=stamps[stampPage];
@@ -94,8 +150,8 @@ function render(){
  let page=location.hash.slice(1)||(webMode?'masa':'patika');
  document.body.dataset.band=Number(grade)<=3?'ilk':Number(grade)>=7?'ust':'orta';
  if(['harita','defter','rozetler'].includes(page))page='profil';
- const tab=page==='pasaport'?'profil':page;
+ const tab=['pasaport','hesap'].includes(page)?'profil':page;
  document.querySelectorAll('nav a').forEach(a=>{if(a.hash==='#'+tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
- if(webMode&&page==='masa')desk();else if(webMode&&page==='oyunlar')games();else if(webMode&&page==='beceri')skillMap();else if(page==='dersler')catalog();else if(page==='profil'||page==='pasaport')profile(page);else path();
+ if(webMode&&page==='masa')desk();else if(webMode&&page==='oyunlar')games();else if(webMode&&page==='beceri')skillMap();else if(page==='dersler')catalog();else if(['profil','pasaport','hesap'].includes(page))profile(page);else path();
 }
 window.addEventListener('pageshow',render);window.addEventListener('hashchange',render);render();
