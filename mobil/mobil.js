@@ -1,4 +1,4 @@
-﻿const screen=document.querySelector('#screen'),gradeSelect=document.querySelector('#grade');
+const screen=document.querySelector('#screen'),gradeSelect=document.querySelector('#grade');
 gradeSelect.innerHTML=Array.from({length:8},(_,i)=>'<option value="'+(i+1)+'">'+(i+1)+'. sınıf</option>').join('');
 gradeSelect.value=grade;
 const icons={'Matematik':'matematik','Fen Bilimleri':'fen','Türkçe':'turkce','Hayat Bilgisi':'hayat','Sosyal Bilgiler':'sosyal','Din Kültürü':'din','İngilizce':'ingilizce','İnkılap Tarihi':'inkilap'};
@@ -8,14 +8,27 @@ function picker(){return '<select id="subject" aria-label="Ders">'+subjects().ma
 function heading(title){return '<div class="heading"><h1>'+title+'</h1>'+picker()+'</div>'}
 function pathLink(){return '<a class="action" href="#patika">Patikayı aç →</a>'}
 function path(){
- const l=lesson(),n=level(),details=[l.v.length+' anlatım sahnesi',l.oyun.ad,l.test.length+' beceri sorusu'];
- const nodes=steps.map((step,i)=>{
-   const status=i<n?'done':i===n?'active':'locked';
-   const mark=i<n?'✓':i===n?'▶':'◇';
-   return '<button class="node '+status+'" data-step="'+i+'" '+(i>n?'disabled':'')+'><b aria-hidden="true">'+mark+'</b><span><strong>'+labels[i]+'</strong><small>'+details[i]+'</small></span><em>'+(i<n?'Tekrar':i===n?'Başla':'Kilitli')+'</em></button>';
+ const l=lesson(),n=level();
+ const points=[[29,16],[67,39],[30,62],[63,85]];
+ const titles=[...labels,'Patika damgası'];
+ const hints=[l.v.length+' sahne',l.oyun.ad,l.test.length+' soru',n===3?'Kazanıldı':'3 adımı tamamla'];
+ const marks=['▶','✦','★','🏆'];
+ const nodes=points.map(([x,y],i)=>{
+   const award=i===3,done=i<n||(award&&n===3),active=i===n&&!award;
+   const state=done?'done':active?'active':'locked';
+   const action=award?'data-award':'data-step="'+i+'"';
+   const label=titles[i]+', '+(done?(award?'becerilerini gör':'tekrar aç'):active?'başla':'kilitli');
+   return `<div class="stop ${x>50?'west':'east'}" style="--x:${x}%;--y:${y}%">
+     <button class="node ${state}${award?' award':''}" ${action} aria-label="${label}" ${!done&&!active?'disabled':''}>
+     <span aria-hidden="true">${done&&!award?'✓':marks[i]}</span></button>
+     <div class="stopLabel"><strong>${titles[i]}</strong><small>${hints[i]}</small></div>
+     ${active?'<span class="startFlag">Başla</span><img class="guideWorm" src="../img/poz_selam.webp" alt="">':''}</div>`;
  }).join('');
- screen.innerHTML=heading('Patikam')+'<div class="trail"><div class="trailTitle"><div><p class="eyebrow">'+subject+' · '+grade+'. sınıf</p><h2>'+l.konu+'</h2></div><span class="score">'+n+'/3</span></div><div class="land"><div class="routeLine"></div><img class="worm" src="../img/poz_selam.webp" alt="">'+nodes+'</div><div class="trailFoot"><span>'+(n===3?'✦ Patika damganı kazandın':'Patika damgası')+'</span><progress max="3" value="'+n+'"></progress></div></div>';
+ const road='M29 16 C29 26 67 27 67 39 S30 50 30 62 S63 74 63 85';
+ screen.innerHTML=heading('Patikam')+`<section class="trail"><div class="trailTitle"><div><p class="eyebrow">${subject} · ${grade}. sınıf</p><h2>${l.konu}</h2></div><span class="score" aria-label="${n} adım tamamlandı">${n}/3</span></div>
+ <div class="land"><svg class="track" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="${road}"/></svg>${nodes}</div></section>`;
  screen.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>location.href=url('etkinlik.html')+'&adim='+steps[Number(b.dataset.step)]);
+ screen.querySelector('[data-award]').onclick=()=>location.hash='harita';
 }
 function catalog(){
  screen.innerHTML='<h1>Ders patikaları</h1><div class="filters"><input type="search" aria-label="Patika ara" placeholder="Ders, oyun veya beceri ara"><select aria-label="İlerleme"><option>Tümü</option><option>Tamamlananlar</option><option>Devam edenler</option></select></div><div id="card"></div>';
