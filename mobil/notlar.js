@@ -1,4 +1,4 @@
-﻿const params=new URLSearchParams(location.search);
+const params=new URLSearchParams(location.search);
 const steps=['izle','oyna','olc'],labels=['İzle','Oyna','Ölç'];
 function stored(key){try{return localStorage.getItem(key)}catch{return null}}
 function write(key,value){try{localStorage.setItem(key,value);return true}catch{return false}}
@@ -27,7 +27,15 @@ function result(k=grade,s=subject,t=theme){
 function level(){return result()?3:Math.max(0,Math.min(2,Number(read('adim.'))||0))}
 function selection(){return new URLSearchParams({k:grade,d:subject,tema:theme})}
 function remember(){write('bilgin.patikam',selection().toString())}
-function url(file,hash=''){return file+'?'+selection()+hash}
+const webMode=document.documentElement.dataset.app==='web'||params.get('gorunum')==='web';
+function url(file,hash=''){
+ const q=selection();
+ if(webMode){
+  if(file==='uygulama.html')file='../web/index.html';
+  else if(file==='etkinlik.html'){file='../mobil/etkinlik.html';q.set('gorunum','web')}
+ }
+ return file+'?'+q+hash;
+}
 function earned(){
  const stamps=[];
  for(const key of Object.keys(originals)){

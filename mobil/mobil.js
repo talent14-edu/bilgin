@@ -5,7 +5,7 @@ const icons={'Matematik':'matematik','Fen Bilimleri':'fen','Türkçe':'turkce','
 gradeSelect.onchange=()=>{
  grade=gradeSelect.value;
  if(!subjects().includes(subject))subject=subjects()[0];
- theme='temel';openRoute(['#profil','#pasaport'].includes(location.hash)?location.hash.slice(1):'dersler');
+ theme='temel';const route=location.hash.slice(1);openRoute(webMode?(route||'masa'):(['profil','pasaport'].includes(route)?route:'dersler'));
 };
 function openRoute(route){
  remember();history.replaceState(null,'',url('uygulama.html','#'+route));render();
@@ -23,19 +23,24 @@ function path(){
    const label=titles[i]+', '+(done?(award?'pasaportunu aç':'tekrar aç'):active?'başla':'kilitli');
    return `<div class="stop ${x>50?'west':'east'}" style="--x:${x}%;--y:${y}%">
      <button class="node ${state}${award?' award':''}" ${action} aria-label="${label}" ${!done&&!active?'disabled':''}>
-     <img class="nodeIcon" src="ikon/${marks[i]}.png" alt="">${done&&!award?'<b class="doneTick" aria-hidden="true">✓</b>':''}</button>
+     <img class="nodeIcon" src="../mobil/ikon/${marks[i]}.png" alt="">${done&&!award?'<b class="doneTick" aria-hidden="true">✓</b>':''}</button>
      <div class="stopLabel"><strong>${titles[i]}</strong><small>${hints[i]}</small></div>
      ${active?'<span class="startFlag">Başla</span><img class="guideWorm" src="../img/poz_selam.webp" alt="">':''}</div>`;
  }).join('');
  const road='M29 16 C29 26 67 27 67 39 S30 50 30 62 S63 74 63 85';
  screen.innerHTML='<div class="heading"><h1>Patikam</h1><a class="switchLesson" href="#dersler">Tema seç ↗</a></div>'+`<section class="trail"><div class="trailTitle"><div><p class="eyebrow">${subject} · ${grade}. sınıf</p><h2>${current().title}</h2><p class="topicHint">${l.konu}</p></div><span class="score" aria-label="${n} adım tamamlandı">${n}/3</span></div>
- <div class="land"><svg class="track" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="${road}"/></svg>${nodes}</div></section>`;
+ <div class="land"><svg class="track" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="${road}"/></svg>${nodes}</div><a class="trailContinue" href="${n===3?'#pasaport':url('etkinlik.html')+'&adim='+steps[n]}"><span>${n===3?'Damgamı gör':n===0?'İlk adımı aç':'Kaldığım yerden devam et'}</span><b aria-hidden="true">→</b></a></section>`;
  screen.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>location.href=url('etkinlik.html')+'&adim='+steps[Number(b.dataset.step)]);
  screen.querySelector('[data-award]').onclick=()=>location.hash='pasaport';
 }
 function catalog(){
  screen.innerHTML='<h1>Dersler</h1><form id="choices" class="paper choices"><label>Ders<select id="subject"></select></label><label>Tema<select id="theme"></select></label><article id="preview"></article><button class="action">Patikayı aç →</button></form>';
  const course=screen.querySelector('#subject'),picker=screen.querySelector('#theme');
+ if(webMode){
+  const indexButton=document.createElement('button');
+  indexButton.type='button';indexButton.className='themeIndex';indexButton.textContent='Tüm sınıf temalarını incele';
+  indexButton.onclick=()=>curriculum(course.value);screen.querySelector('#choices').append(indexButton);
+ }
  for(const s of subjects())course.add(new Option(s,s,false,s===subject));
  function populate(preferred){
   picker.replaceChildren();
@@ -62,7 +67,7 @@ function profile(page){
  const counts=new Map(list.map(s=>[s,stamps.filter(x=>x.grade===grade&&x.subject===s).length]));
  const badges=[...counts.values()].filter(Boolean).length;
  const passport=page==='pasaport';
- screen.innerHTML=`<div class="heading"><h1>Profilim</h1></div><div class="profileSummary"><img src="../img/poz_rozet.webp" alt=""><div><strong>${stamps.length} damga</strong><small>Tüm sınıflardaki pasaportum</small></div></div><div class="profileTabs"><a href="#pasaport" ${passport?'aria-current="page"':''}><img src="ikon/defter.png" alt="">Pasaportum</a><a href="#profil" ${!passport?'aria-current="page"':''}><img src="ikon/madalya.png" alt="">Rozetlerim</a></div><article class="paper collection"></article><div class="pager"></div>`;
+ screen.innerHTML=`<div class="heading"><h1>Profilim</h1></div><div class="profileSummary"><img src="../img/poz_rozet.webp" alt=""><div><strong>${stamps.length} damga</strong><small>Tüm sınıflardaki pasaportum</small></div></div><div class="profileTabs"><a href="#pasaport" ${passport?'aria-current="page"':''}><img src="../mobil/ikon/defter.png" alt="">Pasaportum</a><a href="#profil" ${!passport?'aria-current="page"':''}><img src="../mobil/ikon/madalya.png" alt="">Rozetlerim</a></div><article class="paper collection"></article><div class="pager"></div>`;
  const card=screen.querySelector('.collection');
  if(passport){
   if(!stamps.length){card.innerHTML='<h2>İlk damganı kazan</h2><p>Bir temanın İzle, Oyna ve Ölç adımlarını bitir. Tema damgan bu pasaporta işlenecek.</p><a class="action" href="#dersler">Tema seç →</a>';return}
@@ -84,10 +89,11 @@ function profile(page){
  }
 }
 function render(){
- let page=location.hash.slice(1)||'patika';
+ let page=location.hash.slice(1)||(webMode?'masa':'patika');
+ document.body.dataset.band=Number(grade)<=3?'ilk':Number(grade)>=7?'ust':'orta';
  if(['harita','defter','rozetler'].includes(page))page='profil';
  const tab=page==='pasaport'?'profil':page;
  document.querySelectorAll('nav a').forEach(a=>{if(a.hash==='#'+tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
- if(page==='dersler')catalog();else if(page==='profil'||page==='pasaport')profile(page);else path();
+ if(webMode&&page==='masa')desk();else if(webMode&&page==='oyunlar')games();else if(webMode&&page==='beceri')skillMap();else if(page==='dersler')catalog();else if(page==='profil'||page==='pasaport')profile(page);else path();
 }
 window.addEventListener('pageshow',render);window.addEventListener('hashchange',render);render();
