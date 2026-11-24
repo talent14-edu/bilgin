@@ -68,6 +68,8 @@ function profile(page){
  const badges=[...counts.values()].filter(Boolean).length;
  const passport=page==='pasaport';
  screen.innerHTML=`<div class="heading"><h1>Profilim</h1></div><div class="profileSummary"><img src="../img/poz_rozet.webp" alt=""><div><strong>${stamps.length} damga</strong><small>Tüm sınıflardaki pasaportum</small></div></div><div class="profileTabs"><a href="#pasaport" ${passport?'aria-current="page"':''}><img src="../mobil/ikon/defter.png" alt="">Pasaportum</a><a href="#profil" ${!passport?'aria-current="page"':''}><img src="../mobil/ikon/madalya.png" alt="">Rozetlerim</a></div><article class="paper collection"></article><div class="pager"></div>`;
+ const links=document.querySelector('#profileLinks');
+ if(links)screen.append(links.content.cloneNode(true));
  const card=screen.querySelector('.collection');
  if(passport){
   if(!stamps.length){card.innerHTML='<h2>İlk damganı kazan</h2><p>Bir temanın İzle, Oyna ve Ölç adımlarını bitir. Tema damgan bu pasaporta işlenecek.</p><a class="action" href="#dersler">Tema seç →</a>';return}
