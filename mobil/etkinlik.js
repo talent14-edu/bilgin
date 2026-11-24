@@ -36,15 +36,5 @@ root.querySelector('.io-adimlar').addEventListener('keydown',e=>{
 gates();new MutationObserver(gates).observe(root.querySelector('.io-adimlar'),{subtree:true,attributes:true,attributeFilter:['class']});
 const step=Math.min(Math.max(0,steps.indexOf(params.get('adim'))),reached);
 engine.git(steps[step],true);
-function fit(){
- root.style.zoom='1';
- // Measure the active activity at its natural width before fitting a dense game.
- const width=Math.max(root.scrollWidth,root.offsetWidth),height=root.offsetHeight;
- const factor=Math.min(1,(space.clientHeight-4)/Math.max(1,height),space.clientWidth/Math.max(1,width));
- root.style.width=space.clientWidth+'px';root.style.zoom=String(factor);
-}
-let pending=0;
-function schedule(){if(!pending)pending=requestAnimationFrame(()=>{pending=0;root.style.width=space.clientWidth+'px';fit()})}
-new ResizeObserver(schedule).observe(space);
-new MutationObserver(schedule).observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']});
-root.addEventListener('load',schedule,true);schedule();
+if(webMode)document.body.classList.add('webFull');
+tamSayfa(root,space,webMode);

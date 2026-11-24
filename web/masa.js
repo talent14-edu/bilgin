@@ -22,36 +22,36 @@ function games(){
   return `<article class="gameCard"><img src="../assets/ders/${icons[s]}.png" alt=""><p class="eyebrow">${s}</p><h2>${l.oyun.ad}</h2><p>${l.oyun.yonerge}</p><a class="action" href="oyun.html?${q}">Oyna →</a></article>`;
  }).join('')}</div>`;
 }
-function skillMap(){
- screen.innerHTML='<div class="deskTitle"><h1>Beceri haritam</h1></div><label class="skillPicker">Ders <select id="mapCourse" aria-label="Rapor dersi"></select></label><section class="resultsGrid"></section>';
- const picker=screen.querySelector('#mapCourse');
- subjects().forEach(s=>picker.add(new Option(s,s,false,s===subject)));
- function show(){
-  const course=picker.value;
-  screen.querySelector('.resultsGrid').innerHTML=themeList(grade,course).map(t=>{
-   const score=result(grade,course,t.id);
-   const rows=t.lesson.beceri.map(name=>{
-    const record=Array.isArray(score?.skills)?score.skills.find(b=>b?.name===name&&Number.isInteger(b.correct)&&Number.isInteger(b.total)&&b.total>0):null;
-    return `<li><strong>${name}</strong><span>${record?record.correct+' / '+record.total+' ilk denemede doğru':'Henüz ölçülmedi'}</span>${record?'<meter aria-label="'+name+'" value="'+record.correct+'" max="'+record.total+'"></meter>':''}</li>`;
-   }).join('');
-   return `<article class="gameCard"><p class="eyebrow">${course}</p><h2>${t.title}</h2><ul class="skillRows">${rows}</ul><button class="action" data-theme="${t.id}">Patikaya git →</button></article>`;
-  }).join('');
-  screen.querySelectorAll('[data-theme]').forEach(b=>b.onclick=()=>{subject=course;theme=b.dataset.theme;openRoute('patika')});
- }
- picker.onchange=show;show();
+// Extra paths per subject are placeholders until the team decides what goes in them.
+const extraPaths=[['Tekrar patikası','Temaları karışık sorularla pekiştir.'],['Proje patikası','Öğrendiğini küçük bir ürüne dönüştür.'],['Meydan okuma','Zorlayıcı sorularla kendini dene.']];
+function themeLevel(k,s,t){return result(k,s,t)?3:Math.max(0,Math.min(2,Number(stored(key('adim.',k,s,t)))||0))}
+function subjectsPage(){
+ const list=subjects();
+ screen.innerHTML=`<div class="deskTitle"><h1>Dersler</h1><span class="pageNote">${grade}. sınıf · ${list.length} ders</span></div><div class="lessonGrid">${list.map((s,i)=>{
+  const ready=themeList(grade,s),all=(TEMALAR[grade+'|'+s]||[]).length||ready.length,done=ready.filter(t=>result(grade,s,t.id)).length;
+  return `<button class="lessonCard hue${i%3}" data-lesson="${s}"><img src="../assets/ders/${icons[s]}.png" alt=""><span class="lessonName"><b>${s}</b><small>${all} tema · ${ready.length} patika hazır</small></span><span class="lessonMeter"><progress value="${done}" max="${ready.length}" aria-label="${s} damga ilerlemesi"></progress><small>${done}/${ready.length} damga</small></span><i aria-hidden="true">›</i></button>`;
+ }).join('')}</div>`;
+ screen.querySelectorAll('[data-lesson]').forEach(b=>b.onclick=()=>{subject=b.dataset.lesson;theme='temel';openRoute('ders')});
 }
-function curriculum(course){
- const list=themeList(grade,course),names=TEMALAR[grade+'|'+course]||[];
- const titles=[...new Set([...names,...list.map(t=>t.title)])];
- const dialog=document.createElement('dialog');dialog.className='themeDialog';
- dialog.setAttribute('aria-labelledby','themeIndexTitle');
- dialog.innerHTML=`<div class="sectionTitle"><div><p class="eyebrow">${grade}. sınıf · ${course}</p><h2 id="themeIndexTitle">Tema dizini</h2></div><button class="closeDialog" aria-label="Kapat">×</button></div><ul>${titles.map(title=>{
-  const playable=list.find(t=>t.title===title);
-  return '<li><strong>'+title+'</strong>'+(playable?'<button class="action" data-open="'+playable.id+'">Patikayı aç →</button>':'<small>Program teması</small>')+'</li>';
- }).join('')}</ul>`;
- document.body.append(dialog);
- dialog.querySelector('.closeDialog').onclick=()=>dialog.close();
- dialog.onclose=()=>dialog.remove();
- dialog.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{dialog.close();subject=course;theme=b.dataset.open;openRoute('patika')});
- dialog.showModal();
+function subjectPage(){
+ const ready=themeList(grade,subject),names=TEMALAR[grade+'|'+subject]||[];
+ const titles=[...new Set([...names,...ready.map(t=>t.title)])];
+ screen.innerHTML=`<div class="subjectHead"><img src="../assets/ders/${icons[subject]}.png" alt=""><div><p class="eyebrow">${grade}. sınıf</p><h1>${subject}</h1></div><a class="backLink" href="#dersler">← Tüm dersler</a></div>
+ <section class="themeSection"><div class="sectionTitle"><h2>Temalar</h2><span class="pageNote">${titles.length} tema · ${ready.length} patika hazır</span></div><ol class="themeGrid">${titles.map((title,i)=>{
+  const t=ready.find(x=>x.title===title);
+  if(!t)return `<li class="themeCard soon"><span class="themeNo">${i+1}</span><div><b>${title}</b><small>Program teması · yakında</small></div></li>`;
+  const n=themeLevel(grade,subject,t.id);
+  return `<li class="themeCard ready${n===3?' complete':''}"><span class="themeNo">${n===3?'✓':i+1}</span><div><b>${title}</b><small>${t.lesson.konu} · ${n}/3 adım</small></div><button class="action" data-open="${t.id}">${n===3?'Tekrar aç':n?'Devam et':'Patikayı aç'} →</button></li>`;
+ }).join('')}</ol></section>
+ <section class="pathSection"><div class="sectionTitle"><h2>Patikalar</h2><span class="pageNote">Yeni patika alanları</span></div><div class="pathGrid">${extraPaths.map(([t,d])=>`<article class="pathSlot"><b>${t}</b><small>${d}</small><span class="soonTag">Yakında</span></article>`).join('')}</div></section>`;
+ screen.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{theme=b.dataset.open;openRoute('patika')});
 }
+const menuToggle=document.querySelector('.menuToggle');
+function setMenu(open){
+ document.body.classList.toggle('navMini',!open);
+ menuToggle.setAttribute('aria-expanded',String(open));
+ menuToggle.setAttribute('aria-label',open?'Menüyü daralt':'Menüyü genişlet');
+ write('bilgin.menu',open?'acik':'kapali');
+}
+setMenu(stored('bilgin.menu')!=='kapali');
+menuToggle.onclick=()=>setMenu(document.body.classList.contains('navMini'));
