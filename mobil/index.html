@@ -1,12 +1,20 @@
-<!doctype html>
-<html lang="tr">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Keşif defterim · BİLGİN</title>
-<link rel="icon" href="../favicon.ico">
-<link rel="stylesheet" href="mobil.css">
-<header><img class="logo" src="../assets/logo.png" alt="Bilgin"><label><span class="sr">Sınıf seç</span><select id="grade"></select></label></header>
-<main id="content"></main>
-<nav aria-label="Ana gezinme"></nav>
-<script src="notlar.js"></script><script src="../iop/icerik.js"></script><script src="mobil.js"></script>
-</html>
+<!doctype html><html lang="tr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>BİLGİN · Patika simülatörü</title><link rel="icon" href="../favicon.ico">
+<style>
+*{box-sizing:border-box}body{margin:0;height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr);background:#dbe7e4;color:#14384c;font:600 15px 'Segoe UI',sans-serif}header{display:flex;align-items:center;justify-content:center;gap:20px;padding:6px;background:#fffdf4;border-bottom:1px solid #abbbb3}header img{width:58px;height:32px;object-fit:contain}button{border:0;border-radius:9px;min-height:35px;padding:0 15px;font:inherit;color:inherit;background:transparent;cursor:pointer}button[aria-pressed=true]{background:#113b4f;color:white}.switch{background:#e6eeea;border-radius:11px;padding:2px}main{position:relative;min-height:0;background-image:radial-gradient(#93aaa5 1px,transparent 1px);background-size:16px 16px}iframe{position:absolute;top:50%;left:50%;transform-origin:center;background:#fff9ec;border:5px solid #254653;border-radius:24px;box-shadow:0 7px 26px #244f5330;box-sizing:content-box}@media(max-width:500px){header{justify-content:space-between;padding-inline:12px}iframe{border-width:0;border-radius:0}}
+</style><header><span>Cihaz önizlemesi</span><div class="switch" aria-label="Cihaz önizlemesi"><button data-mode="telefon">Telefon</button><button data-mode="tablet">Tablet</button></div></header><main><iframe title="BİLGİN öğrenci uygulaması"></iframe></main><script>
+const frame=document.querySelector('iframe'),stage=document.querySelector('main');
+let mode=innerWidth>=740&&innerWidth<=1100?'tablet':'telefon';
+function size(){
+ const sw=stage.clientWidth,sh=stage.clientHeight,tablet=mode==='tablet';
+ const native=tablet?sw>=600&&sw<=1100:sw<500;
+ const w=native?sw:tablet?900:390,h=native?Math.max(tablet?610:650,sh):tablet?650:760;
+ const border=parseFloat(getComputedStyle(frame).borderLeftWidth)*2;
+ const scale=Math.min(1,sw/(w+border),sh/(h+border));
+ Object.assign(frame.style,{width:w+'px',height:h+'px',transform:'translate(-50%,-50%) scale('+scale+')'});
+ document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===mode));
+}
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;size()});
+new ResizeObserver(size).observe(stage);size();
+const q=new URLSearchParams(location.search);
+frame.src=(q.get('ders')==='1'?'etkinlik.html':'uygulama.html')+location.search+location.hash;
+</script></html>
