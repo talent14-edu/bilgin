@@ -23,7 +23,7 @@ function games(){
  }).join('')}</div>`;
 }
 function skillMap(){
- screen.innerHTML='<div class="deskTitle"><h1>Beceri haritam</h1></div><label class="skillPicker">Ders <select id="mapCourse" aria-label="Rapor dersi"></select></label><section class="resultsGrid"></section><a class="moreMap" href="../#harita">AI-LA’nın altı platformdan oluşan örnek beceri haritasını incele ↗</a>';
+ screen.innerHTML='<div class="deskTitle"><h1>Beceri haritam</h1></div><label class="skillPicker">Ders <select id="mapCourse" aria-label="Rapor dersi"></select></label><section class="resultsGrid"></section>';
  const picker=screen.querySelector('#mapCourse');
  subjects().forEach(s=>picker.add(new Option(s,s,false,s===subject)));
  function show(){

@@ -67,6 +67,7 @@ const accountDefaults={ad:'Deniz',soyad:'Yıldız',eposta:'deniz.yildiz@okul.bil
 const escHtml=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const logoutIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></svg>';
 let accountPane='bilgi';
+const badgeNames={'Matematik':'Matematik Canavarı','Fen Bilimleri':'Deney Kâşifi','Türkçe':'Söz Ustası','Hayat Bilgisi':'Hayat Gezgini','Sosyal Bilgiler':'Harita Kaptanı','Din Kültürü':'Değerler Elçisi','İngilizce':'İngilizce Yıldızı','İnkılap Tarihi':'Tarih Dedektifi'};
 function account(){
  let saved={};try{saved=JSON.parse(stored('bilgin.hesap')||'{}')}catch{}
  const me={...accountDefaults,...saved};
@@ -141,7 +142,7 @@ function profile(page){
    const n=counts.get(s),total=themeList(grade,s).length;
    const tile=document.createElement('li');
    tile.className='badgeTile '+(n===total?'mastered':n?'earned':'waiting');
-   tile.innerHTML=`<div class="badgeFace" style="--growth:${.82+.09*n}"><img src="../assets/ders/${icons[s]}.png" alt="">${n?'<b aria-label="Kazanıldı">✓</b>':''}</div><strong>${s}</strong><div class="badgeMeter"><progress value="${n}" max="${total}" aria-label="${s} tema ilerlemesi"></progress><small>${n}/${total}</small></div>`;
+   tile.innerHTML=`<div class="badgeFace" style="--growth:${.82+.09*n}"><img src="../assets/ders/${icons[s]}.png" alt="">${n?'<b aria-label="Kazanıldı">✓</b>':''}</div><strong>${badgeNames[s]||s}</strong><small class="badgeSubject">${s}</small><div class="badgeMeter"><progress value="${n}" max="${total}" aria-label="${s} tema ilerlemesi"></progress><small>${n}/${total}</small></div>`;
    grid.append(tile);
   }
  }
