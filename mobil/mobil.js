@@ -5,7 +5,7 @@ const icons={'Matematik':'matematik','Fen Bilimleri':'fen','Türkçe':'turkce','
 gradeSelect.onchange=()=>{
  grade=gradeSelect.value;
  if(!subjects().includes(subject))subject=subjects()[0];
- theme='temel';badgePage=subjects().indexOf(subject);openRoute(['#profil','#pasaport'].includes(location.hash)?location.hash.slice(1):'dersler');
+ theme='temel';openRoute(['#profil','#pasaport'].includes(location.hash)?location.hash.slice(1):'dersler');
 };
 function openRoute(route){
  remember();history.replaceState(null,'',url('uygulama.html','#'+route));render();
@@ -15,7 +15,7 @@ function path(){
  const points=[[29,16],[67,39],[30,62],[63,85]];
  const titles=[...labels,'Patika damgası'];
  const hints=[l.v.length+' sahne',l.oyun.ad,l.test.length+' soru',n===3?'Kazanıldı':'3 adımı tamamla'];
- const marks=['▶','✦','★','🏆'];
+ const marks=['goz','yapboz','buyutec','kupa'];
  const nodes=points.map(([x,y],i)=>{
    const award=i===3,done=i<n||(award&&n===3),active=i===n&&!award;
    const state=done?'done':active?'active':'locked';
@@ -23,7 +23,7 @@ function path(){
    const label=titles[i]+', '+(done?(award?'pasaportunu aç':'tekrar aç'):active?'başla':'kilitli');
    return `<div class="stop ${x>50?'west':'east'}" style="--x:${x}%;--y:${y}%">
      <button class="node ${state}${award?' award':''}" ${action} aria-label="${label}" ${!done&&!active?'disabled':''}>
-     <span aria-hidden="true">${done&&!award?'✓':marks[i]}</span></button>
+     <img class="nodeIcon" src="ikon/${marks[i]}.png" alt="">${done&&!award?'<b class="doneTick" aria-hidden="true">✓</b>':''}</button>
      <div class="stopLabel"><strong>${titles[i]}</strong><small>${hints[i]}</small></div>
      ${active?'<span class="startFlag">Başla</span><img class="guideWorm" src="../img/poz_selam.webp" alt="">':''}</div>`;
  }).join('');
@@ -48,9 +48,9 @@ function catalog(){
   screen.querySelector('#preview').innerHTML=`<img class="bookIcon" src="../assets/ders/${icons[course.value]}.png" alt=""><div><p class="eyebrow">${completed?'✓ Damga kazanıldı':'İzle · Oyna · Ölç'}</p><h2>${t.lesson.konu}</h2><p>${t.lesson.oyun.ad} · ${t.lesson.test.length} soru</p></div>`;
  }
  course.onchange=()=>populate('temel');picker.onchange=preview;populate(theme);
- screen.querySelector('form').onsubmit=e=>{e.preventDefault();subject=course.value;theme=picker.value;badgePage=subjects().indexOf(subject);openRoute('patika')};
+ screen.querySelector('form').onsubmit=e=>{e.preventDefault();subject=course.value;theme=picker.value;openRoute('patika')};
 }
-let stampPage=0,badgePage=subjects().indexOf(subject);
+let stampPage=0;
 function pages(count,index,update){
  const footer=screen.querySelector('.pager');if(!footer||count<2)return;
  footer.innerHTML='<button aria-label="Önceki">←</button><span>'+(index+1)+' / '+count+'</span><button aria-label="Sonraki">→</button>';
@@ -62,7 +62,7 @@ function profile(page){
  const counts=new Map(list.map(s=>[s,stamps.filter(x=>x.grade===grade&&x.subject===s).length]));
  const badges=[...counts.values()].filter(Boolean).length;
  const passport=page==='pasaport';
- screen.innerHTML=`<div class="heading"><h1>Profilim</h1></div><div class="profileSummary"><img src="../img/poz_rozet.webp" alt=""><div><strong>${stamps.length} damga</strong><small>Tüm sınıflardaki pasaportum</small></div></div><div class="profileTabs"><a href="#pasaport" ${passport?'aria-current="page"':''}>Pasaportum</a><a href="#profil" ${!passport?'aria-current="page"':''}>Ders rozetlerim</a></div><article class="paper collection"></article><div class="pager"></div>`;
+ screen.innerHTML=`<div class="heading"><h1>Profilim</h1></div><div class="profileSummary"><img src="../img/poz_rozet.webp" alt=""><div><strong>${stamps.length} damga</strong><small>Tüm sınıflardaki pasaportum</small></div></div><div class="profileTabs"><a href="#pasaport" ${passport?'aria-current="page"':''}><img src="ikon/defter.png" alt="">Pasaportum</a><a href="#profil" ${!passport?'aria-current="page"':''}><img src="ikon/madalya.png" alt="">Rozetlerim</a></div><article class="paper collection"></article><div class="pager"></div>`;
  const card=screen.querySelector('.collection');
  if(passport){
   if(!stamps.length){card.innerHTML='<h2>İlk damganı kazan</h2><p>Bir temanın İzle, Oyna ve Ölç adımlarını bitir. Tema damgan bu pasaporta işlenecek.</p><a class="action" href="#dersler">Tema seç →</a>';return}
@@ -70,10 +70,17 @@ function profile(page){
   card.innerHTML=`<div class="seal"><img src="../assets/ders/${icons[entry.subject]}.png" alt=""></div><p class="eyebrow">${entry.grade}. sınıf · ${entry.subject}</p><h2>${entry.theme}</h2><p>✓ Tema tamamlandı${entry.date?' · '+new Date(entry.date).toLocaleDateString('tr-TR'):''}</p>`;
   pages(stamps.length,stampPage,i=>{stampPage=i;profile(page)});
  }else{
-  badgePage=Math.min(badgePage,list.length-1);
-  const s=list[badgePage],n=counts.get(s),total=themeList(grade,s).length;
-  card.innerHTML=`<div class="medal ${n?'won':''}" style="--size:${56+14*n}px"><img src="../assets/ders/${icons[s]}.png" alt=""></div><p class="eyebrow">${grade}. sınıf · ${badges} kazanılmış ders rozeti</p><h2>${s} rozeti</h2><progress aria-label="${s} rozeti" value="${n}" max="${total}"></progress><p>${n} / ${total} tema tamamlandı</p><small>${n===0?'İlk tema bitince bu rozeti kazanırsın.':n===total?'Ders rozeti en yüksek seviyede.':'Bir sonraki tema bu rozeti büyütür.'}</small>`;
-  pages(list.length,badgePage,i=>{badgePage=i;profile(page)});
+  screen.querySelector('.pager').remove();
+  card.className='badgeBoard';
+  card.innerHTML=`<div class="boardHeading"><h2>Ders rozetlerim</h2><span>${badges} / ${list.length} kazanıldı</span></div><ul class="badges"></ul>`;
+  const grid=card.querySelector('.badges');
+  for(const s of list){
+   const n=counts.get(s),total=themeList(grade,s).length;
+   const tile=document.createElement('li');
+   tile.className='badgeTile '+(n===total?'mastered':n?'earned':'waiting');
+   tile.innerHTML=`<div class="badgeFace" style="--growth:${.82+.09*n}"><img src="../assets/ders/${icons[s]}.png" alt="">${n?'<b aria-label="Kazanıldı">✓</b>':''}</div><strong>${s}</strong><div class="badgeMeter"><progress value="${n}" max="${total}" aria-label="${s} tema ilerlemesi"></progress><small>${n}/${total}</small></div>`;
+   grid.append(tile);
+  }
  }
 }
 function render(){
