@@ -1,5 +1,7 @@
-﻿const root=document.querySelector('#iop'),space=document.querySelector('#space');
-document.querySelector('#back').href=url('uygulama.html','#patika');
+const root=document.querySelector('#iop'),space=document.querySelector('#space');
+const fromLibrary=params.get('kaynak')==='dersler';
+document.querySelector('#back').href=url('uygulama.html',fromLibrary?'#dersler':'#patika');
+document.querySelector('#back').textContent=fromLibrary?'← Dersler':'← Patikam';
 document.querySelector('#journal').href=url('uygulama.html','#defter');
 document.querySelector('#topic').textContent=lesson().konu;
 document.querySelector('#context').textContent=grade+'. sınıf · '+subject;

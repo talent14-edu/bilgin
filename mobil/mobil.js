@@ -6,7 +6,6 @@ function choose(s){subject=s;history.replaceState(null,'',url('uygulama.html',lo
 gradeSelect.onchange=()=>{grade=gradeSelect.value;choose(subjects().includes(subject)?subject:subjects()[0])};
 function picker(){return '<select id="subject" aria-label="Ders">'+subjects().map(s=>'<option '+(s===subject?'selected':'')+'>'+s+'</option>').join('')+'</select>'}
 function heading(title){return '<div class="heading"><h1>'+title+'</h1>'+picker()+'</div>'}
-function pathLink(){return '<a class="action" href="#patika">Patikayı aç →</a>'}
 function path(){
  const l=lesson(),n=level();
  const points=[[29,16],[67,39],[30,62],[63,85]];
@@ -31,19 +30,19 @@ function path(){
  screen.querySelector('[data-award]').onclick=()=>location.hash='harita';
 }
 function catalog(){
- screen.innerHTML='<h1>Ders patikaları</h1><div class="filters"><input type="search" aria-label="Patika ara" placeholder="Ders, oyun veya beceri ara"><select aria-label="İlerleme"><option>Tümü</option><option>Tamamlananlar</option><option>Devam edenler</option></select></div><div id="card"></div>';
+ screen.innerHTML='<h1>Ders kitaplığı</h1><div class="filters"><input type="search" aria-label="Ders ara" placeholder="Ders, oyun veya beceri ara"><select aria-label="İlerleme"><option>Tümü</option><option>Tamamlananlar</option><option>Tamamlanmamış</option></select></div><div id="card"></div>';
  const input=screen.querySelector('input'),filter=screen.querySelector('select'),card=screen.querySelector('#card');
- let pos=0;
+ let pos=Math.max(0,subjects().indexOf(subject));
  function draw(){
    const matches=subjects().filter(s=>{
     const l=IOP_DERS[grade+'|'+s];
     let done=false;try{done=Number.isInteger(JSON.parse(localStorage.getItem('bilgin.mobil.'+grade+'|'+s))?.correct)}catch{}
     return (!filter.selectedIndex || (filter.selectedIndex===1)===done) && [s,l.konu,l.oyun.ad,...l.beceri].join(' ').toLocaleLowerCase('tr').includes(input.value.trim().toLocaleLowerCase('tr'));
    });
-   if(!matches.length){card.innerHTML='<p class="paper">Bu seçimde patika bulunamadı.</p>';return}
+   if(!matches.length){card.innerHTML='<p class="paper">Bu seçimde ders bulunamadı.</p>';return}
    const s=matches[pos],l=IOP_DERS[grade+'|'+s];
-   card.innerHTML='<article class="paper"><img class="subjectArt" src="../assets/ders/'+icons[s]+'.png" alt=""><p class="eyebrow">'+s+'</p><h2>'+l.konu+'</h2><p>'+l.oyun.ad+' · '+l.test.length+' soru</p><p>'+l.beceri.join(' · ')+'</p><button class="action" id="open">Patikayı aç →</button></article><div class="pager"><button id="prev" aria-label="Önceki patika">←</button><span>'+ (pos+1)+' / '+matches.length+'</span><button id="next" aria-label="Sonraki patika">→</button></div>';
-   card.querySelector('#open').onclick=()=>{choose(s);location.hash='patika'};
+   card.innerHTML='<article class="paper"><img class="subjectArt" src="../assets/ders/'+icons[s]+'.png" alt=""><p class="eyebrow">'+s+'</p><h2>'+l.konu+'</h2><p>'+l.oyun.ad+' · '+l.test.length+' soru</p><p>'+l.beceri.join(' · ')+'</p><button class="action" id="open">Dersi aç →</button></article><div class="pager"><button id="prev" aria-label="Önceki ders">←</button><span>'+ (pos+1)+' / '+matches.length+'</span><button id="next" aria-label="Sonraki ders">→</button></div>';
+   card.querySelector('#open').onclick=()=>{subject=s;history.replaceState(null,'',url('uygulama.html','#dersler'));const i=level();location.href=url('etkinlik.html')+'&kaynak=dersler&adim='+steps[i===3?0:i]};
    for(const [id,d] of [['prev',-1],['next',1]]){const b=card.querySelector('#'+id);b.disabled=!matches[pos+d];b.onclick=()=>{pos+=d;draw()}}
  }
  input.oninput=filter.onchange=()=>{pos=0;draw()};draw();
@@ -57,9 +56,19 @@ function render(){
   const note=screen.querySelector('textarea');note.value=read('not.');
   screen.querySelector('form').onsubmit=e=>{e.preventDefault();screen.querySelector('[role=status]').textContent=save('not.',note.value)?'Notun kaydedildi.':'Not kaydedilemedi.'};
  }else if(page==='harita'){
-  const r=result();
-  screen.innerHTML=heading('Becerilerim')+'<article class="paper"><img class="subjectArt" src="../img/poz_rozet.webp" alt=""><h2>'+lesson().konu+'</h2><p>'+(r?r.correct+' / '+lesson().test.length+' ilk denemede doğru':'Ölç adımını bitirince beceri sonuçların burada görünür.')+'</p><div id="skills"></div>'+pathLink()+'</article>';
-  if(r)for(const b of Array.isArray(r.skills)?r.skills:[]){if(!b||!lesson().beceri.includes(b.name)||!Number.isInteger(b.total)||!Number.isInteger(b.correct))continue;const line=document.createElement('p');line.className='skill';line.textContent=b.name+' · '+b.correct+'/'+b.total;screen.querySelector('#skills').append(line)}
+  const r=result(),l=lesson();
+  screen.innerHTML=heading('Beceri raporum')+'<article class="paper report"><p class="eyebrow">Son ölçüm · '+subject+'</p><h2>'+l.konu+'</h2><p>'+(r?r.correct+' / '+l.test.length+' soru ilk denemede doğru.':'Bu ders için henüz ölçüm yok. Ölç adımını tamamladığında sonuçların burada görünür.')+'</p><div id="skills"></div></article>';
+  for(const name of l.beceri){
+   const score=Array.isArray(r?.skills)?r.skills.find(b=>b?.name===name&&Number.isInteger(b.correct)&&Number.isInteger(b.total)&&b.total>0):null;
+   const line=document.createElement('div');line.className='skill';
+   const title=document.createElement('strong');title.textContent=name;
+   const value=document.createElement('span');value.textContent=score?score.correct+' / '+score.total+' ilk denemede doğru':'Henüz ölçülmedi';
+   line.append(title,value);
+   if(score){
+    const meter=document.createElement('meter');meter.max=score.total;meter.value=score.correct;meter.setAttribute('aria-label',name);line.append(meter);
+   }
+   screen.querySelector('#skills').append(line);
+  }
  }else path();
  screen.querySelector('#subject').onchange=e=>choose(e.target.value);
 }
