@@ -1,13 +1,41 @@
 ﻿const params=new URLSearchParams(location.search);
-let grade=/^[1-8]$/.test(params.get('k'))?params.get('k'):'5';
 const steps=['izle','oyna','olc'],labels=['İzle','Oyna','Ölç'];
-function subjects(){return Object.keys(IOP_DERS).filter(k=>k.startsWith(grade+'|')).map(k=>k.split('|')[1])}
-let subject=subjects().includes(params.get('d'))?params.get('d'):(subjects().includes('Fen Bilimleri')?'Fen Bilimleri':subjects()[0]);
-function key(prefix){return 'bilgin.mobil.'+prefix+grade+'|'+subject}
-function read(prefix){try{return localStorage.getItem(key(prefix))||''}catch{return ''}}
-function save(prefix,value){try{localStorage.setItem(key(prefix),value);return true}catch{return false}}
-function result(){try{const r=JSON.parse(read(''));return Number.isInteger(r?.correct)?r:null}catch{return null}}
+function stored(key){try{return localStorage.getItem(key)}catch{return null}}
+function write(key,value){try{localStorage.setItem(key,value);return true}catch{return false}}
+const last=new URLSearchParams(stored('bilgin.patikam')||'');
+let grade=params.get('k')||last.get('k')||'5';
+if(!/^[1-8]$/.test(grade))grade='5';
+function subjects(k=grade){return Object.keys(IOP_DERS).filter(key=>key.startsWith(k+'|')).map(key=>key.split('|')[1])}
+let subject=params.get('d')||(grade===last.get('k')?last.get('d'):null);
+if(!subjects().includes(subject))subject=subjects().includes('Fen Bilimleri')?'Fen Bilimleri':subjects()[0];
+let theme=params.has('k')||params.has('d')?params.get('tema'):last.get('tema');
+if(theme!=='atolye')theme='temel';
+const originals={...IOP_DERS};
+function themeList(k=grade,s=subject){
+ const key=k+'|'+s,row=themeWorkshop[key],names=TEMALAR[key];
+ return [{id:'temel',title:names[row[0]]||originals[key].konu,lesson:originals[key]},
+         {id:'atolye',title:names[row[1]],lesson:workshopLesson(row)}];
+}
+function current(){return themeList().find(t=>t.id===theme)}
+function lesson(){return current().lesson}
+function key(prefix,k=grade,s=subject,t=theme){return 'bilgin.mobil.'+prefix+k+'|'+s+(t==='temel'?'':'|'+t)}
+function read(prefix){return stored(key(prefix))||''}
+function save(prefix,value){return write(key(prefix),value)}
+function result(k=grade,s=subject,t=theme){
+ try{const r=JSON.parse(stored(key('',k,s,t)));return Number.isInteger(r?.correct)?r:null}catch{return null}
+}
 function level(){return result()?3:Math.max(0,Math.min(2,Number(read('adim.'))||0))}
-function url(file,hash=''){const q=new URLSearchParams({k:grade,d:subject});return file+'?'+q+hash}
-function lesson(){return IOP_DERS[grade+'|'+subject]}
-
+function selection(){return new URLSearchParams({k:grade,d:subject,tema:theme})}
+function remember(){write('bilgin.patikam',selection().toString())}
+function url(file,hash=''){return file+'?'+selection()+hash}
+function earned(){
+ const stamps=[];
+ for(const key of Object.keys(originals)){
+  const [k,s]=key.split('|');
+  for(const t of themeList(k,s)){
+   const r=result(k,s,t.id);
+   if(r)stamps.push({grade:k,subject:s,theme:t.title,date:r.earnedAt||''});
+  }
+ }
+ return stamps.sort((a,b)=>b.date.localeCompare(a.date));
+}

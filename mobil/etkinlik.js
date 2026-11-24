@@ -1,16 +1,22 @@
 const root=document.querySelector('#iop'),space=document.querySelector('#space');
-const fromLibrary=params.get('kaynak')==='dersler';
-document.querySelector('#back').href=url('uygulama.html',fromLibrary?'#dersler':'#patika');
-document.querySelector('#back').textContent=fromLibrary?'← Dersler':'← Patikam';
-document.querySelector('#journal').href=url('uygulama.html','#defter');
+document.querySelector('#back').href=url('uygulama.html','#patika');
+document.querySelector('#profile').href=url('uygulama.html','#profil');
 document.querySelector('#topic').textContent=lesson().konu;
-document.querySelector('#context').textContent=grade+'. sınıf · '+subject;
+document.querySelector('#context').textContent=subject+' · '+current().title;
 let reached=level();
 function unlock(n){if(n>reached){reached=n;save('adim.',String(n))}}
-const engine=IOP.kur(root,{kok:'../',sinif:Number(grade),ders:subject,haritaLink:url('uygulama.html','#harita'),testBitti:r=>{
- if(save('',JSON.stringify(r)))unlock(3);
- else document.querySelector('.io-sonuc .io-konu').textContent='Sonuç bu tarayıcıya kaydedilemedi.';
+const activeLesson=lesson();
+IOP_DERS[grade+'|'+subject]=activeLesson;
+const engine=IOP.kur(root,{kok:'../',sinif:Number(grade),ders:subject,haritaLink:url('uygulama.html','#pasaport'),testBitti:r=>{
+ const previous=result();
+ const message=document.querySelector('.io-sonuc .io-konu');
+ if(save('',JSON.stringify({...r,earnedAt:previous?previous.earnedAt||'':new Date().toISOString()}))){
+  unlock(3);
+  message.textContent=previous?'Bu temanın damgası pasaportunda.':'Tema tamamlandı! Damgan pasaportuna eklendi.';
+  document.querySelector('.io-sonuc a').textContent='Pasaportumu aç →';
+ }else message.textContent='Sonuç bu tarayıcıya kaydedilemedi.';
 }});
+root.querySelector('[data-p="olc"] small').textContent=activeLesson.test.length+' soruda beceri';
 const tabs=[...root.querySelectorAll('.io-adim')];
 const forward=root.querySelector('[data-git="oyna"]');
 function gates(){
