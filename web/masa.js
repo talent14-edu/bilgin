@@ -28,7 +28,7 @@ function subjectsPage(){
  screen.innerHTML=`<div class="deskTitle"><h1>Dersler</h1><span class="pageNote">${grade}. sınıf · ${list.length} ders</span></div><div class="lessonGrid">${list.map((s,i)=>{
   const ready=themeList(grade,s),all=(TEMALAR[grade+'|'+s]||[]).length||ready.length,done=ready.filter(t=>result(grade,s,t.id)).length;
   return `<button class="lessonCard hue${i%3}" data-lesson="${s}"><img src="../assets/ders/${icons[s]}.png" alt=""><span class="lessonName"><b>${s}</b><small>${all} tema · ${ready.length} patika hazır</small></span><span class="lessonMeter"><progress value="${done}" max="${ready.length}" aria-label="${s} damga ilerlemesi"></progress><small>${done}/${ready.length} damga</small></span><i aria-hidden="true">›</i></button>`;
- }).join('')}</div>`;
+ }).join('')}</div>${extraStrip()}`;
  screen.querySelectorAll('[data-lesson]').forEach(b=>b.onclick=()=>{subject=b.dataset.lesson;theme='temel';openRoute('ders')});
 }
 function subjectPage(){
@@ -52,7 +52,7 @@ function setMenu(open){
 }
 setMenu(stored('bilgin.menu')!=='kapali');
 menuToggle.onclick=()=>setMenu(document.body.classList.contains('navMini'));
-// Keşif Patikaları: skills outside the Maarif subjects, drawn from the paths the
+// Ek patikalar: skills outside the Maarif subjects, drawn from the paths the
 // AI-LA ecosystem already runs (Talent14, AI-GALAXY, Okumino).
 const discoverIcons={
  spark:'<path d="M12 2.5c.5 4.6 2.9 7 9.5 9.5-6.6 2.5-9 4.9-9.5 9.5-.5-4.6-2.9-7-9.5-9.5 6.6-2.5 9-4.9 9.5-9.5z" fill="currentColor" stroke="none"/>',
@@ -70,10 +70,10 @@ const discoverPaths=[
  {ad:'Anlayarak Hızlı Okuma',not:'Okuma hızını ve anlamayı birlikte büyüt.',ikon:'book',renk:'turuncu',kaynak:'Okumino',bant:[1,8]},
  {ad:'Tasarla ve Üret',not:'Robotik ve maker atölyesinde fikrini ürüne dönüştür.',ikon:'cube',renk:'lacivert',kaynak:'Talent14',bant:[1,8]}
 ];
-function discover(){
+function extraStrip(){
  const g=Number(grade);
- screen.innerHTML=`<div class="deskTitle"><div><h1>Keşif Patikaları</h1><p class="pageNote">Derslerin dışında kalan, hayatın içindeki beceriler</p></div><span class="soonTag big">Yakında açılıyor</span></div><ul class="discoverGrid">${discoverPaths.map(p=>{
+ return `<section class="extraPaths" aria-labelledby="extraTitle"><div class="extraHead"><h2 id="extraTitle">Ek patikalar</h2><span class="pageNote">Derslerin dışında, hayatın içinden</span><span class="soonTag">Yakında</span></div><ul>${discoverPaths.map(p=>{
   const fits=g>=p.bant[0]&&g<=p.bant[1];
-  return `<li class="discoverCard tone-${p.renk}${fits?'':' later'}"><span class="discoverIcon" aria-hidden="true"><svg viewBox="0 0 24 24">${discoverIcons[p.ikon]}</svg></span><div><h2>${p.ad}</h2><p>${p.not}</p></div><div class="discoverFoot"><span class="source">${p.kaynak}</span><span class="band">${fits?p.bant[0]+'–'+p.bant[1]+'. sınıf':p.bant[0]+'. sınıftan itibaren'}</span></div></li>`;
- }).join('')}</ul>`;
+  return `<li class="extraCard tone-${p.renk}${fits?'':' later'}"><span class="discoverIcon" aria-hidden="true"><svg viewBox="0 0 24 24">${discoverIcons[p.ikon]}</svg></span><span><b>${p.ad}</b><small>${p.kaynak} · ${fits?p.bant[0]+'–'+p.bant[1]+'. sınıf':p.bant[0]+'. sınıftan itibaren'}</small></span></li>`;
+ }).join('')}</ul></section>`;
 }
