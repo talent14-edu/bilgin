@@ -53,14 +53,12 @@ function setMenu(open){
 setMenu(stored('bilgin.menu')!=='kapali');
 menuToggle.onclick=()=>setMenu(document.body.classList.contains('navMini'));
 // Keşif Patikaları: skills outside the Maarif subjects, drawn from the paths the
-// AI-LA ecosystem already runs (Talent14, AI-GALAXY, Codemino, Okumino).
+// AI-LA ecosystem already runs (Talent14, AI-GALAXY, Okumino).
 const discoverIcons={
  spark:'<path d="M12 2.5c.5 4.6 2.9 7 9.5 9.5-6.6 2.5-9 4.9-9.5 9.5-.5-4.6-2.9-7-9.5-9.5 6.6-2.5 9-4.9 9.5-9.5z" fill="currentColor" stroke="none"/>',
  coin:'<circle cx="12" cy="12" r="8.5"/><path d="M14.8 9.2c-.5-1-1.5-1.5-2.8-1.5-1.7 0-2.8.9-2.8 2.1 0 2.9 5.9 1.5 5.9 4.4 0 1.2-1.2 2.1-3 2.1-1.4 0-2.5-.6-3-1.6M12 6v1.7M12 16.3V18"/>',
  shield:'<path d="M12 3 4.5 6v5.5c0 4.6 3.1 8 7.5 9.5 4.4-1.5 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/>',
- code:'<path d="m8.5 7.5-5 4.5 5 4.5M15.5 7.5l5 4.5-5 4.5M13.5 5l-3 14"/>',
  alert:'<path d="M10.3 4.2 2.8 17.5A2 2 0 0 0 4.5 20.5h15a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4.5M12 17h.01"/>',
- search:'<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M8.5 11h5"/>',
  book:'<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/>',
  cube:'<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/>'
 };
@@ -68,9 +66,7 @@ const discoverPaths=[
  {ad:'Yapay Zekâ Okuryazarlığı',not:'Yapay zekâ nasıl öğrenir, ne zaman yanılır? Doğru soruyu sormayı öğren.',ikon:'spark',renk:'mor',kaynak:'AI-GALAXY',bant:[1,8]},
  {ad:'Finansal Okuryazarlık',not:'Harçlık, birikim, ihtiyaç ve istek: paranın yolunu sen çiz.',ikon:'coin',renk:'altin',kaynak:'Talent14',bant:[1,8]},
  {ad:'Dijital Güvenlik',not:'Güçlü şifre, kişisel bilgini koruma ve çevrimiçi nezaket.',ikon:'shield',renk:'petrol',kaynak:'Talent14',bant:[3,8]},
- {ad:'Kodlama ve Algoritma',not:'Adım adım düşün, hatayı bul, kendi oyununu kur.',ikon:'code',renk:'mavi',kaynak:'Codemino',bant:[1,8]},
  {ad:'Afet Bilinci',not:'Deprem çantası, güvenli alan ve aile afet planı.',ikon:'alert',renk:'kiremit',kaynak:'Talent14 · AFAD',bant:[1,8]},
- {ad:'Bilgi ve Medya Okuryazarlığı',not:'Haberi sorgula, kaynağı kontrol et, sahteyi ayırt et.',ikon:'search',renk:'yesil',kaynak:'BİLGİN',bant:[4,8]},
  {ad:'Anlayarak Hızlı Okuma',not:'Okuma hızını ve anlamayı birlikte büyüt.',ikon:'book',renk:'turuncu',kaynak:'Okumino',bant:[1,8]},
  {ad:'Tasarla ve Üret',not:'Robotik ve maker atölyesinde fikrini ürüne dönüştür.',ikon:'cube',renk:'lacivert',kaynak:'Talent14',bant:[1,8]}
 ];
