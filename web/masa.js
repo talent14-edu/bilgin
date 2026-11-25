@@ -124,7 +124,7 @@ function mountHero(root){
   root.classList.toggle('is-running',run);
   if(!run)return;
   void dots[cur].offsetWidth;dots[cur].classList.add('is-fill');
-  heroTimer=setTimeout(()=>{if(root.isConnected)show(cur+1)},7000);
+  heroTimer=setTimeout(()=>{if(root.isConnected)show(cur+1)},4500);
  }
  dots.forEach((d,i)=>d.onclick=()=>show(i));
  root.querySelector('.heroDots').onkeydown=e=>{const k={ArrowRight:1,ArrowLeft:-1}[e.key];if(k){e.preventDefault();show(cur+k,true)}};
