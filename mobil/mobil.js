@@ -147,10 +147,10 @@ function render(){
  document.body.dataset.band=Number(grade)<=3?'ilk':Number(grade)>=7?'ust':'orta';
  if(['harita','defter','rozetler'].includes(page))page='profil';
  if(page==='beceri')page=webMode?'masa':'patika';
- if(page==='kesif')page='dersler';
+ if(page==='kesif'||(page==='ekpatika'&&!webMode))page='dersler';
  if(page==='ders'&&!webMode)page='dersler';
- const tab=['pasaport','hesap'].includes(page)?'profil':page==='ders'?'dersler':page;
+ const tab=['pasaport','hesap'].includes(page)?'profil':['ders','ekpatika'].includes(page)?'dersler':page;
  document.querySelectorAll('nav a').forEach(a=>{if(a.hash==='#'+tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
- if(webMode&&page==='masa')desk();else if(webMode&&page==='oyunlar')games();else if(webMode&&page==='dersler')subjectsPage();else if(webMode&&page==='ders')subjectPage();else if(page==='dersler')catalog();else if(['profil','pasaport','hesap'].includes(page))profile(page);else path();
+ if(webMode&&page==='masa')desk();else if(webMode&&page==='oyunlar')games();else if(webMode&&page==='dersler')subjectsPage();else if(webMode&&page==='ders')subjectPage();else if(webMode&&page==='ekpatika')extraPage();else if(page==='dersler')catalog();else if(['profil','pasaport','hesap'].includes(page))profile(page);else path();
 }
 window.addEventListener('pageshow',render);window.addEventListener('hashchange',render);render();

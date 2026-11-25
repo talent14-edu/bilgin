@@ -28,8 +28,9 @@ function subjectsPage(){
  screen.innerHTML=`<div class="deskTitle"><h1>Dersler</h1><span class="pageNote">${grade}. sınıf · ${list.length} ders</span></div><div class="lessonGrid">${list.map((s,i)=>{
   const ready=themeList(grade,s),all=(TEMALAR[grade+'|'+s]||[]).length||ready.length,done=ready.filter(t=>result(grade,s,t.id)).length;
   return `<button class="lessonCard hue${i%3}" data-lesson="${s}"><img src="../assets/ders/${icons[s]}.png" alt=""><span class="lessonName"><b>${s}</b><small>${all} tema · ${ready.length} patika hazır</small></span><span class="lessonMeter"><progress value="${done}" max="${ready.length}" aria-label="${s} damga ilerlemesi"></progress><small>${done}/${ready.length} damga</small></span><i aria-hidden="true">›</i></button>`;
- }).join('')}</div>${extraStrip()}`;
+ }).join('')}${extraCard()}</div>`;
  screen.querySelectorAll('[data-lesson]').forEach(b=>b.onclick=()=>{subject=b.dataset.lesson;theme='temel';openRoute('ders')});
+ screen.querySelector('[data-extra]').onclick=()=>openRoute('ekpatika');
 }
 function subjectPage(){
  const ready=themeList(grade,subject),names=TEMALAR[grade+'|'+subject]||[];
@@ -70,10 +71,14 @@ const discoverPaths=[
  {ad:'Anlayarak Hızlı Okuma',not:'Okuma hızını ve anlamayı birlikte büyüt.',ikon:'book',renk:'turuncu',kaynak:'Okumino',bant:[1,8]},
  {ad:'Tasarla ve Üret',not:'Robotik ve maker atölyesinde fikrini ürüne dönüştür.',ikon:'cube',renk:'lacivert',kaynak:'Talent14',bant:[1,8]}
 ];
-function extraStrip(){
- const g=Number(grade);
- return `<section class="extraPaths" aria-labelledby="extraTitle"><div class="extraHead"><h2 id="extraTitle">Ek patikalar</h2><span class="pageNote">Derslerin dışında, hayatın içinden</span><span class="soonTag">Yakında</span></div><ul>${discoverPaths.map(p=>{
-  const fits=g>=p.bant[0]&&g<=p.bant[1];
-  return `<li class="extraCard tone-${p.renk}${fits?'':' later'}"><span class="discoverIcon" aria-hidden="true"><svg viewBox="0 0 24 24">${discoverIcons[p.ikon]}</svg></span><span><b>${p.ad}</b><small>${p.kaynak} · ${fits?p.bant[0]+'–'+p.bant[1]+'. sınıf':p.bant[0]+'. sınıftan itibaren'}</small></span></li>`;
- }).join('')}</ul></section>`;
+function fitsGrade(p){const g=Number(grade);return g>=p.bant[0]&&g<=p.bant[1]}
+function extraCard(){
+ const open=discoverPaths.filter(fitsGrade).length;
+ return `<button class="lessonCard extraLesson" data-extra><span class="extraArt" aria-hidden="true"><img src="../mobil/ikon/harita.png" alt=""></span><span class="lessonName"><b>Ek patikalar</b><small>${open} patika · derslerin dışında</small></span><span class="lessonMeter"><span class="soonTag">Yakında</span></span><i aria-hidden="true">›</i></button>`;
+}
+function extraPage(){
+ screen.innerHTML=`<div class="subjectHead"><span class="extraArt"><img src="../mobil/ikon/harita.png" alt=""></span><div><p class="eyebrow">${grade}. sınıf · derslerin dışında</p><h1>Ek patikalar</h1></div><a class="backLink" href="#dersler">← Tüm dersler</a></div><ul class="extraGrid">${discoverPaths.map(p=>{
+  const fits=fitsGrade(p);
+  return `<li class="extraItem tone-${p.renk}${fits?'':' later'}"><span class="discoverIcon" aria-hidden="true"><svg viewBox="0 0 24 24">${discoverIcons[p.ikon]}</svg></span><div><h2>${p.ad}</h2><p>${p.not}</p></div><div class="extraFoot"><span class="source">${p.kaynak}</span><span>${fits?p.bant[0]+'–'+p.bant[1]+'. sınıf':p.bant[0]+'. sınıftan itibaren'}</span><span class="soonTag">Yakında</span></div></li>`;
+ }).join('')}</ul>`;
 }
