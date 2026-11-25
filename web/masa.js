@@ -11,10 +11,10 @@ function desk(){
  const art=grade==='4'?'../assets/bridge2.png':'../assets/sahne/k'+grade+'.webp';
  const next=n===3?'Patikayı tekrar aç':n===0?'Patikaya başla':'Kaldığın yerden devam et';
  screen.innerHTML=`<div class="deskTitle"><h1>Merhaba, ${escHtml(account().ad)}!</h1><a href="#pasaport"><img src="../mobil/ikon/madalya.png" alt=""> ${stamps.length} damga</a></div>
- <div class="deskLayout"><article class="featured"><div class="featureArt"><img src="${art}" alt=""></div><div class="featureCopy"><p class="eyebrow">${subject} · ${grade}. sınıf</p><h2>${current().title}</h2><p>${l.konu}</p><a class="action" id="continue" href="${n===3?'#patika':url('etkinlik.html')+'&adim='+steps[n]}">${next} →</a></div></article>
+ <div class="deskLayout">${heroCarousel(l,n,art,next)}
  <section class="journey"><div class="sectionTitle"><h2>Patikam</h2><a href="#patika">Haritayı aç →</a></div><ol>${labels.map((label,i)=>`<li class="${i<n?'complete':i===n?'next':''}"><span>${i<n?'✓':i+1}</span><div><b>${label}</b><small>${[l.v.length+' anlatım sahnesi',l.oyun.ad,l.test.length+' soru'][i]}</small></div></li>`).join('')}</ol><div class="journeyFoot"><img src="../mobil/ikon/kupa.png" alt=""><span>${n===3?'Damgan pasaportunda':'Tema damgası'}</span><b>${n}/3</b></div></section></div>
  <section class="courses"><div class="sectionTitle"><h2>Derslerim</h2><a href="#dersler">Tema seç →</a></div><div class="courseGrid">${subjectCards()}</div></section>`;
- bindCourses();
+ bindCourses();mountHero(screen.querySelector('.heroCarousel'));
 }
 function games(){
  screen.innerHTML=`<div class="deskTitle"><h1>Oyun dolabı</h1><a href="../?k=${grade}#oyna">Bilgin’in oyun masası ↗</a></div><div class="gameGrid">${subjects().map(s=>{
@@ -81,4 +81,57 @@ function extraPage(){
   const fits=fitsGrade(p);
   return `<li class="extraItem tone-${p.renk}${fits?'':' later'}"><span class="discoverIcon" aria-hidden="true"><svg viewBox="0 0 24 24">${discoverIcons[p.ikon]}</svg></span><div><h2>${p.ad}</h2><p>${p.not}</p></div><div class="extraFoot"><span class="source">${p.kaynak}</span><span>${fits?p.bant[0]+'–'+p.bant[1]+'. sınıf':p.bant[0]+'. sınıftan itibaren'}</span><span class="soonTag">Yakında</span></div></li>`;
  }).join('')}</ul>`;
+}
+// Anasayfa vitrini: AI-LA öğretmen panelindeki haftalık karuselin öğrenci sürümü.
+const quotes=[
+ ['Hayatta en hakiki mürşit ilimdir.','Mustafa Kemal Atatürk'],
+ ['Hayal gücü bilgiden daha önemlidir.','Albert Einstein'],
+ ['İlim ilim bilmektir, ilim kendin bilmektir.','Yunus Emre'],
+ ['Öğrenmenin en iyi yolu, merak etmektir.','BİLGİN'],
+ ['Bir çocuk, bir öğretmen, bir kalem ve bir kitap dünyayı değiştirebilir.','Malala Yousafzai']
+];
+let heroTimer=0;
+function heroCarousel(l,n,art,next){
+ const day=Math.floor(Date.now()/864e5),[quote,who]=quotes[day%quotes.length];
+ const games=subjects().slice(0,3).map(s=>`<li><img src="../assets/ders/${icons[s]}.png" alt=""><span><b>${originals[grade+'|'+s].oyun.ad}</b><small>${s}</small></span></li>`).join('');
+ const names=subjects().slice(0,3).map(s=>badgeNames[s]).filter(Boolean).join(', ');
+ const slides=[
+  {label:'Haftanın önerisi',tone:'nane',img:art,copy:`<p class="eyebrow">Haftanın önerisi · ${subject} · ${grade}. sınıf</p><h2>${current().title}</h2><p>${l.konu}</p><a class="action" id="continue" href="${n===3?'#patika':url('etkinlik.html')+'&adim='+steps[n]}">${next} →</a>`},
+  {label:'Yarışma',tone:'altin',img:'../assets/sahne/kar_yarisma.webp',copy:`<p class="eyebrow">Yarışma</p><h2>Talent Cup</h2><p>Yapay zekâ projeni takımınla kur, öğretmeninle birlikte yarışmaya katıl.</p><a class="action" href="https://talentcup.org" target="_blank" rel="noopener">Yarışmayı incele ↗</a>`},
+  {label:'Günün sözü',tone:'lavanta',img:'../assets/sahne/kar_soz.webp',copy:`<p class="eyebrow">Günün sözü</p><blockquote><p>“${quote}”</p><footer>${who}</footer></blockquote>`},
+  {label:'En çok oynanan oyunlar',tone:'petrol',img:'../assets/sahne/kar_oyun.webp',copy:`<p class="eyebrow">En çok oynanan oyunlar · ${grade}. sınıf</p><ul class="heroGames">${games}</ul><a class="action" href="#oyunlar">Oyun dolabını aç →</a>`},
+  {label:'Yeni eklendi',tone:'mandalina',img:'../assets/sahne/kar_yeni.webp',copy:`<p class="eyebrow">Yeni eklendi</p><h2>Rozetlerin artık bir unvanı var</h2><p>${names}… Temaları bitir, unvanını kazan.</p><a class="action" href="#profil">Rozetlerime bak →</a>`}
+ ];
+ return `<section class="featured heroCarousel" aria-roledescription="karusel" aria-label="Haftanın vitrini"><div class="heroSlides">${slides.map((sl,i)=>`<article class="heroSlide tone-${sl.tone}" id="hs-${i}" role="tabpanel" aria-roledescription="slayt" aria-label="${i+1} / ${slides.length}: ${sl.label}"><div class="featureArt"><img src="${sl.img}" alt="" ${i?'loading="lazy"':''}></div><div class="featureCopy">${sl.copy}</div></article>`).join('')}</div><div class="heroNav"><div class="heroDots" role="tablist" aria-label="Vitrin slaytları">${slides.map((sl,i)=>`<button type="button" role="tab" aria-controls="hs-${i}" aria-label="${sl.label}" title="${sl.label}"><i></i></button>`).join('')}</div><button type="button" class="heroArrow" data-step="-1" aria-label="Önceki slayt">‹</button><button type="button" class="heroArrow" data-step="1" aria-label="Sonraki slayt">›</button></div></section>`;
+}
+function mountHero(root){
+ clearTimeout(heroTimer);
+ if(!root)return;
+ const slides=[...root.querySelectorAll('.heroSlide')],dots=[...root.querySelectorAll('.heroDots button')];
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let cur=0,hold=false;
+ function show(i,focus){
+  const prev=cur;cur=(i+slides.length)%slides.length;
+  slides.forEach((sl,k)=>{sl.classList.toggle('is-on',k===cur);sl.classList.toggle('is-left',k!==cur&&(k<cur));sl.inert=k!==cur});
+  dots.forEach((d,k)=>{d.setAttribute('aria-selected',String(k===cur));d.tabIndex=k===cur?0:-1});
+  if(focus)dots[cur].focus();
+  tick();
+ }
+ function tick(){
+  clearTimeout(heroTimer);
+  dots.forEach(d=>d.classList.remove('is-fill'));
+  const run=root.isConnected&&!hold&&!reduce&&!document.hidden;
+  root.classList.toggle('is-running',run);
+  if(!run)return;
+  void dots[cur].offsetWidth;dots[cur].classList.add('is-fill');
+  heroTimer=setTimeout(()=>{if(root.isConnected)show(cur+1)},7000);
+ }
+ dots.forEach((d,i)=>d.onclick=()=>show(i));
+ root.querySelector('.heroDots').onkeydown=e=>{const k={ArrowRight:1,ArrowLeft:-1}[e.key];if(k){e.preventDefault();show(cur+k,true)}};
+ root.querySelectorAll('.heroArrow').forEach(b=>b.onclick=()=>show(cur+Number(b.dataset.step)));
+ root.onmouseenter=root.onfocusin=()=>{hold=true;tick()};
+ root.onmouseleave=()=>{hold=root.contains(document.activeElement);tick()};
+ root.onfocusout=e=>{if(!root.contains(e.relatedTarget)){hold=root.matches(':hover');tick()}};
+ document.addEventListener('visibilitychange',tick);
+ show(0);
 }
