@@ -17,7 +17,7 @@ function desk(){
  bindCourses();mountHero(screen.querySelector('.heroCarousel'));
 }
 function games(){
- screen.innerHTML=`<div class="deskTitle"><h1>Oyun dolabı</h1><a href="../?k=${grade}#oyna">Bilgin’in oyun masası ↗</a></div><div class="gameGrid">${subjects().map(s=>{
+ screen.innerHTML=`<div class="deskTitle"><h1>Oyun dolabı</h1></div><div class="gameGrid">${subjects().map(s=>{
   const l=originals[grade+'|'+s],q=new URLSearchParams({k:grade,d:s});
   return `<article class="gameCard"><img src="../assets/ders/${icons[s]}.png" alt=""><p class="eyebrow">${s}</p><h2>${l.oyun.ad}</h2><p>${l.oyun.yonerge}</p><a class="action" href="oyun.html?${q}">Oyna →</a></article>`;
  }).join('')}</div>`;

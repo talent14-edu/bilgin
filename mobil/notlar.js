@@ -2,7 +2,9 @@ const params=new URLSearchParams(location.search);
 const steps=['izle','oyna','olc'],labels=['İzle','Oyna','Ölç'];
 function stored(key){try{return localStorage.getItem(key)}catch{return null}}
 function write(key,value){try{localStorage.setItem(key,value);return true}catch{return false}}
-const last=new URLSearchParams(stored('bilgin.patikam')||'');
+// Öğretmen alanı kendi ilerlemesini ayrı anahtarlarda tutar (öğrencininkine karışmaz).
+const ONEK=(window.OGRETMEN_ALANI||params.get('rol')==='ogretmen')?'bilgin.ogrt.':'bilgin.';
+const last=new URLSearchParams(stored(ONEK+'patikam')||'');
 let grade=params.get('k')||last.get('k')||'5';
 if(!/^[1-8]$/.test(grade))grade='5';
 function subjects(k=grade){return Object.keys(IOP_DERS).filter(key=>key.startsWith(k+'|')).map(key=>key.split('|')[1])}
@@ -18,7 +20,7 @@ function themeList(k=grade,s=subject){
 }
 function current(){return themeList().find(t=>t.id===theme)}
 function lesson(){return current().lesson}
-function key(prefix,k=grade,s=subject,t=theme){return 'bilgin.mobil.'+prefix+k+'|'+s+(t==='temel'?'':'|'+t)}
+function key(prefix,k=grade,s=subject,t=theme){return ONEK+'mobil.'+prefix+k+'|'+s+(t==='temel'?'':'|'+t)}
 function read(prefix){return stored(key(prefix))||''}
 function save(prefix,value){return write(key(prefix),value)}
 function result(k=grade,s=subject,t=theme){
@@ -26,13 +28,14 @@ function result(k=grade,s=subject,t=theme){
 }
 function level(){return result()?3:Math.max(0,Math.min(2,Number(read('adim.'))||0))}
 function selection(){return new URLSearchParams({k:grade,d:subject,tema:theme})}
-function remember(){write('bilgin.patikam',selection().toString())}
+function remember(){write(ONEK+'patikam',selection().toString())}
 const webMode=document.documentElement.dataset.app==='web'||params.get('gorunum')==='web';
 function url(file,hash=''){
  const q=selection();
  if(webMode){
-  if(file==='uygulama.html')file='../web/index.html';
-  else if(file==='etkinlik.html'){file='../mobil/etkinlik.html';q.set('gorunum','web')}
+  const ogretmen=window.OGRETMEN_ALANI||params.get('rol')==='ogretmen';
+  if(file==='uygulama.html')file=ogretmen?'../ogretmen/index.html':'../ogrenci/index.html';
+  else if(file==='etkinlik.html'){file='../mobil/etkinlik.html';q.set('gorunum','web');if(ogretmen)q.set('rol','ogretmen')}
  }
  return file+'?'+q+hash;
 }

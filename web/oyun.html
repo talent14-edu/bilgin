@@ -1,19 +1,4 @@
-﻿<!doctype html><html lang="tr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Oyun masası · BİLGİN</title><link rel="icon" href="../favicon.ico"><link rel="stylesheet" href="../iop/iop.css"><link rel="stylesheet" href="../mobil/mobil.css"><link rel="stylesheet" href="../mobil/etkinlik.css"><style>
-#iop .io-adimlar{display:none}#iop{padding-top:15px}body{grid-template-rows:56px 1fr}
-</style><header><a id="back">← Oyun dolabı</a><img src="../assets/logo.png" alt="Bilgin"></header><main class="freeplay"><p class="eyebrow" id="context"></p><h1 id="topic"></h1><div id="space"><section id="iop" class="iop"></section></div></main>
-<script src="../iop/icerik.js"></script><script src="../iop/iop.js"></script><script src="../mobil/tamsayfa.js"></script><script>
-const params=new URLSearchParams(location.search),k=params.get('k'),d=params.get('d');
-const [grade,subject]=(Object.hasOwn(IOP_DERS,k+'|'+d)?k+'|'+d:'5|Fen Bilimleri').split('|');
-document.querySelector('#back').href='index.html?k='+grade+'#oyunlar';
-document.querySelector('#context').textContent=grade+'. sınıf · '+subject;
-document.querySelector('#topic').textContent=IOP_DERS[grade+'|'+subject].oyun.ad;
-const root=document.querySelector('#iop'),engine=IOP.kur(root,{kok:'../',sinif:Number(grade),ders:subject});
-engine.git('oyna',true);
-document.body.classList.add('webFull');tamSayfa(root,document.querySelector('#space'),true);
-new MutationObserver(()=>{
- const next=root.querySelector('#io-oileri');
- if(next&&!next.hidden&&root.querySelector('.io-adim[data-p="oyna"].bitti')&&next.textContent!=='Dolaba dön →'){
-  next.textContent='Dolaba dön →';next.onclick=()=>location.href=document.querySelector('#back').href;
- }
-}).observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden','class']});
-</script></html>
+<!doctype html><html lang="tr"><meta charset="utf-8"><title>BİLGİN · Öğrenci alanı</title>
+<meta name="robots" content="noindex"><link rel="canonical" href="../ogrenci/">
+<script>location.replace('../ogrenci/oyun.html'+location.search+location.hash)</script>
+<p>Öğrenci alanı taşındı: <a href="../ogrenci/">bilgin.app/ogrenci</a></p></html>

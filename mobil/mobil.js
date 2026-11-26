@@ -1,8 +1,9 @@
 const screen=document.querySelector('#screen'),gradeSelect=document.querySelector('#grade');
+if(gradeSelect){
 gradeSelect.innerHTML=Array.from({length:8},(_,i)=>'<option value="'+(i+1)+'">'+(i+1)+'. sınıf</option>').join('');
-gradeSelect.value=grade;
+gradeSelect.value=grade;}
 const icons={'Matematik':'matematik','Fen Bilimleri':'fen','Türkçe':'turkce','Hayat Bilgisi':'hayat','Sosyal Bilgiler':'sosyal','Din Kültürü':'din','İngilizce':'ingilizce','İnkılap Tarihi':'inkilap'};
-gradeSelect.onchange=()=>{
+if(gradeSelect)gradeSelect.onchange=()=>{
  grade=gradeSelect.value;
  if(!subjects().includes(subject))subject=subjects()[0];
  theme='temel';const route=location.hash.slice(1);openRoute(webMode?(route||'masa'):(['profil','pasaport','hesap'].includes(route)?route:'dersler'));
@@ -58,13 +59,15 @@ function pages(count,index,update){
  prev.onclick=()=>update(index-1);next.onclick=()=>update(index+1);
 }
 const avatars=[['selam','Selam veren'],['sevinc','Sevinçli'],['dusunme','Düşünceli'],['ipucu','İpucu veren'],['rozet','Rozetli']];
-const accountDefaults={ad:'Deniz',soyad:'Yıldız',eposta:'deniz.yildiz@okul.bilgin.app',avatar:'selam'};
+// Öğretmen alanı (../ogretmen/) kendi hesap anahtarını ve varsayılanlarını verir; öğrencininkiyle karışmaz.
+const HESAP_KEY=window.HESAP_ANAHTARI||'bilgin.hesap';
+const accountDefaults={ad:'Deniz',soyad:'Yıldız',eposta:'deniz.yildiz@okul.bilgin.app',avatar:'selam',...(window.HESAP_VARSAYILAN||{})};
 const escHtml=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const logoutIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></svg>';
 let accountPane='bilgi';
 const badgeNames={'Matematik':'Matematik Canavarı','Fen Bilimleri':'Deney Kâşifi','Türkçe':'Söz Ustası','Hayat Bilgisi':'Hayat Gezgini','Sosyal Bilgiler':'Harita Kaptanı','Din Kültürü':'Değerler Elçisi','İngilizce':'İngilizce Yıldızı','İnkılap Tarihi':'Tarih Dedektifi'};
 function account(){
- let saved={};try{saved=JSON.parse(stored('bilgin.hesap')||'{}')}catch{}
+ let saved={};try{saved=JSON.parse(stored(HESAP_KEY)||'{}')}catch{}
  const me={...accountDefaults,...saved};
  if(!avatars.some(([k])=>k===me.avatar))me.avatar=accountDefaults.avatar;
  return me;
@@ -97,7 +100,7 @@ function accountSettings(card){
    const ad=form.ad.value.trim(),soyad=form.soyad.value.trim();
    if(!ad||!soyad){say('Ad ve soyad boş kalamaz.',true);(ad?form.soyad:form.ad).focus();return}
    const next={...me,ad,soyad,avatar:form.querySelector('[name=avatar]:checked').value};
-   if(!write('bilgin.hesap',JSON.stringify(next))){say('Bu tarayıcı kaydetmeye izin vermedi.',true);return}
+   if(!write(HESAP_KEY,JSON.stringify(next))){say('Bu tarayıcı kaydetmeye izin vermedi.',true);return}
    profile('hesap');screen.querySelector('.formNote').textContent='✓ Profilin kaydedildi.';
   };
  }else{
@@ -150,7 +153,10 @@ function render(){
  if(page==='kesif'||(page==='ekpatika'&&!webMode))page='dersler';
  if(page==='ders'&&!webMode)page='dersler';
  const tab=['pasaport','hesap'].includes(page)?'profil':['ders','ekpatika'].includes(page)?'dersler':page;
- document.querySelectorAll('nav a').forEach(a=>{if(a.hash==='#'+tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+ const [ek,ekArg]=page.split('/'),ekSekme=window.EK_SEKME&&EK_SEKME[ek];
+ document.querySelectorAll('nav a').forEach(a=>{if(a.hash==='#'+(ekSekme||tab))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+ if(window.EK_EKRAN&&EK_EKRAN[ek])return EK_EKRAN[ek](ekArg);
+ if(webMode&&page==='masa'&&window.EK_ANA)return EK_ANA();
  if(webMode&&page==='masa')desk();else if(webMode&&page==='oyunlar')games();else if(webMode&&page==='dersler')subjectsPage();else if(webMode&&page==='ders')subjectPage();else if(webMode&&page==='ekpatika')extraPage();else if(page==='dersler')catalog();else if(['profil','pasaport','hesap'].includes(page))profile(page);else path();
 }
 window.addEventListener('pageshow',render);window.addEventListener('hashchange',render);render();

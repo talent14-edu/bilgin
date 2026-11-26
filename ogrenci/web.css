@@ -94,3 +94,4 @@ nav .navBrand .brand,nav .navBrand .brand[aria-current]{background:none;border:0
 .featured.heroCarousel:after{z-index:3}
 @media(prefers-reduced-motion:reduce){.heroSlide{transition:none}}
 @media(max-width:740px){.heroCarousel{min-height:250px}.heroGames li:nth-child(n+3){display:none}}
+@media(min-width:741px){#ogrenciMenu .navLogout{margin-top:auto}#ogrenciMenu .navGrade+.navLogout{margin-top:0}}
