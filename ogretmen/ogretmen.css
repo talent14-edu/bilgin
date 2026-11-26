@@ -78,3 +78,24 @@
 @media(max-width:1100px){.sdIzgara,.ttIzgara{grid-template-columns:repeat(2,minmax(0,1fr))}.ttDers{grid-template-columns:1fr}}
 @media(max-width:740px){.secimIkili,.raporSayi{grid-template-columns:repeat(2,1fr)}.tSatir,.ogrTablo .tSatir{grid-template-columns:1fr 1fr}.tBas{display:none}.adimCizgi{flex-wrap:wrap}}
 .haftaKart small{display:block!important}.dersSec,.temaSec{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+
+/* sağ üst: sınıf seçimi + duyurular (Okumino öğretmen odası gibi) */
+#ogrtUst{position:fixed;top:clamp(12px,2.4vh,22px);right:clamp(14px,2.4vw,34px);z-index:20;display:flex;align-items:center;gap:10px}
+.ustSinif{display:flex;align-items:center;gap:6px;height:46px;padding:0 6px 0 8px;border:1px solid #bccdc0;border-radius:24px;background:#fffdf6;box-shadow:0 3px 0 #d6e0d2}
+.ustSinif img{width:32px;height:32px;object-fit:contain}.ustSinif select{border:0;background:none;font-weight:800;color:#103c50;padding:6px 4px;cursor:pointer}
+.duyuruZil{position:relative;display:grid;place-items:center;width:46px;height:46px;padding:0;border:1px solid #f0d58e;border-radius:50%;background:#fff3cf;box-shadow:0 3px 0 #e6cf93;cursor:pointer;color:#b4541a}
+.duyuruZil svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.duyuruZil[aria-expanded=true]{background:#ffe6a8}
+#duyuruSayi{position:absolute;top:-3px;right:-3px;min-width:21px;height:21px;padding:0 5px;border-radius:11px;background:#e4572e;color:#fff;font:800 12px/21px var(--ui);font-style:normal;border:2px solid #fffdf6}
+.duyuruKutu{position:absolute;top:56px;right:0;width:min(380px,90vw);max-height:min(540px,80vh);overflow:auto;padding:14px;border:1px solid #bccdc0;border-radius:20px;background:#fffdf6;box-shadow:0 18px 40px -18px #10384b80}
+.duyuruKutu header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.duyuruKutu h2{font-size:20px}.duyuruKutu ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.duyuruKutu a{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:14px}.duyuruKutu a:hover{background:#f4f7eb}.duyuruKutu .oIk{width:34px;height:34px}
+.duyuruKutu b,.duyuruKutu small,.duyuruKutu em{display:block}.duyuruKutu small{color:#52645c;font-size:14px}.duyuruKutu em{font-style:normal;font-size:12px;color:#8a9a8f;margin-top:2px}
+.duyuruKutu li.yeni a{background:#eef6f3}.duyuruKutu li.yeni b:after{content:"";display:inline-block;width:8px;height:8px;margin-left:6px;border-radius:50%;background:#e4572e;vertical-align:middle}
+@media(min-width:741px){.ogretmen .deskTitle{padding-right:250px}}
+@media(max-width:740px){#ogrtUst{position:static;justify-content:flex-end;padding:8px 12px 0}}
+/* Bu hafta: büyük ikon, ortalı */
+.haftaKart ol{flex:1;align-content:stretch}.haftaKart li{flex-direction:column;justify-content:center;text-align:center;gap:6px;padding:12px 8px}
+.haftaKart .oIk{width:clamp(46px,8vh,68px);height:clamp(46px,8vh,68px)}.haftaKart b{font-size:clamp(26px,4.4vh,38px)}.haftaKart small{font-size:15px;font-weight:600}
+/* Sınıflarım: kart kesilmesin, öğrenci listesi kendi içinde kaysın */
+.sinifListe{grid-auto-rows:max-content}.sinifKart{flex:none}.ogrListe{max-height:min(48vh,440px);overflow-y:auto;padding-right:4px}
+.ogrListe{max-height:max(190px,calc(100dvh - 440px))}

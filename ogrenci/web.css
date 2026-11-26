@@ -95,3 +95,33 @@ nav .navBrand .brand,nav .navBrand .brand[aria-current]{background:none;border:0
 @media(prefers-reduced-motion:reduce){.heroSlide{transition:none}}
 @media(max-width:740px){.heroCarousel{min-height:250px}.heroGames li:nth-child(n+3){display:none}}
 @media(min-width:741px){#ogrenciMenu .navLogout{margin-top:auto}#ogrenciMenu .navGrade+.navLogout{margin-top:0}}
+
+/* v3 ayarları: büyük ikonlar, ortalı metinler, profil ve pasaport */
+@media(min-width:741px){
+ .lessonCard{align-items:center;justify-content:center;text-align:center;gap:clamp(6px,1.2vh,12px)}.lessonCard img{width:clamp(76px,15vh,132px);height:clamp(76px,15vh,132px);padding:10px;border-radius:26px}
+ .lessonName b{font-size:clamp(20px,3.2vh,28px)}.lessonMeter{width:82%;justify-content:center}
+ .lessonCard.extraLesson .extraArt{width:clamp(76px,15vh,132px);height:clamp(76px,15vh,132px)}
+ .gameCard{justify-items:center;align-content:center;text-align:center;gap:clamp(6px,1.2vh,10px)}.gameCard img{width:clamp(72px,14vh,124px);height:clamp(72px,14vh,124px);filter:drop-shadow(0 6px 6px #50644f22)}
+ .gameCard .action{justify-self:center;align-self:center}.gameCard h2{font-size:clamp(20px,3vh,26px)}
+ .badgeFace{width:clamp(84px,16vh,140px)!important;max-height:none!important}.badgeTile{gap:clamp(4px,1vh,10px)}.badgeTile strong{font-size:clamp(17px,2.6vh,22px)}.badgeSubject{font-size:13px;display:block!important}.badgeMeter{width:70%}
+ .profileSummary{padding:8px 18px 8px 10px;gap:14px}.profileSummary img{width:clamp(52px,8.5vh,72px)!important;height:clamp(52px,8.5vh,72px)!important}.profileSummary strong{font:800 clamp(18px,2.6vh,22px) var(--el)}.profileSummary small{font-size:14px;color:#5b5236}
+ .profileTabs a{min-height:48px;font-size:17px}.profileTabs img{width:30px;height:30px}
+}
+/* pasaport kitapçığı */
+.passport{display:grid!important;grid-template-columns:minmax(220px,.8fr) minmax(0,1.6fr);gap:0!important;padding:0!important;overflow:hidden;align-content:stretch!important;border-color:#c9a86a!important;background:#fffaf0!important;box-shadow:0 6px 0 #e3d2ad}
+.pasSol,.pasSag{display:flex;flex-direction:column;gap:12px;padding:clamp(14px,2.6vh,26px) clamp(16px,2vw,28px);min-height:0}
+.pasSol{background:linear-gradient(160deg,#103c50,#0e5a6e);color:#fff;align-items:center;text-align:center;border-right:4px dashed #e9d6a8}
+.pasBaslik{font:800 13px var(--ui);letter-spacing:.08em;text-transform:uppercase;color:#f7d58b;display:flex;justify-content:space-between;width:100%}.pasSag .pasBaslik{color:#8a5a12}.pasBaslik span{color:#7a6a4a;letter-spacing:0;text-transform:none}
+.pasFoto{width:clamp(80px,15vh,128px);height:clamp(80px,15vh,128px);object-fit:contain;border-radius:20px;background:#fff6dd;border:4px solid #f7d58b}
+.pasSol dl{display:grid;grid-template-columns:auto auto;gap:4px 14px;margin:0;text-align:left;font-size:14px}.pasSol dt{color:#bfe0e4}.pasSol dd{margin:0;font-weight:800}
+.pasNot{font-size:13px;color:#d6ecee;margin-top:auto}.pasSol .action{background:#ff8a3d;color:#3b2410;align-self:center}
+.damgalar{list-style:none;margin:0;padding:0;flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:clamp(8px,1.4vh,14px);overflow:auto}
+.damga{position:relative;display:grid;place-items:center;align-content:center;text-align:center;min-height:0;aspect-ratio:1;max-height:100%;justify-self:center;width:min(100%,170px);transform:rotate(var(--r));--c:#c0392b}
+.damga svg{position:absolute;inset:0;width:100%;height:100%}.damga .dDis{fill:none;stroke:var(--c);stroke-width:4;opacity:.85}.damga .dIc{fill:none;stroke:var(--c);stroke-width:2;stroke-dasharray:3 4;opacity:.7}
+.damga text{font:800 9.5px var(--ui);letter-spacing:.06em;fill:var(--c)}.damga img{position:relative;width:34%;height:34%;object-fit:contain}
+.damga b{position:relative;max-width:62%;font:800 clamp(10px,1.5vh,13px)/1.1 var(--el);color:var(--c)}.damga small{position:relative;font-size:10px;color:var(--c);opacity:.8}
+.damga.ton1{--c:#0e6e8c}.damga.ton2{--c:#268158}.damga.ton3{--c:#b4541a}
+.damga em{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) rotate(-18deg);padding:2px 12px;border:3px solid #c0392b;border-radius:8px;background:#fffaf0e6;color:#c0392b;font:900 15px var(--ui);font-style:normal;letter-spacing:.14em}
+.damga.ornek{opacity:.78}
+.damga.bos{transform:none;border:3px dashed #e0d0ab;border-radius:50%;width:min(100%,150px)}.damga.bos span{font:800 28px var(--el);color:#e0d0ab}
+@media(max-width:740px){.passport{grid-template-columns:1fr}.pasSol{border-right:0;border-bottom:4px dashed #e9d6a8}.damgalar{grid-template-columns:repeat(2,1fr);grid-auto-rows:auto}}

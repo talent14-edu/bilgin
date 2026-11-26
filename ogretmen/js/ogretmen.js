@@ -248,6 +248,34 @@ document.getElementById('ogrtSinif').onchange = e => {
   if (location.hash.slice(1) === hedef) render(); else location.hash = hedef;
 };
 
+/* ---------- sağ üst: duyurular ---------- */
+function duyurular() {
+  const v = veri(), list = [];
+  v.odevler.slice(0, 3).forEach(od => { const al = odevAlicilar(od), ok = al.filter(o => odevIlerleme(o, od).durum === 'Tamamladı').length, sn = sinifBul(od.sinifId);
+    if (sn) list.push({id: `odev-${od.id}-${ok}`, ik: '../mobil/ikon/harita.png', zaman: sinifAdi(sn) + ' sınıfı', baslik: `${ok}/${al.length} öğrenci ödevi bitirdi`, metin: od.baslik, link: `#odevler/${od.sinifId}`}); });
+  const yeni = TT.find(d => !ttBitti(d.id)); if (yeni) list.push({id: 'tt-' + yeni.id, ik: 'img/teachtech.png', zaman: 'TeachTech', baslik: 'Yeni ders: ' + yeni.ad, metin: yeni.alt, link: '#ders-tt/' + yeni.id});
+  list.push({id: 'duyuru-rozet', ik: '../mobil/ikon/madalya.png', zaman: 'Yeni', baslik: 'Rozetlere unvan geldi', metin: 'Öğrencilerin temaları bitirdikçe Matematik Canavarı, Deney Kâşifi gibi unvanlar kazanıyor.', link: '#profil'});
+  list.push({id: 'duyuru-odev', ik: 'img/sinif.png', zaman: 'Öğretmen masası', baslik: 'Patika ödevi verebilirsin', metin: 'Sınıflarım’dan ders ve tema seçip ödevi tek adımda gönder.', link: '#siniflar'});
+  return list;
+}
+const okunan = () => { try { return new Set(JSON.parse(localStorage.getItem('bilgin.ogrt.duyuru') || '[]')); } catch { return new Set(); } };
+function duyuruSay() { const n = duyurular().filter(d => !okunan().has(d.id)).length, i = document.getElementById('duyuruSayi'); i.hidden = !n; i.textContent = n; }
+function duyuruAc(ac) {
+  const kutuEl = $o('.duyuruKutu'), zil = $o('.duyuruZil');
+  if (!ac) { kutuEl.hidden = true; zil.setAttribute('aria-expanded', 'false'); return; }
+  const ok = okunan(), list = duyurular();
+  kutuEl.innerHTML = `<header><h2>Duyurular</h2><button type="button" class="textButton" data-hepsi>Tümünü okundu say</button></header><ul>${list.map(d => `<li class="${ok.has(d.id) ? '' : 'yeni'}"><a href="${d.link}" data-did="${d.id}">${ik(d.ik)}<span><b>${kacis(d.baslik)}</b><small>${kacis(d.metin)}</small><em>${kacis(d.zaman)}</em></span></a></li>`).join('')}</ul>`;
+  kutuEl.hidden = false; zil.setAttribute('aria-expanded', 'true');
+  const isle = ids => { try { localStorage.setItem('bilgin.ogrt.duyuru', JSON.stringify([...new Set([...okunan(), ...ids])])); } catch {} duyuruSay(); };
+  $$o('[data-did]', kutuEl).forEach(a => a.onclick = () => { isle([a.dataset.did]); duyuruAc(false); });
+  $o('[data-hepsi]', kutuEl).onclick = () => { isle(list.map(d => d.id)); duyuruAc(true); };
+}
+$o('.duyuruZil').onclick = e => { e.stopPropagation(); duyuruAc($o('.duyuruKutu').hidden); };
+document.addEventListener('click', e => { if (!e.target.closest('#ogrtUst')) duyuruAc(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') duyuruAc(false); });
+window.addEventListener('hashchange', () => { duyuruAc(false); duyuruSay(); });
+duyuruSay();
+
 /* ---------- yönlendirme kancaları (mobil.js render) ---------- */
 window.EK_ANA = ogretmenAna;
 window.EK_SEKME = {teachtech: 'teachtech', 'ders-tt': 'teachtech', siniflar: 'siniflar', 'odev-ver': 'siniflar', odevler: 'siniflar', rapor: 'siniflar'};

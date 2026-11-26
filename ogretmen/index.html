@@ -11,8 +11,10 @@
 <a href="#siniflar" title="Sınıflarım"><img src="img/sinif.png" alt=""><span>Sınıflarım</span></a>
 <a href="#teachtech" title="TeachTech"><img src="img/teachtech.png" alt=""><span>TeachTech</span></a>
 <a href="#profil" title="Profil"><img src="../mobil/ikon/madalya.png" alt=""><span>Profil</span></a>
-<label class="navGrade ogrtSinif" title="Sınıf"><span>Sınıf</span><select id="ogrtSinif" aria-label="Sınıf seç"></select></label>
 <button type="button" class="logout navLogout" data-logout title="Çıkış"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></svg><span>Çıkış</span></button></nav>
+<div id="ogrtUst"><label class="ustSinif" title="Sınıf"><img src="img/sinif.png" alt=""><span class="gizli">Sınıf seç</span><select id="ogrtSinif" aria-label="Sınıf seç"></select></label>
+<button type="button" class="duyuruZil" aria-haspopup="dialog" aria-expanded="false" aria-label="Duyurular"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg><i id="duyuruSayi" hidden></i></button>
+<section class="duyuruKutu" role="dialog" aria-label="Duyurular" hidden></section></div>
 <main id="screen"></main>
 <script src="../iop/icerik.js"></script><script src="../iop/temalar.js"></script><script src="../mobil/tema-atolyesi.js"></script><script src="../mobil/notlar.js"></script>
 <script src="js/ogretmen.js"></script><script src="../ogrenci/masa.js"></script><script src="../mobil/mobil.js"></script></body></html>
