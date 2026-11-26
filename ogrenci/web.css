@@ -125,3 +125,25 @@ nav .navBrand .brand,nav .navBrand .brand[aria-current]{background:none;border:0
 .damga.ornek{opacity:.78}
 .damga.bos{transform:none;border:3px dashed #e0d0ab;border-radius:50%;width:min(100%,150px)}.damga.bos span{font:800 28px var(--el);color:#e0d0ab}
 @media(max-width:740px){.passport{grid-template-columns:1fr}.pasSol{border-right:0;border-bottom:4px dashed #e9d6a8}.damgalar{grid-template-columns:repeat(2,1fr);grid-auto-rows:auto}}
+
+/* Hesabım (web, 2026-11-26): solda kimlik paneli (büyük avatar + seçimler), sağda ferah alanlar, Kaydet en altta. */
+.account{display:flex;flex-direction:column;gap:clamp(10px,1.8vh,16px);padding:clamp(14px,2.4vh,24px) clamp(18px,2.4vw,32px)}
+.account .accountForm{flex:1;min-height:0;display:grid;grid-template-columns:minmax(250px,320px) minmax(0,1fr);grid-template-rows:auto auto auto 1fr;gap:clamp(12px,2vh,18px) clamp(20px,2.6vw,40px);align-items:start}
+.accountForm>.avatarPick,.accountForm>.sifreBilgi{grid-column:1;grid-row:1/-1;align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:clamp(16px,3vh,28px) 18px;border-radius:24px;background:linear-gradient(170deg,#fff4d6,#fffaf0);border:1px solid #ecd9a8;text-align:center}
+.avatarBuyuk{margin:0;display:grid;justify-items:center;gap:8px}.accountForm .avatarPick .avatarBuyuk img{width:clamp(120px,20vh,170px);height:clamp(120px,20vh,170px);object-fit:contain;padding:10px;border-radius:50%;background:#fffdf6;border:4px solid #f2c96b;box-shadow:0 10px 22px -12px #8a5a1288}
+.avatarBuyuk b{display:block;font:800 clamp(20px,2.6vh,24px)/1.15 var(--el);color:var(--lacivert)}.avatarBuyuk small{color:#6a6a4f;font-weight:650}
+.accountForm .avatarPick legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.accountForm .avatarPick>p{margin:-4px 0 2px}
+.accountForm .avatarPick div{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;width:100%;max-width:300px}.accountForm .avatarPick div img{width:100%;height:auto;aspect-ratio:1}
+.accountForm>*:not(.avatarPick):not(.sifreBilgi){grid-column:2}
+.accountForm .fieldRow{gap:clamp(12px,1.4vw,18px)}.accountForm .field{padding:10px 16px;border-radius:16px}.accountForm .field span{font-size:13px}.accountForm .field input{font-size:18px;padding:4px 0}
+.accountForm .fieldHint{font-size:14px}.accountForm .formActions{align-self:end;padding-top:12px;border-top:1px dashed #c9d6c6}.accountForm .formActions .action{min-width:140px;min-height:46px;font-size:17px}
+.sifreBilgi img{width:clamp(96px,15vh,130px);height:clamp(96px,15vh,130px);object-fit:contain}.sifreBilgi b{font:800 20px var(--el);color:var(--lacivert)}.sifreBilgi ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-weight:650;color:#4f6862}.sifreBilgi li:before{content:"✓ ";color:#1d6b46;font-weight:800}
+@media(max-width:900px){.account .accountForm{grid-template-columns:1fr;grid-template-rows:none}.accountForm>.avatarPick,.accountForm>.sifreBilgi,.accountForm>*:not(.avatarPick):not(.sifreBilgi){grid-column:1;grid-row:auto}.sifreBilgi{display:none!important}}
+
+/* Pasaport sol sayfa: ortalı, büyük fotoğraf, bilgiler küçük kutularda */
+.pasSol{justify-content:flex-start;gap:clamp(10px,1.8vh,16px)}.pasSol .pasBaslik{justify-content:center}
+.pasSol .pasFoto{width:clamp(130px,24vh,200px);height:clamp(130px,24vh,200px);border-radius:28px;padding:6px;box-shadow:0 14px 28px -14px #000a}
+.pasSol dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:min(100%,340px);text-align:center;font-size:13px}
+.pasSol dl>dt{display:none}.pasSol dd{display:grid;gap:2px;padding:8px 6px;border-radius:14px;background:#ffffff14;border:1px solid #ffffff22;font-size:18px}
+.pasSol dd:before{content:attr(data-etiket);font-size:12px;font-weight:600;color:#bfe0e4}
+.pasSol .pasNot{max-width:34ch}
