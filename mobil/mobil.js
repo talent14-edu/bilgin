@@ -62,6 +62,11 @@ const avatars=[['selam','Selam veren'],['sevinc','Sevinçli'],['dusunme','Düş�
 // Öğretmen alanı (../ogretmen/) kendi hesap anahtarını ve varsayılanlarını verir; öğrencininkiyle karışmaz.
 const HESAP_KEY=window.HESAP_ANAHTARI||'bilgin.hesap';
 const accountDefaults={ad:'Deniz',soyad:'Yıldız',eposta:'deniz.yildiz@okul.bilgin.app',avatar:'selam',...(window.HESAP_VARSAYILAN||{})};
+// Avatar: hazır Bilgin pozlarından biri ya da öğrencinin kendi yüklediği fotoğraf (avatar:'foto', foto: küçültülmüş data URL).
+const avatarSrc=me=>me.avatar==='foto'&&me.foto?me.foto:'../img/poz_'+me.avatar+'.webp';
+const penIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>';
+// Seçilen resmi ortadan kare kırpıp 320 px JPEG'e indirir; localStorage'a sığsın diye.
+function shrinkPhoto(file){return new Promise((ok,no)=>{if(!file||!/^image\//.test(file.type))return no('type');const r=new FileReader();r.onerror=()=>no('read');r.onload=()=>{const im=new Image();im.onerror=()=>no('decode');im.onload=()=>{const k=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=320;const g=c.getContext('2d');g.fillStyle='#fffdf6';g.fillRect(0,0,320,320);g.drawImage(im,(im.width-k)/2,(im.height-k)/2,k,k,0,0,320,320);ok(c.toDataURL('image/jpeg',.85))};im.src=r.result};r.readAsDataURL(file)})}
 const escHtml=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const logoutIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></svg>';
 let accountPane='bilgi';
@@ -69,7 +74,7 @@ const badgeNames={'Matematik':'Matematik Canavarı','Fen Bilimleri':'Deney Kâş
 function account(){
  let saved={};try{saved=JSON.parse(stored(HESAP_KEY)||'{}')}catch{}
  const me={...accountDefaults,...saved};
- if(!avatars.some(([k])=>k===me.avatar))me.avatar=accountDefaults.avatar;
+ if(!(me.avatar==='foto'&&me.foto)&&!avatars.some(([k])=>k===me.avatar))me.avatar=accountDefaults.avatar;
  return me;
 }
 function askLogout(){
@@ -92,15 +97,26 @@ function accountSettings(card){
  const form=card.querySelector('form'),note=card.querySelector('.formNote');
  const say=(text,bad)=>{note.textContent=text;note.classList.toggle('bad',!!bad)};
  if(info){
-  form.innerHTML=`<fieldset class="avatarPick">${webMode?`<figure class="avatarBuyuk"><img class="avatarNow" src="../img/poz_${me.avatar}.webp" alt=""><figcaption><b>${escHtml(me.ad+' '+me.soyad)}</b><small>${grade}. sınıf</small></figcaption></figure>`:''}<legend>Avatarım</legend><p>Arkadaşların seni bu resimle tanır.</p><div>${avatars.map(([k,t])=>`<label title="${t}"><input type="radio" name="avatar" value="${k}" ${k===me.avatar?'checked':''}><img src="../img/poz_${k}.webp" alt="${t}"></label>`).join('')}</div></fieldset><div class="fieldRow"><label class="field"><span>Ad</span><input name="ad" value="${escHtml(me.ad)}" autocomplete="given-name" maxlength="40" required></label><label class="field"><span>Soyad</span><input name="soyad" value="${escHtml(me.soyad)}" autocomplete="family-name" maxlength="40" required></label></div><div class="fieldRow"><label class="field locked"><span>E-posta</span><input value="${escHtml(me.eposta)}" readonly></label><label class="field locked"><span>Sınıf seviyesi</span><input value="${grade}. sınıf" readonly></label></div><p class="fieldHint">E-postan ve sınıfın okulun tarafından tanımlanır.</p><div class="formActions"><button type="reset" class="textButton">Sıfırla</button><button class="action">Kaydet</button></div>`;
-  const preview=()=>{const pick=form.querySelector('[name=avatar]:checked');if(pick)screen.querySelectorAll('.avatarNow').forEach(i=>i.src='../img/poz_'+pick.value+'.webp')};
-  form.onchange=preview;form.onreset=()=>{setTimeout(preview);say('')};
+  form.innerHTML=`<fieldset class="avatarPick">${webMode?`<figure class="avatarBuyuk"><span class="avatarKalem"><img class="avatarNow" src="${avatarSrc(me)}" alt=""><button type="button" class="kalemBtn" data-yukle aria-label="Profil resmini değiştir" title="Bilgisayarından resim yükle">${penIcon}</button></span><figcaption><b>${escHtml(me.ad+' '+me.soyad)}</b><small>${grade}. sınıf</small></figcaption></figure>`:''}<legend>Avatarım</legend><p>Arkadaşların seni bu resimle tanır.</p><div>${avatars.map(([k,t])=>`<label title="${t}"><input type="radio" name="avatar" value="${k}" ${k===me.avatar?'checked':''}><img src="../img/poz_${k}.webp" alt="${t}"></label>`).join('')}${me.foto?`<label title="Kendi resmim"><input type="radio" name="avatar" value="foto" ${me.avatar==='foto'?'checked':''}><img class="fotoSec" src="${me.foto}" alt="Kendi resmim"></label>`:''}<button type="button" class="yukleKutu" data-yukle title="Bilgisayarından resim yükle">${penIcon}<span>Yükle</span></button></div><input type="file" accept="image/*" class="fotoDosya" hidden></fieldset><div class="fieldRow"><label class="field"><span>Ad</span><input name="ad" value="${escHtml(me.ad)}" autocomplete="given-name" maxlength="40" required></label><label class="field"><span>Soyad</span><input name="soyad" value="${escHtml(me.soyad)}" autocomplete="family-name" maxlength="40" required></label></div><div class="fieldRow"><label class="field locked"><span>E-posta</span><input value="${escHtml(me.eposta)}" readonly></label><label class="field locked"><span>Sınıf seviyesi</span><input value="${grade}. sınıf" readonly></label></div><p class="fieldHint">E-postan ve sınıfın okulun tarafından tanımlanır.</p><div class="formActions"><button type="reset" class="textButton">Sıfırla</button><button class="action">Kaydet</button></div>`;
+  let foto=me.foto||'';
+  const preview=()=>{const pick=form.querySelector('[name=avatar]:checked');if(pick)screen.querySelectorAll('.avatarNow').forEach(i=>i.src=avatarSrc({avatar:pick.value,foto}))};
+  const dosya=form.querySelector('.fotoDosya');
+  form.querySelectorAll('[data-yukle]').forEach(b=>b.onclick=()=>dosya.click());
+  dosya.onchange=async e=>{
+   e.stopPropagation();const f=dosya.files[0];dosya.value='';if(!f)return;
+   try{foto=await shrinkPhoto(f)}catch{say('Bu dosya açılamadı. JPG ya da PNG bir resim seç.',true);return}
+   let r=form.querySelector('[name=avatar][value=foto]');
+   if(!r){const l=document.createElement('label');l.title='Kendi resmim';l.innerHTML='<input type="radio" name="avatar" value="foto"><img class="fotoSec" alt="Kendi resmim">';form.querySelector('.yukleKutu').before(l);r=l.querySelector('input')}
+   r.nextElementSibling.src=foto;r.checked=true;preview();say('Resmin hazır. Kaydet ile profiline ekle.');
+  };
+  form.onchange=e=>{if(e.target!==dosya)preview()};form.onreset=()=>{setTimeout(preview);say('')};
   form.onsubmit=e=>{
    e.preventDefault();
    const ad=form.ad.value.trim(),soyad=form.soyad.value.trim();
    if(!ad||!soyad){say('Ad ve soyad boş kalamaz.',true);(ad?form.soyad:form.ad).focus();return}
-   const next={...me,ad,soyad,avatar:form.querySelector('[name=avatar]:checked').value};
-   if(!write(HESAP_KEY,JSON.stringify(next))){say('Bu tarayıcı kaydetmeye izin vermedi.',true);return}
+   const av=form.querySelector('[name=avatar]:checked').value;
+   const next={...me,ad,soyad,avatar:av};if(foto)next.foto=foto;
+   if(!write(HESAP_KEY,JSON.stringify(next))){say('Bu tarayıcı kaydetmeye izin vermedi. Resim çok büyük olabilir.',true);return}
    profile('hesap');screen.querySelector('.formNote').textContent='✓ Profilin kaydedildi.';
   };
  }else{
@@ -123,7 +139,7 @@ function profile(page){
  const badges=[...counts.values()].filter(Boolean).length;
  const passport=page==='pasaport';
  const me=account(),settings=page==='hesap';
- screen.innerHTML=`<div class="heading"><h1>Profilim</h1></div><div class="profileSummary"><img class="avatarNow" src="../img/poz_${me.avatar}.webp" alt=""><div><strong>${escHtml(me.ad+' '+me.soyad)}</strong><small>${grade}. sınıf · ${stamps.length} damga · ${badges}/${list.length} rozet</small></div></div><div class="profileTabs"><a href="#pasaport" ${passport?'aria-current="page"':''}><img src="../mobil/ikon/defter.png" alt="">Pasaportum</a><a href="#profil" ${page==='profil'?'aria-current="page"':''}><img src="../mobil/ikon/madalya.png" alt="">Rozetlerim</a><a href="#hesap" ${settings?'aria-current="page"':''}><img class="avatarNow" src="../img/poz_${me.avatar}.webp" alt="">Hesabım</a></div><article class="paper collection"></article><div class="pager"></div>`;
+ screen.innerHTML=`<div class="heading"><h1>Profilim</h1></div><div class="profileSummary"><img class="avatarNow" src="${avatarSrc(me)}" alt=""><div><strong>${escHtml(me.ad+' '+me.soyad)}</strong><small>${grade}. sınıf · ${stamps.length} damga · ${badges}/${list.length} rozet</small></div></div><div class="profileTabs"><a href="#pasaport" ${passport?'aria-current="page"':''}><img src="../mobil/ikon/defter.png" alt="">Pasaportum</a><a href="#profil" ${page==='profil'?'aria-current="page"':''}><img src="../mobil/ikon/madalya.png" alt="">Rozetlerim</a><a href="#hesap" ${settings?'aria-current="page"':''}><img class="avatarNow" src="${avatarSrc(me)}" alt="">Hesabım</a></div><article class="paper collection"></article><div class="pager"></div>`;
  const card=screen.querySelector('.collection');
  if(settings){screen.querySelector('.pager').remove();accountSettings(card);return}
  if(passport){
@@ -133,7 +149,7 @@ function profile(page){
   const ornek={subject:'Fen Bilimleri',grade:'5',theme:'Kuvveti Tanıyalım',date:new Date().toISOString()};
   const yuvalar=Math.max(8,stamps.length+(stamps.length?0:1));
   const liste=stamps.length?stamps.map((e,i)=>damga(e,i)).join(''):damga(ornek,0,true);
-  card.innerHTML=`<section class="pasSol"><p class="pasBaslik">BİLGİN · Öğrenme pasaportu</p><img class="pasFoto" src="../img/poz_${me.avatar}.webp" alt=""><dl><dt>Ad soyad</dt><dd data-etiket="Ad soyad">${escHtml(me.ad+' '+me.soyad)}</dd><dt>Sınıf</dt><dd data-etiket="Sınıf">${grade}. sınıf</dd><dt>Tema damgası</dt><dd data-etiket="Tema damgası">${stamps.length}</dd><dt>Ders rozeti</dt><dd data-etiket="Ders rozeti">${badges} / ${list.length}</dd></dl><p class="pasNot">${stamps.length?'Her tema patikasını bitirdiğinde pasaportuna bir damga basılır.':'Bir temanın İzle, Oyna ve Ölç adımlarını bitir; ilk damgan buraya basılacak.'}</p>${stamps.length?'':'<a class="action" href="#dersler">Tema seç →</a>'}</section>
+  card.innerHTML=`<section class="pasSol"><p class="pasBaslik">BİLGİN · Öğrenme pasaportu</p><img class="pasFoto" src="${avatarSrc(me)}" alt=""><dl><dt>Ad soyad</dt><dd data-etiket="Ad soyad">${escHtml(me.ad+' '+me.soyad)}</dd><dt>Sınıf</dt><dd data-etiket="Sınıf">${grade}. sınıf</dd><dt>Tema damgası</dt><dd data-etiket="Tema damgası">${stamps.length}</dd><dt>Ders rozeti</dt><dd data-etiket="Ders rozeti">${badges} / ${list.length}</dd></dl><p class="pasNot">${stamps.length?'Her tema patikasını bitirdiğinde pasaportuna bir damga basılır.':'Bir temanın İzle, Oyna ve Ölç adımlarını bitir; ilk damgan buraya basılacak.'}</p>${stamps.length?'':'<a class="action" href="#dersler">Tema seç →</a>'}</section>
    <section class="pasSag"><p class="pasBaslik">Tema damgalarım <span>${stamps.length} damga</span></p><ul class="damgalar">${liste}${Array.from({length:yuvalar-(stamps.length||1)},()=>'<li class="damga bos" aria-hidden="true"><span>?</span></li>').join('')}</ul></section>`;
  }else{
   screen.querySelector('.pager').remove();

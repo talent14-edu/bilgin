@@ -161,3 +161,4 @@ nav .navBrand .brand,nav .navBrand .brand[aria-current]{background:none;border:0
 .duyuruKutu li.yeni a{background:#eef6f3}.duyuruKutu li.yeni b:after{content:"";display:inline-block;width:8px;height:8px;margin-left:6px;border-radius:50%;background:#e4572e;vertical-align:middle}
 @media(min-width:741px){.deskTitle{padding-right:70px}#screen:has(.profileTabs)>.profileSummary{margin-right:64px}.ogretmen #screen:has(.profileTabs)>.profileSummary{margin-right:250px}}
 @media(max-width:740px){#ogrenciUst{top:auto;bottom:16px;right:16px}}
+.accountForm .avatarPick div .yukleKutu{width:100%;height:auto;aspect-ratio:1}.accountForm .avatarPick div{grid-template-columns:repeat(auto-fit,minmax(38px,1fr));gap:5px;max-width:330px}
