@@ -147,3 +147,17 @@ nav .navBrand .brand,nav .navBrand .brand[aria-current]{background:none;border:0
 .pasSol dl>dt{display:none}.pasSol dd{display:grid;gap:2px;padding:8px 6px;border-radius:14px;background:#ffffff14;border:1px solid #ffffff22;font-size:18px}
 .pasSol dd:before{content:attr(data-etiket);font-size:12px;font-weight:600;color:#bfe0e4}
 .pasSol .pasNot{max-width:34ch}
+
+/* sağ üst duyurular: öğrenci (#ogrenciUst) ve öğretmen (#ogrtUst) aynı görünüm */
+#ogrenciUst{position:fixed;top:clamp(12px,2.4vh,22px);right:clamp(14px,2.4vw,34px);z-index:20;display:flex;align-items:center;gap:10px}
+.duyuruZil{position:relative;display:grid;place-items:center;width:46px;height:46px;padding:0;border:1px solid #f0d58e;border-radius:50%;background:#fff3cf;box-shadow:0 3px 0 #e6cf93;cursor:pointer;color:#b4541a}
+.duyuruZil svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.duyuruZil[aria-expanded=true]{background:#ffe6a8}.duyuruZil:hover svg{animation:duyuruSalla .5s}
+@keyframes duyuruSalla{25%{transform:rotate(-12deg)}75%{transform:rotate(10deg)}}
+.duyuruSayi,#duyuruSayi{position:absolute;top:-3px;right:-3px;min-width:21px;height:21px;padding:0 5px;border-radius:11px;background:#e4572e;color:#fff;font:800 12px/21px var(--ui);font-style:normal;border:2px solid #fffdf6}
+.duyuruKutu{position:absolute;top:56px;right:0;width:min(380px,90vw);max-height:min(540px,80vh);overflow:auto;padding:14px;border:1px solid #bccdc0;border-radius:20px;background:#fffdf6;box-shadow:0 18px 40px -18px #10384b80}
+.duyuruKutu header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.duyuruKutu h2{font-size:20px}.duyuruKutu ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.duyuruKutu a{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:14px}.duyuruKutu a:hover{background:#f4f7eb}.duyuruKutu .oIk{width:34px;height:34px;object-fit:contain;flex:none}
+.duyuruKutu b,.duyuruKutu small,.duyuruKutu em{display:block}.duyuruKutu small{color:#52645c;font-size:14px}.duyuruKutu em{font-style:normal;font-size:12px;color:#8a9a8f;margin-top:2px}
+.duyuruKutu li.yeni a{background:#eef6f3}.duyuruKutu li.yeni b:after{content:"";display:inline-block;width:8px;height:8px;margin-left:6px;border-radius:50%;background:#e4572e;vertical-align:middle}
+@media(min-width:741px){.deskTitle{padding-right:70px}#screen:has(.profileTabs)>.profileSummary{margin-right:64px}.ogretmen #screen:has(.profileTabs)>.profileSummary{margin-right:250px}}
+@media(max-width:740px){#ogrenciUst{top:auto;bottom:16px;right:16px}}
